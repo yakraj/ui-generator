@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Class Extractor</title>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+      }
+      #main-container {
+        height: 100vh;
+        width: 100%;
+      }
+      #id1680541680333 {
+        height: 90%;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+      h2 {
+        font-family: sans-serif;
+        font-weight: bold;
+        color: grey;
+      }
+      #id1680541702958 {
+        height: 5%;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background: linear-gradient(45deg, #7dfff9, #7900b7);
+      }
+      textarea {
+        height: 100%;
+        width: 100%;
+        border: none;
+        box-sizing: border-box;
+      }
+      #id1680541687870 {
+        height: 10%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        box-sizing: border-box;
+
+        background: #272822;
+      }
+      .button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 5px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+      .button:hover {
+        background-color: #00bfff;
+      }
+      #extracted-class::-webkit-scrollbar {
+        display: none;
+      }
+      #extracted-class {
+        font-family: sans-serif;
+        color: #fff;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: scroll;
+        width: 90%;
+        padding: 5px;
+        box-sizing: border-box;
+      }
+    </style>
+
+    <div id="main-container">
+      <div id="id1680541680333">
+        <div id="id1680541702958">
+          <h2>Insert your Code</h2>
+          <button id="extract-css-btn" onclick="ExtractIt()" class="button">
+            Compile and Extract
+          </button>
+        </div>
+        <textarea id="html-code" type="text"></textarea>
+      </div>
+      <div id="id1680541687870">
+        <div id="extracted-class"></div>
+        <button onclick="CopyButton()" id="extract-css-btn" class="button">
+          copy
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const htmlCodeInput = document.getElementById("html-code");
+      const ViewElement = document.getElementById("extracted-class");
+
+      const cssClasses = [];
+
+      const ExtractIt = () => {
+        const regex = /class\s*=\s*["']([^"']+)["']/g;
+        let match;
+        while ((match = regex.exec(htmlCodeInput.value))) {
+          const classes = match[1].split(/\s+/);
+          cssClasses.push(...classes);
+          ViewElement.innerText = JSON.stringify(cssClasses);
+        }
+      };
+
+      const CopyButton = () => {
+        navigator.clipboard
+          .writeText(JSON.stringify(cssClasses))
+          .then(() => {
+            window.alert("HTML code successfully copied.");
+          })
+          .catch((err) => {
+            console.error("Failed to copy element: ", err);
+          });
+      };
+    </script>
+  </body>
+</html>

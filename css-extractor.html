@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Css Extractor</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+  </head>
+  <body>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .main-container {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+      .button,
+      button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 5px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 15px;
+        cursor: pointer;
+      }
+      .html-code-tab {
+        height: 6%;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 5px 15px;
+        box-sizing: border-box;
+        background: #d7e5d7;
+      }
+      .button:hover {
+        background-color: #00bfff;
+      }
+      button:hover {
+        background-color: #00bfff;
+      }
+
+      .extract-contents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+      .file-extract {
+        padding: 10px;
+        box-sizing: border-box;
+        height: 10%;
+        width: 100%;
+        position: relative;
+        background: linear-gradient(45deg, #3ce18d, #ffb8b8);
+        box-sizing: border-box;
+      }
+      .extract-report {
+        background-color: #272822;
+        height: 90%;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+      }
+      #id1680537649947 {
+        height: 6%;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      pre {
+        height: 92%;
+        /* padding-bottom: 20px; */
+        box-sizing: border-box;
+      }
+      .insert-code {
+        height: 50%;
+        width: 100%;
+        position: relative;
+        background: #272822;
+      }
+      .extracted-content {
+        height: 94%;
+        width: 100%;
+        position: relative;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+    </style>
+    <div class="main-container">
+      <div class="file-extract">
+        <input
+          style="
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 10px;
+          "
+          id="input-text"
+          type="text"
+        />
+        <div class="extract-contents">
+          <input id="input-file" type="file" />
+          <button onclick="ExtractCode()">Extract</button>
+        </div>
+      </div>
+      <div class="extract-report">
+        <div class="html-code-tab">
+          <h2>Extracted HTML</h2>
+          <button onclick="copyCSS()" class="button">COPY</button>
+        </div>
+        <pre class="language-html">
+            <code style = "display:flex;" class="language-html"  id="extracted-css">
+              <!-- Your HTML code goes here -->
+            </code>
+          </pre>
+      </div>
+    </div>
+
+    <script>
+      // this is code for filtering content
+      var DesiredText = document.getElementById("input-text");
+      let minified = "";
+      let ExtractedCSS = [];
+      const extractedCssOutput = document.getElementById("extracted-css");
+
+      function extractCssValues(minifiedCss, desiredSelectors) {
+        const regexPatterns = desiredSelectors.map(
+          (selector) => new RegExp(`(${selector}{)(.*?)(})`, "gm")
+        );
+        const values = {};
+
+        regexPatterns.forEach((pattern) => {
+          const matches = minifiedCss.match(pattern);
+          if (matches && matches.length > 0) {
+            const css = matches[0];
+            const valuesStr = css.substring(
+              css.indexOf("{") + 1,
+              css.lastIndexOf("}")
+            );
+            values[pattern.exec(css)[1].replace("{", "")] = valuesStr.trim();
+          }
+        });
+
+        return values;
+      }
+
+      function getFileContents(inputElement) {
+        return new Promise((resolve, reject) => {
+          const file = inputElement.files[0];
+          if (!file) {
+            reject(new Error("No file selected"));
+          }
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            const contents = event.target.result;
+            resolve(contents);
+          };
+          reader.onerror = (event) => {
+            reject(event.target.error);
+          };
+          reader.readAsText(file);
+        });
+      }
+
+      let reader = new FileReader();
+      reader.onload = function () {
+        let text = reader.result;
+        console.log(text);
+      };
+      const ExtractCode = () => {
+        const inputElement = document.getElementById("input-file");
+        getFileContents(inputElement)
+          .then((contents) => {
+            minified = contents;
+            // console.log(contents);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+
+        desired = JSON.parse(DesiredText.value);
+        setTimeout(() => {
+          const values = extractCssValues(minified, desired);
+          for (let key in values) {
+            ExtractedCSS.push(`.${key}{${values[key]}}`);
+            extractedCssOutput.innerText = ExtractedCSS.join("\n");
+
+            // console.log(`${key}{${values[key]}}`);
+          }
+          console.log("loop finished");
+        }, 100);
+      };
+
+      // this is for data
+      const copyCSS = () => {
+        navigator.clipboard
+          .writeText(extractedCssOutput.innerText)
+          .then(() => {
+            window.alert("CSS code successfully copied.");
+          })
+          .catch((err) => {
+            console.error("Failed to copy element: ", err);
+          });
+      };
+    </script>
+  </body>
+</html>
