@@ -298,6 +298,7 @@ select {
   position: absolute;
   background: grey;
   top: 0;
+  z-index: 1000;
   left: 45%;
   padding: 10px;
   border-radius: 0px 0px 10px 10px;
