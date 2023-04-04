@@ -359,7 +359,7 @@ function App() {
           src={require("./assect/edit.svg").default}
         />
       </div>
-      <div id="branding">Create Gallery</div>
+      <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data
       </div>
