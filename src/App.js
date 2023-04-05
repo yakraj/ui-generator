@@ -164,7 +164,9 @@ function App() {
     navigator.clipboard
       .writeText(clonedElement.outerHTML)
       .then(() => {
-        window.alert("Gallery data successfully copied.");
+        if (window.confirm("Do you want to redirect to a new site?")) {
+          window.location.href = "https://html-extractor.yakraj.com";
+        }
       })
       .catch((err) => {
         console.error("Failed to copy element: ", err);
@@ -346,74 +348,6 @@ function App() {
 
 // from here zoom pan section starts
 
-const [zoomLevel, setZoomLevel] = useState(1);
-const [isPanning, setIsPanning] = useState(false);
-const [panStart, setPanStart] = useState({ x: 0, y: 0 });
-const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
-const [prevPanOffset, setPrevPanOffset] = useState({ x: 0, y: 0 });
-
-
-useEffect(() => {
-  const zoomable = document.querySelector(".main-container-parent");
-  const innerDiv = PlayGround.current
-
-  const handleWheel = (event) => {
-    if (event.altKey) {
-      event.preventDefault();
-      setZoomLevel((prevZoomLevel) => prevZoomLevel + event.deltaY * -0.01);
-    }
-  };
-  zoomable.addEventListener("wheel", handleWheel);
-
-  const handleMouseDown = (event) => {
-    if (event.button === 1) {
-      event.preventDefault();
-      setIsPanning(true);
-      setPanStart({ x: event.clientX, y: event.clientY });
-    }
-  };
-  zoomable.addEventListener("mousedown", handleMouseDown);
-
-  const handleMouseMove = (event) => {
-    if (isPanning) {
-      event.preventDefault();
-      setPanOffset({
-        x: event.clientX - panStart.x,
-        y: event.clientY - panStart.y,
-      });
-      innerDiv.style.transform = `scale(${zoomLevel}) translate(${
-        prevPanOffset.x + panOffset.x
-      }px, ${prevPanOffset.y + panOffset.y}px)`;
-    }
-  };
-  zoomable.addEventListener("mousemove", handleMouseMove);
-
-  const handleMouseUp = (event) => {
-    if (event.button === 1) {
-      setIsPanning(false);
-      setPrevPanOffset({
-        x: prevPanOffset.x + panOffset.x,
-        y: prevPanOffset.y + panOffset.y,
-      });
-      setPanOffset({ x: 0, y: 0 });
-    }
-  };
-  document.addEventListener("mouseup", handleMouseUp);
-
-  return () => {
-    zoomable.removeEventListener("wheel", handleWheel);
-    zoomable.removeEventListener("mousedown", handleMouseDown);
-    zoomable.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-  };
-}, [isPanning, panOffset, panStart, prevPanOffset, zoomLevel]);
-
-
-
-
-
-
-
 
   return (
     <div className="App">
@@ -440,8 +374,7 @@ useEffect(() => {
           return <SingleButton key={i} data={x} />;
         })}
       </div>
-      <div className="Main-container-parent">
-
+    
       
       <div
         ref={PlayGround}
@@ -449,7 +382,7 @@ useEffect(() => {
         id="main-container"
       >
         <div ref={Rectangle} id="rectangle" className="guide-rectangle"></div>
-      </div></div>
+      </div>
       <div ref={Properties} className="user-panel">
         <div className="properties-heading">Properties</div>
         <div className="properties-items">
