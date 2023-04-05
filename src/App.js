@@ -29,12 +29,12 @@ function App() {
 
   // set background image
 
-  // useEffect(() => {
-  //   var element = document.getElementById("main-container");
-  //   element.style.backgroundImage = `url(${prompt(
-  //     "pleas insert background image"
-  //   )})`;
-  // }, []);
+  useEffect(() => {
+    var element = document.getElementById("main-container");
+    element.style.backgroundImage = `url(${prompt(
+      "pleas insert background image"
+    )})`;
+  }, []);
   useEffect(() => {
     if (data) {
       var parentRect = document.getElementById(parent);
@@ -345,28 +345,48 @@ const mainContainer = useRef()
 const [scalepg,onscalepg] = useState(1)
 const ZoomIn = ()=>{
   console.log(scalepg)
-var element = PlayGround.current
-if(scalepg ==1){
-element.style.transform='scale(2)'
-onscalepg(2)
-} 
-else if(scalepg ==2){
-element.style.scale= 'scale(3)'
-onscalepg(3)
-} 
+  
+  var element = PlayGround.current
+  switch(scalepg){
+    case 1 :
+      element.style.transform='scale(2)'
+      onscalepg(2)
+      break;
+      case 2 :
+      element.style.transform='scale(3)'
+      onscalepg(3)
+      break;
+      case 3 :
+      element.style.transform='scale(4)'
+      onscalepg(4)
+      break;
+      default:
+        return
+
+  }
+ 
 }
 
 const ZoomOut = ()=>{
  
 var element = PlayGround.current
-if(scalepg ==2){
-  element.style.transform='scale(1)'
-  onscalepg(1)
-  } 
-  else if(scalepg ==3){
-  element.style.scale= 'scale(2)'
-  onscalepg(2)
-  } 
+switch(scalepg){
+  case 2 :
+    element.style.transform='scale(1)'
+    onscalepg(1)
+    break;
+    case 3 :
+    element.style.transform='scale(2)'
+    onscalepg(2)
+    break;
+    case 4 :
+    element.style.transform='scale(3)'
+    onscalepg(3)
+    break;
+    default:
+      return
+
+} 
 }
 
 
