@@ -338,7 +338,49 @@ function App() {
  
 
 
-// from here zoom pan section starts
+
+//from here zoom and other starts
+const mainContainer = useRef()
+
+const [scalepg,onscalepg] = useState(1)
+const ZoomIn = ()=>{
+  console.log(scalepg)
+var element = PlayGround.current
+if(scalepg ==1){
+element.style.transform='scale(2)'
+onscalepg(2)
+} 
+else if(scalepg ==2){
+element.style.scale= 'scale(3)'
+onscalepg(3)
+} 
+}
+
+const ZoomOut = ()=>{
+ 
+var element = PlayGround.current
+if(scalepg ==2){
+  element.style.transform='scale(1)'
+  onscalepg(1)
+  } 
+  else if(scalepg ==3){
+  element.style.scale= 'scale(2)'
+  onscalepg(2)
+  } 
+}
+
+
+useEffect(()=>{
+var mainWidth = mainContainer.current.offsetWidth
+
+var setWidth = mainWidth * 0.95;
+
+var setHeight = ((mainWidth * 0.95)/16)*9
+
+PlayGround.current.style.width = setWidth+'px';
+PlayGround.current.style.height = setHeight+'px';
+
+},[])
 
 
   return (
@@ -356,6 +398,8 @@ function App() {
           alt="delete"
           src={require("./assect/edit.svg").default}
         />
+        <div onClick={() =>ZoomIn()}>+</div>
+        <div onClick={() =>ZoomOut()}>-</div>
       </div>
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
@@ -367,14 +411,14 @@ function App() {
         })}
       </div>
     
-      
+      <div ref = {mainContainer} className="container-parent">
       <div
         ref={PlayGround}
         onClick={() => setParent("main-container")}
         id="main-container"
       >
         <div ref={Rectangle} id="rectangle" className="guide-rectangle"></div>
-      </div>
+      </div></div>
       <div ref={Properties} className="user-panel">
         <div className="properties-heading">Properties</div>
         <div className="properties-items">

@@ -40,13 +40,23 @@
 }
 
 
-#main-container {
+.container-parent {
+  display:flex;
+  justify-content:center;
+  align-items:center;
   height: 100vh;
   width: 100%;
+  background: linear-gradient(95deg, rgb(184, 243, 250), pink);
+  overflow:scroll;
+
+}
+#main-container {
+  transform:scale(1);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background: linear-gradient(95deg, rgb(184, 243, 250), pink);
+  background:#fff;
+  transition-duration: 0.1s;
   
 }
 .user-panel {
@@ -299,6 +309,7 @@ select {
 .center-control {
   position: absolute;
   background: grey;
+  display:flex;
   top: 0;
   z-index: 1000;
   left: 45%;
@@ -322,3 +333,25 @@ select {
   background: #fff;
   transition-duration: 0.2s;
 }
+.center-control div:hover {
+  background:grey;
+  color:#fff;
+}
+.center-control div {
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px #fff;
+  width: 30px;
+  cursor: pointer;
+  background: #fff;
+  transition-duration: 0.2s;
+  font-family:sans-serif;
+  font-weight:bold;
+  justify-content: center;
+  align-items:center;
+  display:flex;
+  color:grey;
+  font-size:1.5rem;
+}
+
