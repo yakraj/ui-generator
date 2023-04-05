@@ -39,25 +39,22 @@
   }
 }
 
-
 .container-parent {
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   width: 100%;
   background: linear-gradient(95deg, rgb(184, 243, 250), pink);
-  overflow:scroll;
-
+  overflow: scroll;
 }
 #main-container {
-  transform:scale(1);
-  background-size: cover;
+  transform: scale(1);
+  background-size: cover !important;
   background-repeat: no-repeat;
   background-position: center;
-  background:#fff;
+  background: #fff;
   transition-duration: 0.3s;
-  
 }
 .user-panel {
   width: 0px;
@@ -309,7 +306,7 @@ select {
 .center-control {
   position: absolute;
   background: grey;
-  display:flex;
+  display: flex;
   top: 0;
   z-index: 1000;
   left: 45%;
@@ -320,8 +317,11 @@ select {
 .center-control img:hover:nth-child(1) {
   background-color: red;
 }
-.center-control img:hover:nth-child(2) {
+.center-control .open-properties:hover {
   background-color: green;
+}
+.center-control .close-properties:hover {
+  background-color: red;
 }
 .center-control img {
   padding: 5px;
@@ -334,8 +334,8 @@ select {
   transition-duration: 0.2s;
 }
 .center-control div:hover {
-  background:grey;
-  color:#fff;
+  background: grey;
+  color: #fff;
 }
 .center-control div {
   padding: 5px;
@@ -346,12 +346,11 @@ select {
   cursor: pointer;
   background: #fff;
   transition-duration: 0.2s;
-  font-family:sans-serif;
-  font-weight:bold;
+  font-family: sans-serif;
+  font-weight: bold;
   justify-content: center;
-  align-items:center;
-  display:flex;
-  color:grey;
-  font-size:1.5rem;
+  align-items: center;
+  display: flex;
+  color: grey;
+  font-size: 2rem;
 }
-

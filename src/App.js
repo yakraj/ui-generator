@@ -4,12 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { InputMenu } from "./input-menu";
 function App() {
   const [images, setImages] = useState([]);
+  const [closeProps, onCloseProps] = useState(true);
   const Rectangle = useRef("");
   const [tempImage, setTempImage] = useState([]);
   const [parent, setParent] = useState("main-container");
   const [childElement, onChildElement] = useState("");
   const [data, ondata] = useState();
   const [propertyPanel, onpropertyPanel] = useState(false);
+
   const PlayGround = useRef();
   // const mainContainer = "main-container";
   const Properties = useRef();
@@ -147,7 +149,7 @@ function App() {
     // divElements.forEach((divElement) => {
     //   divElement.removeAttribute("style");
     // });
-   
+
     GuideRectangle.forEach((elem) => {
       elem.remove("delete-button");
     });
@@ -156,8 +158,8 @@ function App() {
     navigator.clipboard
       .writeText(clonedElement.outerHTML)
       .then(() => {
-        if (window.confirm("Do you want to redirect to a new site?")) {
-          window.location.href = "https://html-extractor.yakraj.com";
+        if (window.confirm("Do you want to extract copied data?")) {
+          window.open("https://html-extractor.yakraj.com", "_blank");
         }
       })
       .catch((err) => {
@@ -335,73 +337,63 @@ function App() {
       </div>
     );
   };
- 
 
+  //from here zoom and other starts
+  const mainContainer = useRef();
 
+  const [scalepg, onscalepg] = useState(1);
+  const ZoomIn = () => {
+    console.log(scalepg);
 
-//from here zoom and other starts
-const mainContainer = useRef()
-
-const [scalepg,onscalepg] = useState(1)
-const ZoomIn = ()=>{
-  console.log(scalepg)
-  
-  var element = PlayGround.current
-  switch(scalepg){
-    case 1 :
-      element.style.transform='scale(2)'
-      onscalepg(2)
-      break;
-      case 2 :
-      element.style.transform='scale(3)'
-      onscalepg(3)
-      break;
-      case 3 :
-      element.style.transform='scale(4)'
-      onscalepg(4)
-      break;
+    var element = PlayGround.current;
+    switch (scalepg) {
+      case 1:
+        element.style.transform = "scale(2)";
+        onscalepg(2);
+        break;
+      case 2:
+        element.style.transform = "scale(3)";
+        onscalepg(3);
+        break;
+      case 3:
+        element.style.transform = "scale(4)";
+        onscalepg(4);
+        break;
       default:
-        return
+        return;
+    }
+  };
 
-  }
- 
-}
+  const ZoomOut = () => {
+    var element = PlayGround.current;
+    switch (scalepg) {
+      case 2:
+        element.style.transform = "scale(1)";
+        onscalepg(1);
+        break;
+      case 3:
+        element.style.transform = "scale(2)";
+        onscalepg(2);
+        break;
+      case 4:
+        element.style.transform = "scale(3)";
+        onscalepg(3);
+        break;
+      default:
+        return;
+    }
+  };
 
-const ZoomOut = ()=>{
- 
-var element = PlayGround.current
-switch(scalepg){
-  case 2 :
-    element.style.transform='scale(1)'
-    onscalepg(1)
-    break;
-    case 3 :
-    element.style.transform='scale(2)'
-    onscalepg(2)
-    break;
-    case 4 :
-    element.style.transform='scale(3)'
-    onscalepg(3)
-    break;
-    default:
-      return
+  useEffect(() => {
+    var mainWidth = mainContainer.current.offsetWidth;
 
-} 
-}
+    var setWidth = mainWidth * 0.9;
 
+    var setHeight = ((mainWidth * 0.9) / 16) * 9;
 
-useEffect(()=>{
-var mainWidth = mainContainer.current.offsetWidth
-
-var setWidth = mainWidth * 0.95;
-
-var setHeight = ((mainWidth * 0.95)/16)*9
-
-PlayGround.current.style.width = setWidth+'px';
-PlayGround.current.style.height = setHeight+'px';
-
-},[])
-
+    PlayGround.current.style.width = setWidth + "px";
+    PlayGround.current.style.height = setHeight + "px";
+  }, []);
 
   return (
     <div className="App">
@@ -413,13 +405,29 @@ PlayGround.current.style.height = setHeight+'px';
           alt="delete"
           src={require("./assect/delete.svg").default}
         />
-        <img
-          onClick={() => (Properties.current.style.width = "20%")}
-          alt="delete"
-          src={require("./assect/edit.svg").default}
-        />
-        <div onClick={() =>ZoomIn()}>+</div>
-        <div onClick={() =>ZoomOut()}>-</div>
+        {closeProps ? (
+          <img
+            className="open-properties"
+            onClick={() => {
+              Properties.current.style.width = "20%";
+              onCloseProps(false);
+            }}
+            alt="delete"
+            src={require("./assect/edit.svg").default}
+          />
+        ) : (
+          <img
+            className="close-properties"
+            onClick={() => {
+              Properties.current.style.width = "0%";
+              onCloseProps(true);
+            }}
+            alt="delete"
+            src={require("./assect/close.svg").default}
+          />
+        )}
+        <div onClick={() => ZoomIn()}>+</div>
+        <div onClick={() => ZoomOut()}>-</div>
       </div>
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
@@ -430,15 +438,15 @@ PlayGround.current.style.height = setHeight+'px';
           return <SingleButton key={i} data={x} />;
         })}
       </div>
-    
-      <div ref = {mainContainer} className="container-parent">
-      <div
-        ref={PlayGround}
-        onClick={() => setParent("main-container")}
-        id="main-container"
-      >
-        <div ref={Rectangle} id="rectangle" className="guide-rectangle"></div>
-      </div></div>
+
+      <div ref={Rectangle} id="rectangle" className="guide-rectangle"></div>
+      <div ref={mainContainer} className="container-parent">
+        <div
+          ref={PlayGround}
+          onClick={() => setParent("main-container")}
+          id="main-container"
+        ></div>
+      </div>
       <div ref={Properties} className="user-panel">
         <div className="properties-heading">Properties</div>
         <div className="properties-items">
@@ -446,6 +454,7 @@ PlayGround.current.style.height = setHeight+'px';
             <div class="display-data">
               <p>display</p>
               <select
+                onFocus={(e) => (e.target.value = "")}
                 id="displayDropdown"
                 onChange={(e) =>
                   activeElement
@@ -477,6 +486,7 @@ PlayGround.current.style.height = setHeight+'px';
             <div class="display-data">
               <p>Justify Content</p>
               <select
+                onFocus={(e) => (e.target.value = "")}
                 id="Justify-content"
                 onChange={(e) =>
                   activeElement
@@ -496,6 +506,7 @@ PlayGround.current.style.height = setHeight+'px';
             <div class="display-data">
               <p>align Items</p>
               <select
+                onFocus={(e) => (e.target.value = "")}
                 id="displayDropdown"
                 onChange={(e) =>
                   activeElement
@@ -513,6 +524,7 @@ PlayGround.current.style.height = setHeight+'px';
             <div class="display-data">
               <p>flex Direction</p>
               <select
+                onFocus={(e) => (e.target.value = "")}
                 id="displayDropdown"
                 onChange={(e) =>
                   activeElement
@@ -548,6 +560,11 @@ PlayGround.current.style.height = setHeight+'px';
                     ? (activeElement.style.height = e.target.value)
                     : null
                 }
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    activeElement.style.height = e.target.value;
+                  }
+                }}
                 type="text"
                 placeholder="Element Height"
               />
@@ -561,6 +578,11 @@ PlayGround.current.style.height = setHeight+'px';
                     ? (activeElement.style.width = e.target.value)
                     : null
                 }
+                onKeyDown={(e) => {
+                  if (e.keyCode === 13) {
+                    activeElement.style.width = e.target.value;
+                  }
+                }}
                 type="text"
                 placeholder="Element Width"
               />
