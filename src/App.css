@@ -39,13 +39,20 @@
   }
 }
 
-#main-container {
+.main-container-parent{
   height: 100vh;
+  width: 100%;
+  background: linear-gradient(95deg, rgb(184, 243, 250), pink);
+  overflow:hidden;
+}
+
+#main-container {
+  height: 100%;
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background: linear-gradient(95deg, rgb(184, 243, 250), pink);
+  
 }
 .user-panel {
   width: 0px;
