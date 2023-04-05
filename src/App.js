@@ -141,21 +141,13 @@ function App() {
     let originalElement = document.getElementById("main-container");
     let clonedElement = originalElement.cloneNode(true);
 
-    const displayFuncElems = clonedElement.querySelectorAll(".display-func");
-    const deleteButtonElems = clonedElement.querySelectorAll(".delete-button");
     const GuideRectangle = clonedElement.querySelectorAll("#rectangle");
     // const divElements = clonedElement.querySelectorAll("div");
 
     // divElements.forEach((divElement) => {
     //   divElement.removeAttribute("style");
     // });
-    displayFuncElems.forEach((elem) => {
-      elem.remove("display-func");
-    });
-
-    deleteButtonElems.forEach((elem) => {
-      elem.remove("delete-button");
-    });
+   
     GuideRectangle.forEach((elem) => {
       elem.remove("delete-button");
     });
