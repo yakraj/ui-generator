@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { InputMenu } from "./input-menu";
+import { Controlbar } from "./components/controlbar";
 function App() {
   const [images, setImages] = useState([]);
   const [closeProps, onCloseProps] = useState(true);
@@ -343,20 +344,26 @@ function App() {
 
   const [scalepg, onscalepg] = useState(1);
   const ZoomIn = () => {
-    console.log(scalepg);
-
+    var playgroundWidth = PlayGround.current.offsetWidth;
+    var playgroundHeight = PlayGround.current.offsetHeight;
     var element = PlayGround.current;
     switch (scalepg) {
       case 1:
-        element.style.transform = "scale(2)";
+        element.style.transform = `scale(2) translateX(${
+          playgroundWidth * 0.25
+        }px) translateY(${playgroundWidth * 0.1}px)`;
         onscalepg(2);
         break;
       case 2:
-        element.style.transform = "scale(3)";
+        element.style.transform = `scale(3) translateX(${
+          playgroundWidth * 0.32
+        }px) translateY(${playgroundWidth * 0.15}px)`;
         onscalepg(3);
         break;
       case 3:
-        element.style.transform = "scale(4)";
+        element.style.transform = `scale(4) translateX(${
+          playgroundWidth * 0.4
+        }px) translateY(${playgroundWidth * 0.2}px)`;
         onscalepg(4);
         break;
       default:
@@ -447,201 +454,7 @@ function App() {
           id="main-container"
         ></div>
       </div>
-      <div ref={Properties} className="user-panel">
-        <div className="properties-heading">Properties</div>
-        <div className="properties-items">
-          <div class="data-contents">
-            <div class="display-data">
-              <p>display</p>
-              <select
-                onFocus={(e) => (e.target.value = "")}
-                id="displayDropdown"
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.display = e.target.value)
-                    : null
-                }
-              >
-                <option value="inline">inline</option>
-                <option value="block">block</option>
-                <option value="inline-block">inline-block</option>
-                <option value="flex">flex</option>
-                <option value="inline-flex">inline-flex</option>
-                <option value="grid">grid</option>
-                <option value="inline-grid">inline-grid</option>
-                <option value="table">table</option>
-                <option value="table-caption">table-caption</option>
-                <option value="table-cell">table-cell</option>
-                <option value="table-column">table-column</option>
-                <option value="table-column-group">table-column-group</option>
-                <option value="table-footer-group">table-footer-group</option>
-                <option value="table-header-group">table-header-group</option>
-                <option value="table-row">table-row</option>
-                <option value="table-row-group">table-row-group</option>
-                <option value="none">none</option>
-                <option value="initial">initial</option>
-                <option value="inherit">inherit</option>
-              </select>
-            </div>
-            <div class="display-data">
-              <p>Justify Content</p>
-              <select
-                onFocus={(e) => (e.target.value = "")}
-                id="Justify-content"
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.justifyContent = e.target.value)
-                    : null
-                }
-              >
-                <option value="flex-start">flex-start</option>
-                <option value="flex-end">flex-end</option>
-                <option value="center">center</option>
-                <option value="space-between">space-between</option>
-                <option value="space-around">space-around</option>
-                <option value="space-evenly">space-evenly</option>
-                <option value="stretch">stretch</option>
-              </select>
-            </div>
-            <div class="display-data">
-              <p>align Items</p>
-              <select
-                onFocus={(e) => (e.target.value = "")}
-                id="displayDropdown"
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.alignItems = e.target.value)
-                    : null
-                }
-              >
-                <option value="flex-start">flex-start</option>
-                <option value="flex-end">flex-end</option>
-                <option value="center">center</option>
-                <option value="baseline">baseline</option>
-                <option value="stretch">stretch</option>
-              </select>
-            </div>
-            <div class="display-data">
-              <p>flex Direction</p>
-              <select
-                onFocus={(e) => (e.target.value = "")}
-                id="displayDropdown"
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.flexDirection = e.target.value)
-                    : null
-                }
-              >
-                <option value="row">row</option>
-                <option value="row-reverse">row-reverse</option>
-                <option value="column">column</option>
-                <option value="column-reverse">column-reverse</option>
-              </select>
-            </div>
-            <div class="display-data">
-              <p>Custon Class</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    activeElement.classList.add(e.target.value);
-                  }
-                }}
-                type="text"
-                placeholder="custom class"
-              />
-            </div>
-            <div class="display-data">
-              <p>height</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.height = e.target.value)
-                    : null
-                }
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    activeElement.style.height = e.target.value;
-                  }
-                }}
-                type="text"
-                placeholder="Element Height"
-              />
-            </div>
-            <div class="display-data">
-              <p>Width</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.width = e.target.value)
-                    : null
-                }
-                onKeyDown={(e) => {
-                  if (e.keyCode === 13) {
-                    activeElement.style.width = e.target.value;
-                  }
-                }}
-                type="text"
-                placeholder="Element Width"
-              />
-            </div>
-            <div class="display-data">
-              <p>Overflow X</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.overflowX = e.target.value)
-                    : null
-                }
-                type="text"
-                placeholder="Element Width"
-              />
-            </div>
-            <div class="display-data">
-              <p>Overflow Y</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.overflowY = e.target.value)
-                    : null
-                }
-                type="text"
-                placeholder="Element Width"
-              />
-            </div>
-            <div class="display-data">
-              <p>Inside Text</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.innerHTML = e.target.value)
-                    : null
-                }
-                type="text"
-                placeholder="Element Width"
-              />
-            </div>
-            <div class="display-data">
-              <p>Image URL</p>
-              <input
-                onFocus={(e) => e.target.select()}
-                onChange={(e) =>
-                  activeElement
-                    ? activeElement.setAttribute("src", e.target.value)
-                    : null
-                }
-                type="text"
-                placeholder="Element Width"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Controlbar Element={activeElement} Properties={Properties} />
     </div>
   );
 }

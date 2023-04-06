@@ -1,0 +1,181 @@
+.flex {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+.wid-50 {
+  width: 50%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.wid-30 {
+  width: 30%;
+}
+.flex-rec:hover {
+  background: #fff;
+}
+.flex-rec:active {
+  background: red;
+}
+.flex-rec {
+  transition-duration: 0.2s;
+  height: 40px;
+  width: 45px;
+  background: grey;
+  cursor: pointer;
+}
+.box-shadow {
+  box-shadow: 0 0 5px #fff, 0 0 10px #fff;
+}
+.mar-5 {
+  margin: 2px;
+}
+
+.borr-5 {
+  border-radius: 5px;
+}
+.wid-100 {
+  width: 100%;
+}
+
+.wid-100-center {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.flex-col {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.colorpicker img {
+  height: 20px;
+  width: 20px;
+}
+.wid-50 input::placeholder {
+  color: palegreen;
+}
+.wid-50 input,
+.wid-50 select,
+.custom-input {
+  border: none;
+  background: transparent;
+  color: palegreen;
+  border-bottom: 2px solid palegreen;
+  border-radius: 0px;
+  outline: none;
+  width: 80%;
+  font-size: 1.2rem;
+}
+.wid-30 select {
+  border: none;
+  background: transparent;
+  color: palegreen;
+  border-bottom: 2px solid palegreen;
+  border-radius: 0px;
+  outline: none;
+  width: 95%;
+  font-size: 1.2rem;
+}
+hr {
+  width: 90%;
+  background: palegreen;
+  border: none;
+  height: 1px;
+}
+
+.colorpicker input {
+  border-bottom: none;
+  height: 40px;
+}
+
+.data-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.data-contents p {
+  margin: 0;
+  text-transform: uppercase;
+  padding: 0;
+  font-family: sans-serif;
+  color: #fff;
+  margin: 2px;
+}
+
+.a-l {
+  text-align: left;
+}
+.wid-100-around {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.wid-100-around h2 {
+  margin: 0;
+  padding: 3px;
+  box-shadow: 0 0 5px #fff;
+  width: 25%;
+  background-color: aqua;
+  color: rebeccapurple;
+  cursor: pointer;
+}
+
+input::placeholder {
+  color: palegreen;
+}
+.image-content {
+  width: 100%;
+}
+.image-content input:nth-child(1) {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid palegreen;
+  font-size: 1.2rem;
+  width: 85%;
+}
+.image-content input:nth-child(2) {
+  background-color: transparent;
+  width: 15%;
+  height: 30px;
+  border-bottom: 2px solid palegreen;
+  font-size: 1.2rem;
+  width: 85%;
+}
+.text-section textarea::placeholder {
+  color: palegreen;
+}
+.text-section textarea {
+  color: palegreen;
+  height: 40px;
+  width: 100%;
+  font-size: 1.2rem;
+  background-color: transparent;
+  color: palegreen;
+  border: 1px solid palegreen;
+}
+
+.paddingmargin {
+  transition-duration: 0.2s;
+  height: 40px;
+  width: 45px;
+  background: grey;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.2rem;
+  align-items: flex-end;
+}
+
+.text-edit-cont {
+  margin-top: 100px;
+}
