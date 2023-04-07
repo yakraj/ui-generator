@@ -56,6 +56,11 @@
   background: #fff;
   transition-duration: 0.3s;
 }
+div {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .user-panel {
   border-left: 2px dotted grey;
   height: 100vh;
@@ -63,9 +68,9 @@
   overflow: hidden;
   right: 0;
   top: 0;
-  transition-duration: .2s;
+  transition-duration: 0.2s;
   width: auto;
-  max-width:300px;
+  max-width: 350px;
   z-index: 1000;
 }
 .delete-button {
@@ -205,7 +210,6 @@
   display: none;
 }
 .properties-items {
-  
   background: #646464;
   height: 100%;
   overflow-y: overlay;

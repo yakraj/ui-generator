@@ -224,10 +224,19 @@ export const Controlbar = ({ Element, Properties }) => {
               <div className="wid-50">
                 <p>Height</p>
                 <input
-                  onFocus={(e) => e.target.select()}
-                  onChange={(e) =>
-                    Element ? (Element.style.height = e.target.value) : null
-                  }
+                  onFocus={(e) => {
+                    e.target.select();
+                    e.target.value = Element && Element.style.height;
+                    e.target.readOnly = false;
+                  }}
+                  onBlur={(e) => {
+                    e.target.setAttribute("readOnly", "readOnly");
+                  }}
+                  onChange={(e) => {
+                    if (Element) {
+                      Element.style.height = e.target.value;
+                    }
+                  }}
                   onKeyDown={(e) => {
                     if (e.keyCode === 13) {
                       Element.style.height = e.target.value;
@@ -240,7 +249,11 @@ export const Controlbar = ({ Element, Properties }) => {
               <div className="wid-50">
                 <p>Width</p>
                 <input
-                  onFocus={(e) => e.target.select()}
+                  onFocus={(e) => {
+                    e.target.select();
+                    e.target.value = Element && Element.style.width;
+                    e.target.readOnly = false;
+                  }}
                   onChange={(e) =>
                     Element ? (Element.style.width = e.target.value) : null
                   }

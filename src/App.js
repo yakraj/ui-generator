@@ -32,7 +32,6 @@ function App() {
 
   // set background image
 
-
   useEffect(() => {
     if (data) {
       var parentRect = document.getElementById(parent);
@@ -181,31 +180,36 @@ function App() {
   }, [tempImage]);
   const Highliter = (e) => {
     e.stopPropagation();
-    console.log("reached until here");
+    e.target.style.outline = "2px solid red";
     setactiveElement(e.target);
+    setTimeout(() => {
+      e.target.style.removeProperty("outline");
+    }, 100);
   };
 
-
   // duplicate element
+  const [hasCodeRun, setHasCodeRun] = useState(false);
 
-
-  useEffect(()=>{
-    document.addEventListener('keydown', function(event) {
-      if (event.shiftKey && event.key === 'D') {
-        
-        if(activeElement){
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.shiftKey && event.key === "D") {
+        if (activeElement) {
           const clonedElement = activeElement.cloneNode(true);
 
           const parentElement = activeElement.parentNode;
-          console.log(parentElement,'/n',clonedElement)
+          console.log(parentElement, "/n", clonedElement);
           parentElement.appendChild(clonedElement);
-
-
         }
-        
       }
-    });
-  },[activeElement])
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeElement]);
+
   const ElementCreator = (type) => {
     let element = null;
 
@@ -418,6 +422,8 @@ function App() {
     PlayGround.current.style.width = setWidth + "px";
     PlayGround.current.style.height = setHeight + "px";
   }, []);
+
+  // delete eleme
 
   return (
     <div className="App">
