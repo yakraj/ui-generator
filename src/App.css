@@ -70,7 +70,7 @@ div {
   top: 0;
   transition-duration: 0.2s;
   width: auto;
-  max-width: 350px;
+  max-width: 300px;
   z-index: 1000;
 }
 .delete-button {
