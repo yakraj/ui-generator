@@ -32,12 +32,7 @@ function App() {
 
   // set background image
 
-  useEffect(() => {
-    var element = document.getElementById("main-container");
-    element.style.backgroundImage = `url(${prompt(
-      "pleas insert background image"
-    )})`;
-  }, []);
+
   useEffect(() => {
     if (data) {
       var parentRect = document.getElementById(parent);
@@ -189,6 +184,28 @@ function App() {
     console.log("reached until here");
     setactiveElement(e.target);
   };
+
+
+  // duplicate element
+
+
+  useEffect(()=>{
+    document.addEventListener('keydown', function(event) {
+      if (event.shiftKey && event.key === 'D') {
+        
+        if(activeElement){
+          const clonedElement = activeElement.cloneNode(true);
+
+          const parentElement = activeElement.parentNode;
+          console.log(parentElement,'/n',clonedElement)
+          parentElement.appendChild(clonedElement);
+
+
+        }
+        
+      }
+    });
+  },[activeElement])
   const ElementCreator = (type) => {
     let element = null;
 

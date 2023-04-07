@@ -57,17 +57,16 @@
   transition-duration: 0.3s;
 }
 .user-panel {
-  width: auto;
-  transition-duration: 0.2s;
-  overflow: hidden;
   border-left: 2px dotted grey;
-
-  /* position: absolute; */
-  right: 0px;
-  top: 0px;
-  opacity: 0.8;
-  z-index: 1000;
   height: 100vh;
+  /* opacity: .8; */
+  overflow: hidden;
+  right: 0;
+  top: 0;
+  transition-duration: .2s;
+  width: auto;
+  max-width:20%;
+  z-index: 1000;
 }
 .delete-button {
   font-family: sans-serif;
@@ -206,10 +205,11 @@
   display: none;
 }
 .properties-items {
-  height: 92%;
-  width: 100%;
-  background: #838889;
+  
+  background: #646464;
+  height: 100%;
   overflow-y: overlay;
+  width: 100%;
 }
 
 .CreatorSec {

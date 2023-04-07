@@ -3,7 +3,7 @@ import "./controlbar.css";
 export const Controlbar = ({ Element, Properties }) => {
   const [activeJustify, onactiveJustify] = useState();
   const [activeAlign, onactiveAlign] = useState();
-
+  const [ImageType, onImageType]  = useState('bg')
   const FlexControlBox = "flex-rec mar-5 borr-5 box-shadow";
   const padding = "paddingmargin mar-5 borr-5 box-shadow";
   const PaddingInput = (element) => {
@@ -15,11 +15,16 @@ export const Controlbar = ({ Element, Properties }) => {
     );
   };
 
+  useEffect(()=>{
+    Element && Element.classList.length > 0 ?null : window.alert("This Element doesn't have class")
+  },[Element])
+
   return (
     <div ref={Properties} className="user-panel">
-      <div className="properties-heading">Properties</div>
+     
       <div className="properties-items">
         <div className="data-contents">
+          <div className="neo-cont">
           {/* this is for custom class */}
           <div className="flex-col ">
             <p className="a-l">Custon Class</p>
@@ -35,13 +40,7 @@ export const Controlbar = ({ Element, Properties }) => {
               placeholder="custom class"
             />
           </div>
-          <div
-            style={{
-              pointerEvents:
-                Element && Element.classList.length > 0 ? "all" : "none",
-            }}
-            className="if-class"
-          >
+          
             {/* this is for display and flex-direction */}
             <div className="flex">
               <div className="wid-50">
@@ -90,8 +89,9 @@ export const Controlbar = ({ Element, Properties }) => {
                 </select>
               </div>
             </div>
+            </div>
             {/* this is for flex adjustment */}
-            <div>
+            <div className="neo-cont">
               <div className="flex">
                 <div
                   onClick={() => (Element.style.justifyContent = "flex-start")}
@@ -186,7 +186,6 @@ export const Controlbar = ({ Element, Properties }) => {
                 <div className={FlexControlBox}></div>
               </div>
             </div>
-            <hr />
             {/* this is for border radius and fill */}
             <div className="flex">
               <div className="wid-50">
@@ -245,7 +244,9 @@ export const Controlbar = ({ Element, Properties }) => {
               </div>
             </div>
             {/* this is for overflow */}
-            <div className="flex">
+            <div className=" neo-cont">
+              <p className = "al-left">Overflow</p>
+              <div className="flex">
               <div className="wid-30">
                 <p>All</p>
                 <select
@@ -293,14 +294,15 @@ export const Controlbar = ({ Element, Properties }) => {
                   <option value="overlay">overlay</option>
                   <option value="stretch">stretch</option>
                 </select>
-              </div>
+              </div></div>
             </div>
-            <hr />
             {/* this is for image */}
-            <div className="wid-100">
+            <div className="wid-100 neo-cont">
               <div className="flex wid-100-around">
-                <h2>BG</h2>
-                <h2>IMG</h2>
+                <h2 style = {{
+  backgroundColor: ImageType==='bg'? 'aqua':'grey'}} onClick={() =>{onImageType('bg')}}>BG</h2>
+                <h2 style = {{
+  backgroundColor: ImageType==='img'? 'aqua':'grey'}} onClick={() =>{onImageType('img')}}>IMG</h2>
               </div>
               <div className="flex image-content">
                 <input
@@ -308,13 +310,15 @@ export const Controlbar = ({ Element, Properties }) => {
                   type="url"
                   placeholder="url"
                 />
+                <div className= 'upload-image borr-10'>
+                  
                 <input type="file" />
+                </div>
               </div>
             </div>
-            <hr />
             {/* this is for padding and margin */}
-            <div className="flex">
-              <div className="wid-50">
+            <div className="flex neo-cont">
+              <div className="wid-50 borR">
                 <p>Padding</p>
                 <div className="wid-100-center">
                   <div className={padding}>
@@ -434,8 +438,8 @@ export const Controlbar = ({ Element, Properties }) => {
 
             {/* this is for position and transform */}
 
-            <div className="flex">
-              <div className="wid-50">
+            <div className="flex neo-cont">
+              <div className="wid-50 borR">
                 <p>position</p>
                 <select
                   onFocus={(e) => (e.target.value = "")}
@@ -491,10 +495,9 @@ export const Controlbar = ({ Element, Properties }) => {
                 </div>
               </div>
             </div>
-            <hr />
             {/* this is a new container, which will be used for Text control */}
 
-            <div className="text-edit-cont">
+            <div className="text-edit-cont neo-cont">
               <div className="text-section">
                 <p>Text</p>
                 <textarea
@@ -611,7 +614,6 @@ export const Controlbar = ({ Element, Properties }) => {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 };
