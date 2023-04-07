@@ -4,21 +4,34 @@ export const Controlbar = ({ Element, Properties }) => {
   const [activeJustify, onactiveJustify] = useState();
   const [activeAlign, onactiveAlign] = useState();
   const [ImageType, onImageType]  = useState('bg')
+  const [imageURL, setImageURL] = useState('');
+
+
+  console.log(imageURL)
   const FlexControlBox = "flex-rec mar-5 borr-5 box-shadow";
   const padding = "paddingmargin mar-5 borr-5 box-shadow";
-  const PaddingInput = (element) => {
-    console.log(element);
-    return (
-      <div className="paddingmargin mar-5 borr-5 box-shadow">
-        <input onChange={(e) => (element = e.target.value)} type="text" />
-      </div>
-    );
-  };
+  const ImageURLHandler = (e) =>{
+    console.log('happend',e.target.value)
+    ImageType === 'bg'? Element.style.backgroundImage = `url(${e.target.value})` : Element.setAttribute('src',e.target.value)
+    
+  }
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
+    reader.onload = (event) => {
+      setImageURL(ImageType);
+      ImageType === 'bg'? Element.style.backgroundImage = `url(${event.target.result})` : Element.setAttribute('src',event.target.result)
+    };
+
+    reader.readAsDataURL(file);
+
+    
+  };
   useEffect(()=>{
     Element && Element.classList.length > 0 ?null : window.alert("This Element doesn't have class")
   },[Element])
-
+ 
   return (
     <div ref={Properties} className="user-panel">
      
@@ -44,7 +57,7 @@ export const Controlbar = ({ Element, Properties }) => {
             {/* this is for display and flex-direction */}
             <div className="flex">
               <div className="wid-50">
-                <p>Display</p>
+                <p className="al-left">Display</p>
                 <select
                   onFocus={(e) => (e.target.value = "")}
                   id="displayDropdown"
@@ -72,7 +85,7 @@ export const Controlbar = ({ Element, Properties }) => {
                 </select>
               </div>
               <div className="wid-50">
-                <p>Flex Direction</p>
+                <p className="al-left">Flex Direction</p>
                 <select
                   onFocus={(e) => (e.target.value = "")}
                   id="displayDropdown"
@@ -186,6 +199,7 @@ export const Controlbar = ({ Element, Properties }) => {
                 <div className={FlexControlBox}></div>
               </div>
             </div>
+            <div className="neo-cont">
             {/* this is for border radius and fill */}
             <div className="flex">
               <div className="wid-50">
@@ -242,6 +256,7 @@ export const Controlbar = ({ Element, Properties }) => {
                   placeholder="Width"
                 />
               </div>
+            </div>
             </div>
             {/* this is for overflow */}
             <div className=" neo-cont">
@@ -306,13 +321,14 @@ export const Controlbar = ({ Element, Properties }) => {
               </div>
               <div className="flex image-content">
                 <input
+                  onChange = {ImageURLHandler}
                   onFocus={(e) => e.target.select()}
                   type="url"
                   placeholder="url"
                 />
                 <div className= 'upload-image borr-10'>
                   
-                <input type="file" />
+                <input onChange={handleFileInputChange} type="file" />
                 </div>
               </div>
             </div>
