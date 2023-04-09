@@ -3,6 +3,14 @@ import "./App.css";
 import { useEffect, useRef, useState } from "react";
 import { InputMenu } from "./input-menu";
 import { Controlbar } from "./components/controlbar";
+import {
+  CopyArray,
+  SingleButton,
+  ZoomIn,
+  ZoomOut,
+} from "./components/smallFunc";
+import { act } from "react-dom/test-utils";
+
 function App() {
   const [images, setImages] = useState([]);
   const [closeProps, onCloseProps] = useState(true);
@@ -12,26 +20,29 @@ function App() {
   const [childElement, onChildElement] = useState("");
   const [data, ondata] = useState();
   const [propertyPanel, onpropertyPanel] = useState(false);
-
+  const [scalepg, onscalepg] = useState(1);
   const PlayGround = useRef();
   // const mainContainer = "main-container";
   const Properties = useRef();
   const [activeElement, setactiveElement] = useState();
-  const executeClick = (id) => {
-    var divs = document.querySelectorAll("div");
+  // these are for appendchild as rectangle
 
-    // Loop through all div elements and remove the background style
-    for (var i = 0; i < divs.length; i++) {
-      divs[i].style.outline = "none";
-    }
+  //
 
-    const element = document.getElementById(id);
-    element.style.outline = "5px solid green";
-    setactiveElement(element);
-  };
+  // prevent to onload
 
-  // set background image
+  window.addEventListener("beforeunload", function (e) {
+    // Cancel the event
+    e.preventDefault();
 
+    // Chrome requires returnValue to be set
+    e.returnValue = "";
+
+    // Display the confirmation message
+    const confirmationMessage = "Do you really want to close?";
+    e.returnValue = confirmationMessage; // For Chrome
+    return confirmationMessage; // For other browsers
+  });
   useEffect(() => {
     if (data) {
       var parentRect = document.getElementById(parent);
@@ -45,8 +56,16 @@ function App() {
     }
   }, [childElement]);
 
-  // console.log(parent, new Date().getSeconds());
-  // console.log(childElement, new Date().getSeconds());
+  useEffect(() => {
+    if (activeElement) {
+      activeElement.style.outline = "5px solid blue";
+
+      setTimeout(() => {
+        activeElement.style.removeProperty("outline");
+      }, 100);
+    }
+  }, [activeElement]);
+
   let counter = 0;
 
   useEffect(() => {
@@ -70,15 +89,38 @@ function App() {
         background: "anything",
       };
 
+      let targetItem = null;
       function handleMouseMove(ev) {
+        // it is for setting parent backgound
+        targetItem = ev.target;
+
+        var recWidth = null;
+        var recHeight = null;
+        switch (scalepg) {
+          case 1:
+            recHeight = ev.clientY - topPosition;
+            recWidth = ev.clientX - leftPosition;
+            break;
+          case 2:
+            recHeight = (ev.clientY - topPosition) / 2;
+            recWidth = (ev.clientX - leftPosition) / 2;
+            break;
+          case 3:
+            recHeight = (ev.clientY - topPosition) / 3;
+            recWidth = (ev.clientX - leftPosition) / 3;
+            break;
+          default:
+            return;
+        }
+
         Rectangle.current.style.height = ev.clientY - topPosition + "px";
         Rectangle.current.style.width = ev.clientX - leftPosition + "px";
         const heiGht =
           (ev.clientY - topPosition) / (window.innerHeight / 100) + "%";
         const WiDth =
           (ev.clientX - leftPosition) / (window.innerWidth / 100) + "%";
-        tempObj.height = ev.clientY - topPosition + "px";
-        tempObj.width = ev.clientX - leftPosition + "px";
+        tempObj.height = recHeight + "px";
+        tempObj.width = recWidth + "px";
         Rectangle.current.style.height = heiGht;
         Rectangle.current.style.width = WiDth;
       }
@@ -93,32 +135,23 @@ function App() {
       PlayGround.current.addEventListener("mouseup", function handleMouseUp(e) {
         lastTopPosition = e.clientY;
         lastLeftPosition = e.clientX;
-        setTimeout(() => {
-          if (e.clientY - topPosition > 10 && e.clientX - leftPosition > 10) {
-            var CreateRect = document.createElement("div");
-            CreateRect.setAttribute("id", tempObj.id);
-            CreateRect.style.height = tempObj.height;
-            CreateRect.style.width = tempObj.width;
-            CreateRect.style.position = "relative";
-            // CreateRect.style.top = tempObj.top;
-            // CreateRect.style.left = tempObj.left;
-            CreateRect.style.border = "1px solid red";
-            CreateRect.style.boxSizing = "border-box";
-            CreateRect.style.boxShadow = "0 0 5px #fff,0 0 10px #fff";
 
-            CreateRect.onclick = (e) => {
-              e.stopPropagation();
-              setParent(tempObj.id);
-              executeClick(tempObj.id);
-            };
-            // parent.appendChild(CreateRect);
-            onChildElement(CreateRect);
-            // parentRect.appendChild(CreateRect);
-            // setTempImage([...tempImage, tempObj]);
-          } else {
-            // console.log("delete it");
+        if (e.clientY - topPosition > 10 && e.clientX - leftPosition > 10) {
+          var CreateRect = document.createElement("div");
+          CreateRect.setAttribute("id", tempObj.id);
+          CreateRect.style.height = tempObj.height;
+          CreateRect.style.width = tempObj.width;
+          CreateRect.style.position = "relative";
+          // CreateRect.style.top = tempObj.top;
+          // CreateRect.style.left = tempObj.left;
+          CreateRect.style.border = "0.5px solid rgb(255 207 207)";
+          CreateRect.style.boxSizing = "border-box";
+          CreateRect.style.boxShadow = "0 0 5px #fff,0 0 10px #fff";
+
+          if (targetItem) {
+            targetItem.appendChild(CreateRect);
           }
-        }, 10);
+        }
         Rectangle.current.style.height = 0 + "px";
         Rectangle.current.style.width = 0 + "px";
 
@@ -132,35 +165,7 @@ function App() {
     return () => {
       PlayGround.current.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [tempImage]);
-
-  const CopyArray = () => {
-    let originalElement = document.getElementById("main-container");
-    let clonedElement = originalElement.cloneNode(true);
-
-    const GuideRectangle = clonedElement.querySelectorAll("#rectangle");
-    // const divElements = clonedElement.querySelectorAll("div");
-
-    // divElements.forEach((divElement) => {
-    //   divElement.removeAttribute("style");
-    // });
-
-    GuideRectangle.forEach((elem) => {
-      elem.remove("delete-button");
-    });
-
-    console.log(clonedElement);
-    navigator.clipboard
-      .writeText(clonedElement.outerHTML)
-      .then(() => {
-        if (window.confirm("Do you want to extract copied data?")) {
-          window.open("https://html-extractor.yakraj.com", "_blank");
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to copy element: ", err);
-      });
-  };
+  }, [tempImage, scalepg]);
 
   // keypress eventlistner
 
@@ -178,17 +183,6 @@ function App() {
   useEffect(() => {
     setImages(tempImage);
   }, [tempImage]);
-  const Highliter = (e) => {
-    e.stopPropagation();
-    e.target.style.outline = "2px solid red";
-    setactiveElement(e.target);
-    setTimeout(() => {
-      e.target.style.removeProperty("outline");
-    }, 100);
-  };
-
-  // duplicate element
-  const [hasCodeRun, setHasCodeRun] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -210,207 +204,8 @@ function App() {
     };
   }, [activeElement]);
 
-  const ElementCreator = (type) => {
-    let element = null;
-
-    switch (type) {
-      case "text":
-        element = document.createElement("input");
-        element.setAttribute("type", "text");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "img":
-        element = document.createElement("img");
-        element.setAttribute("src", "text");
-        element.setAttribute("alt", "custom");
-        break;
-      case "input":
-        console.log("input");
-        break;
-      case "button":
-        element = document.createElement("button");
-        element.innerHTML = "Click Me";
-        break;
-      case "textarea":
-        element = document.createElement("textarea");
-        element.setAttribute("type", "text");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "h1":
-        element = document.createElement("h1");
-        element.innerHTML = "Hello World";
-        break;
-      case "h2":
-        element = document.createElement("h2");
-        element.innerHTML = "Hello World";
-        break;
-      case "h3":
-        element = document.createElement("h3");
-        element.innerHTML = "Hello World";
-        break;
-      case "h4":
-        element = document.createElement("h4");
-        element.innerHTML = "Hello World";
-        break;
-      case "h5":
-        element = document.createElement("h5");
-        element.innerHTML = "Hello World";
-        break;
-      case "h6":
-        element = document.createElement("h6");
-        element.innerHTML = "Hello World";
-        break;
-      case "p":
-        element = document.createElement("p");
-        element.innerHTML = "Hello World";
-        break;
-      case "strong":
-        element = document.createElement("strong");
-        element.innerHTML = "Hello World";
-        break;
-      case "file":
-        element = document.createElement("input");
-        element.setAttribute("type", "file");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "number":
-        element = document.createElement("input");
-        element.setAttribute("type", "number");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "email":
-        element = document.createElement("input");
-        element.setAttribute("type", "email");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "date":
-        element = document.createElement("input");
-        element.setAttribute("type", "date");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "password":
-        element = document.createElement("input");
-        element.setAttribute("type", "password");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "search":
-        element = document.createElement("input");
-        element.setAttribute("type", "search");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "tel":
-        element = document.createElement("input");
-        element.setAttribute("type", "tel");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "url":
-        element = document.createElement("input");
-        element.setAttribute("type", "url");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      default:
-        console.log("default");
-        break;
-    }
-    let targetItem = null;
-
-    const TargetFinder = (e) => {
-      targetItem = e.target;
-    };
-
-    const MouseUpHandler = () => {
-      window.removeEventListener("mousemove", TargetFinder);
-      window.removeEventListener("mouseup", MouseUpHandler);
-      if (targetItem) {
-        element.addEventListener("click", Highliter);
-        targetItem.appendChild(element);
-      }
-    };
-
-    window.addEventListener("mousemove", TargetFinder);
-    window.addEventListener("mouseup", MouseUpHandler);
-  };
-
-  const SingleButton = ({ data }) => {
-    return (
-      <div
-        onMouseDown={() =>
-          data.subitems.length ? null : ElementCreator(data.value)
-        }
-        className="buttons-container"
-      >
-        <div className="input-button">{data.icon}</div>
-
-        {data.subitems.length ? (
-          <div className="extra-subitem">
-            {data.subitems.map((x, i) => {
-              return (
-                <div
-                  onMouseDown={() => ElementCreator(x.value)}
-                  key={i}
-                  className="input-button sub-button"
-                >
-                  {x.icon}
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
-    );
-  };
-
   //from here zoom and other starts
   const mainContainer = useRef();
-
-  const [scalepg, onscalepg] = useState(1);
-  const ZoomIn = () => {
-    var playgroundWidth = PlayGround.current.offsetWidth;
-    var playgroundHeight = PlayGround.current.offsetHeight;
-    var element = PlayGround.current;
-    switch (scalepg) {
-      case 1:
-        element.style.transform = `scale(2) translateX(${
-          playgroundWidth * 0.25
-        }px) translateY(${playgroundWidth * 0.1}px)`;
-        onscalepg(2);
-        break;
-      case 2:
-        element.style.transform = `scale(3) translateX(${
-          playgroundWidth * 0.32
-        }px) translateY(${playgroundWidth * 0.15}px)`;
-        onscalepg(3);
-        break;
-      case 3:
-        element.style.transform = `scale(4) translateX(${
-          playgroundWidth * 0.4
-        }px) translateY(${playgroundWidth * 0.2}px)`;
-        onscalepg(4);
-        break;
-      default:
-        return;
-    }
-  };
-
-  const ZoomOut = () => {
-    var element = PlayGround.current;
-    switch (scalepg) {
-      case 2:
-        element.style.transform = "scale(1)";
-        onscalepg(1);
-        break;
-      case 3:
-        element.style.transform = "scale(2)";
-        onscalepg(2);
-        break;
-      case 4:
-        element.style.transform = "scale(3)";
-        onscalepg(3);
-        break;
-      default:
-        return;
-    }
-  };
 
   useEffect(() => {
     var mainWidth = mainContainer.current.offsetWidth;
@@ -423,14 +218,38 @@ function App() {
     PlayGround.current.style.height = setHeight + "px";
   }, []);
 
-  // delete eleme
+  // select element
+  const [runFirst, onRunFirst] = useState(true);
 
+  const NHighliter = (e) => {
+    setactiveElement(e.target);
+  };
+  useEffect(() => {
+    console.log("running", new Date());
+    if (!runFirst) {
+      PlayGround.current.removeEventListener("click", NHighliter);
+    } else {
+      onRunFirst(false);
+    }
+    return PlayGround.current.addEventListener("click", NHighliter);
+  }, []);
+
+  // delte element
   return (
     <div className="App">
       <div className="center-control">
         <img
           onClick={() => {
-            activeElement.remove();
+            const result = window.confirm(
+              "Are you sure you want to delete this item?"
+            );
+            if (result === true) {
+              activeElement.remove();
+              // Perform the delete operation
+            } else {
+              // User clicked Cancel
+              // Do nothing or perform some other operation
+            }
           }}
           alt="delete"
           src={require("./assect/delete.svg").default}
@@ -439,7 +258,7 @@ function App() {
           <img
             className="open-properties"
             onClick={() => {
-              Properties.current.style.width = "20%";
+              Properties.current.style.width = "300px";
               onCloseProps(false);
             }}
             alt="delete"
@@ -456,8 +275,8 @@ function App() {
             src={require("./assect/close.svg").default}
           />
         )}
-        <div onClick={() => ZoomIn()}>+</div>
-        <div onClick={() => ZoomOut()}>-</div>
+        <div onClick={() => ZoomIn(PlayGround, onscalepg, scalepg)}>+</div>
+        <div onClick={() => ZoomOut(PlayGround, onscalepg, scalepg)}>-</div>
       </div>
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
@@ -465,7 +284,7 @@ function App() {
       </div>
       <div className="CreatorSec">
         {InputMenu.map((x, i) => {
-          return <SingleButton key={i} data={x} />;
+          return <SingleButton PlayGround={PlayGround} key={i} data={x} />;
         })}
       </div>
 

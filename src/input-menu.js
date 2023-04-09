@@ -7,26 +7,7 @@ export const InputMenu = [
         icon: "h1",
         value: "h1",
       },
-      {
-        icon: "h2",
-        value: "h2",
-      },
-      {
-        icon: "h3",
-        value: "h3",
-      },
-      {
-        icon: "h4",
-        value: "h4",
-      },
-      {
-        icon: "h5",
-        value: "h5",
-      },
-      {
-        icon: "h6",
-        value: "h6",
-      },
+
       {
         icon: "p",
         value: "p",

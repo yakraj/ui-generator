@@ -28,13 +28,13 @@ export const Controlbar = ({ Element, Properties }) => {
 
     reader.readAsDataURL(file);
   };
-  useEffect(() => {
-    if (Element && Element.classList.length > 0) {
-      return;
-    } else {
-      window.alert("This Element doesn't have class");
-    }
-  }, [Element]);
+  // useEffect(() => {
+  //   if (Element && Element.classList.length > 0) {
+  //     return;
+  //   } else {
+  //     window.alert("This Element doesn't have class");
+  //   }
+  // }, [Element]);
 
   return (
     <div ref={Properties} className="user-panel">
@@ -225,9 +225,9 @@ export const Controlbar = ({ Element, Properties }) => {
                 <p>Height</p>
                 <input
                   onFocus={(e) => {
-                    e.target.select();
                     e.target.value = Element && Element.style.height;
                     e.target.readOnly = false;
+                    e.target.select();
                   }}
                   onBlur={(e) => {
                     e.target.setAttribute("readOnly", "readOnly");
@@ -250,9 +250,9 @@ export const Controlbar = ({ Element, Properties }) => {
                 <p>Width</p>
                 <input
                   onFocus={(e) => {
-                    e.target.select();
                     e.target.value = Element && Element.style.width;
                     e.target.readOnly = false;
+                    e.target.select();
                   }}
                   onChange={(e) =>
                     Element ? (Element.style.width = e.target.value) : null
