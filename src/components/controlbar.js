@@ -6,11 +6,9 @@ export const Controlbar = ({ Element, Properties }) => {
   const [ImageType, onImageType] = useState("bg");
   const [imageURL, setImageURL] = useState("");
 
-  console.log(imageURL);
   const FlexControlBox = "flex-rec mar-5 borr-5 box-shadow";
   const padding = "paddingmargin mar-5 borr-5 box-shadow";
   const ImageURLHandler = (e) => {
-    console.log("happend", e.target.value);
     ImageType === "bg"
       ? (Element.style.backgroundImage = `url(${e.target.value})`)
       : Element.setAttribute("src", e.target.value);
@@ -19,22 +17,41 @@ export const Controlbar = ({ Element, Properties }) => {
     const file = event.target.files[0];
     const reader = new FileReader();
 
-    reader.onload = (event) => {
+    reader.onload = (ev) => {
       setImageURL(ImageType);
-      ImageType === "bg"
-        ? (Element.style.backgroundImage = `url(${event.target.result})`)
-        : Element.setAttribute("src", event.target.result);
+      switch (ImageType) {
+        case "bg":
+          Element.style.backgroundImage = `url(${ev.target.result})`;
+          event.target.value = "";
+          break;
+        case "img":
+          Element.setAttribute("src", ev.target.result);
+          event.target.value = "";
+          break;
+        default:
+          var backgoundIMG = document.createElement("img");
+          backgoundIMG.style.position = "absolute";
+          backgoundIMG.style.height = "100%";
+          backgoundIMG.style.width = "100%";
+          backgoundIMG.style.opacity = "0.4";
+          backgoundIMG.style.top = "0";
+          backgoundIMG.style.left = "0";
+          backgoundIMG.style.pointerEvents = "none";
+          backgoundIMG.setAttribute("src", ev.target.result);
+          backgoundIMG.setAttribute("id", "reference-image");
+          if (Element) {
+            Element.style.position = "relative";
+            Element.appendChild(backgoundIMG);
+            event.target.value = "";
+          } else {
+            window.alert("Parent Node Not found");
+            event.target.value = "";
+          }
+      }
     };
 
     reader.readAsDataURL(file);
   };
-  // useEffect(() => {
-  //   if (Element && Element.classList.length > 0) {
-  //     return;
-  //   } else {
-  //     window.alert("This Element doesn't have class");
-  //   }
-  // }, [Element]);
 
   return (
     <div ref={Properties} className="user-panel">
@@ -345,6 +362,16 @@ export const Controlbar = ({ Element, Properties }) => {
               >
                 IMG
               </h2>
+              <h2
+                style={{
+                  backgroundColor: ImageType === "ref" ? "aqua" : "grey",
+                }}
+                onClick={() => {
+                  onImageType("ref");
+                }}
+              >
+                REF
+              </h2>
             </div>
             <div className="flex image-content">
               <input
@@ -352,8 +379,15 @@ export const Controlbar = ({ Element, Properties }) => {
                 onFocus={(e) => e.target.select()}
                 type="url"
                 placeholder="url"
+                style={{ display: ImageType === "ref" ? "none" : "block" }}
               />
-              <div className="upload-image borr-10">
+              <div
+                style={{
+                  width: ImageType === "ref" ? "100%" : "25%",
+                  transitionDuration: "0.2s",
+                }}
+                className="upload-image borr-10"
+              >
                 <input onChange={handleFileInputChange} type="file" />
               </div>
             </div>

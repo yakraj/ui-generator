@@ -144,6 +144,7 @@ input::placeholder {
 }
 .image-content {
   width: 100%;
+  justify-content: flex-end;
 }
 .image-content input:nth-child(1) {
   background-color: transparent;

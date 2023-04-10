@@ -74,6 +74,7 @@ export const executeClick = (id, setactiveElement) => {
 export const CopyArray = () => {
   let originalElement = document.getElementById("main-container");
   let clonedElement = originalElement.cloneNode(true);
+  let refImage = clonedElement.querySelectorAll("#reference-image");
 
   const GuideRectangle = clonedElement.querySelectorAll("#rectangle");
   // const divElements = clonedElement.querySelectorAll("div");
@@ -83,10 +84,12 @@ export const CopyArray = () => {
   // });
 
   GuideRectangle.forEach((elem) => {
-    elem.remove("delete-button");
+    elem.remove();
+  });
+  refImage.forEach((elem) => {
+    elem.remove();
   });
 
-  console.log(clonedElement);
   navigator.clipboard
     .writeText(clonedElement.outerHTML)
     .then(() => {
