@@ -108,6 +108,23 @@ hr {
   box-sizing: border-box;
 }
 
+.class-message {
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: red;
+  color: #fff;
+  position: fixed;
+  left: 70px;
+  top: 0;
+  opacity: 0;
+  font-weight: bold;
+  text-transform: capitalize;
+  transition-duration: 0.5s;
+}
+
 .data-contents p {
   margin: 0;
   text-transform: uppercase;
