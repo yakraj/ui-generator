@@ -171,19 +171,34 @@ input::placeholder {
   width: 80%;
 }
 
-.text-section textarea::placeholder {
+textarea::placeholder {
   color: palegreen;
 }
-.text-section textarea {
+textarea {
   color: palegreen;
   height: 40px;
-  width: 100%;
+  width: 95%;
   font-size: 1.2rem;
   background-color: transparent;
   color: palegreen;
   border: 1px solid palegreen;
 }
-
+.append-button:active {
+  background: grey;
+  color: azure;
+}
+.append-button {
+  height: 45px;
+  width: 80%;
+  font-weight: bold;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  border: none;
+  margin: 15px;
+  background: azure;
+  color: grey;
+  cursor: pointer;
+}
 .paddingmargin {
   transition-duration: 0.2s;
   height: 40px;

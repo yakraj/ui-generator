@@ -234,7 +234,18 @@ function App() {
     return PlayGround.current.addEventListener("click", NHighliter);
   }, []);
 
-  // delte element
+  // Copy selected Element
+  const CopySelected = () => {
+    let clonedElement = activeElement.cloneNode(true);
+    navigator.clipboard
+      .writeText(clonedElement.outerHTML)
+      .then(() => {
+        console.log("copied data");
+      })
+      .catch((err) => {
+        console.error("Failed to copy element: ", err);
+      });
+  };
   return (
     <div className="App">
       <div className="center-control">
@@ -275,6 +286,12 @@ function App() {
             src={require("./assect/close.svg").default}
           />
         )}
+        <img
+          className="open-properties"
+          onClick={() => CopySelected()}
+          alt="delete"
+          src={require("./assect/copy.svg").default}
+        />
         <div onClick={() => ZoomIn(PlayGround, onscalepg, scalepg)}>+</div>
         <div onClick={() => ZoomOut(PlayGround, onscalepg, scalepg)}>-</div>
       </div>

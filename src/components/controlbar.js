@@ -5,7 +5,19 @@ export const Controlbar = ({ Element, Properties }) => {
   const [activeAlign, onactiveAlign] = useState();
   const [ImageType, onImageType] = useState("bg");
   const [imageURL, setImageURL] = useState("");
+  const [InnerHTML, onInnerHTML] = useState("");
 
+  const AppendHTML = () => {
+    var tempDiv = document.createElement("div");
+    tempDiv.innerHTML = InnerHTML;
+    var elements = tempDiv.getElementsByTagName("*");
+    if (Element && elements) {
+      for (let i = 0; i < elements.length; i++) {
+        Element.appendChild(elements[i].cloneNode(true));
+      }
+      onInnerHTML("");
+    }
+  };
   const FlexControlBox = "flex-rec mar-5 borr-5 box-shadow";
   const padding = "paddingmargin mar-5 borr-5 box-shadow";
   const ImageURLHandler = (e) => {
@@ -723,6 +735,21 @@ export const Controlbar = ({ Element, Properties }) => {
                   />
                 </div>
               </div>
+            </div>
+            <div className="neo-cont">
+              <p>HTML Code</p>
+              <textarea
+                value={InnerHTML}
+                onFocus={(e) => e.target.select()}
+                onChange={(e) => onInnerHTML(e.target.value)}
+                placeholder="Paste html here to append."
+                type="text"
+              />
+              {Element && (
+                <button onClick={() => AppendHTML()} className="append-button">
+                  Append
+                </button>
+              )}
             </div>
           </div>
         </div>
