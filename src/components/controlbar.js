@@ -6,7 +6,7 @@ export const Controlbar = ({ Element, Properties }) => {
   const [ImageType, onImageType] = useState("bg");
   const [imageURL, setImageURL] = useState("");
   const [InnerHTML, onInnerHTML] = useState("");
-
+  const [verDiv, onverDiv] = useState(false);
   const AppendHTML = () => {
     var tempDiv = document.createElement("div");
     tempDiv.innerHTML = InnerHTML;
@@ -625,10 +625,29 @@ export const Controlbar = ({ Element, Properties }) => {
               <div className="text-section">
                 <p>Text</p>
                 <textarea
-                  onFocus={(e) => e.target.select()}
-                  onChange={(e) =>
-                    Element ? (Element.innerHTML = e.target.value) : null
-                  }
+                  onFocus={(e) => {
+                    e.target.select();
+                  }}
+                  onChange={(e) => {
+                    if (Element) {
+                      if (Element.tagName === "DIV") {
+                        if (verDiv === Element) {
+                          Element.innerHTML = e.target.value;
+                        } else {
+                          if (
+                            window.confirm(
+                              `Do you really want to change inside?\nIt is a ${Element.tagName} Element\nIt's height is : ${Element.style.height}\nIt's width is : ${Element.style.width}`
+                            )
+                          ) {
+                            Element.innerHTML = e.target.value;
+                            onverDiv(Element);
+                          }
+                        }
+                      } else {
+                        Element.innerHTML = e.target.value;
+                      }
+                    }
+                  }}
                   placeholder="your text here"
                   type="text"
                 />
