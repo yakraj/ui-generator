@@ -77,12 +77,26 @@ export const CopyArray = () => {
   let refImage = clonedElement.querySelectorAll("#reference-image");
 
   const GuideRectangle = clonedElement.querySelectorAll("#rectangle");
+
+  var elements = clonedElement.getElementsByTagName("*");
   // const divElements = clonedElement.querySelectorAll("div");
 
-  // divElements.forEach((divElement) => {
-  //   divElement.removeAttribute("style");
-  // });
+  Array.from(elements).forEach((divElement) => {
+    if (divElement.style.backgroundImage) {
+      console.log("it has a image");
+      if (divElement.style.backgroundImage.length > 200) {
+        console.log("it has more length");
 
+        divElement.style.backgroundImage = `url('local image')`;
+        // divElement.style.removeProperty("background-image");
+      }
+    }
+    if (divElement.getAttribute("src")) {
+      if (divElement.getAttribute("src").length > 200) {
+        divElement.setAttribute("src", "local Image");
+      }
+    }
+  });
   GuideRectangle.forEach((elem) => {
     elem.remove();
   });

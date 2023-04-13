@@ -10,10 +10,10 @@ export const Controlbar = ({ Element, Properties }) => {
   const AppendHTML = () => {
     var tempDiv = document.createElement("div");
     tempDiv.innerHTML = InnerHTML;
-    var elements = tempDiv.getElementsByTagName("*");
-    if (Element && elements) {
-      for (let i = 0; i < elements.length; i++) {
-        Element.appendChild(elements[i].cloneNode(true));
+    if (Element) {
+      var children = tempDiv.children;
+      for (var i = 0; i < children.length; i++) {
+        Element.appendChild(children[i]);
       }
       onInnerHTML("");
     }
