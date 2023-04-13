@@ -754,6 +754,46 @@ export const Controlbar = ({ Element, Properties }) => {
                   />
                 </div>
               </div>
+              {/* from here it is for text align */}
+              <div className="flex">
+                <div className="wid-50">
+                  <p>Decoration</p>
+                  <select
+                    onFocus={(e) => (e.target.value = "")}
+                    id="displayDropdown"
+                    onChange={(e) =>
+                      Element
+                        ? (Element.style.textDecoration = e.target.value)
+                        : null
+                    }
+                  >
+                    <option value="none">None</option>
+                    <option value="line-through">Line-through</option>
+                    <option value="underline">Underline</option>
+                    <option value="overline">Overline</option>
+                  </select>
+                </div>
+                <div className="wid-50">
+                  <p>Align Text</p>
+                  <select
+                    onFocus={(e) => (e.target.value = "")}
+                    id="displayDropdown"
+                    onChange={(e) =>
+                      Element
+                        ? (Element.style.textAlign = e.target.value)
+                        : null
+                    }
+                  >
+                    <option value="none">None</option>
+                    <option value="center">Center</option>
+                    <option value="start">Start</option>
+                    <option value="end">End</option>
+                    <option value="Left">Left</option>
+                    <option value="right">Right</option>
+                    <option value="justify">Justify</option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div className="neo-cont">
               <p>HTML Code</p>
