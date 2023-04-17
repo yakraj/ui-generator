@@ -369,7 +369,7 @@ export const Controlbar = ({ Element, Properties }) => {
                     style={{
                       height: "75%",
                       width: "75%",
-                      border: "2px solid pink",
+                      border: "3px solid pink",
                     }}
                   />
                 </div>
@@ -381,7 +381,7 @@ export const Controlbar = ({ Element, Properties }) => {
                     style={{
                       height: "75%",
                       width: "75%",
-                      borderLeft: "2px solid pink",
+                      borderLeft: "3px solid pink",
                     }}
                   />
                 </div>
@@ -393,7 +393,7 @@ export const Controlbar = ({ Element, Properties }) => {
                     style={{
                       height: "75%",
                       width: "75%",
-                      borderRight: "2px solid pink",
+                      borderRight: "3px solid pink",
                     }}
                   />
                 </div>{" "}
@@ -405,7 +405,7 @@ export const Controlbar = ({ Element, Properties }) => {
                     style={{
                       height: "75%",
                       width: "75%",
-                      borderTop: "2px solid pink",
+                      borderTop: "3px solid pink",
                     }}
                   />
                 </div>
@@ -419,7 +419,7 @@ export const Controlbar = ({ Element, Properties }) => {
                     style={{
                       height: "75%",
                       width: "75%",
-                      borderBottom: "2px solid pink",
+                      borderBottom: "3px solid pink",
                     }}
                   />
                 </div>
@@ -687,6 +687,14 @@ export const Controlbar = ({ Element, Properties }) => {
                   <option value="sticky">sticky</option>
                   <option value="static">Static</option>
                 </select>
+                <p>Z Index</p>
+                <input
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) =>
+                    Element ? (Element.style.zIndex = e.target.value) : null
+                  }
+                  type="number"
+                />
               </div>
               <div className="wid-50">
                 <p>Transform</p>
