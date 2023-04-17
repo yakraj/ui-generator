@@ -117,7 +117,7 @@ div {
   position: absolute;
   height: 0px;
   width: 0px;
-  background: red;
+  background: #ff000063;
   box-shadow: 0 0 5px #fff, 0 0 10px #fff;
   top: 304px;
   z-index: 999;
@@ -338,4 +338,9 @@ div {
   display: flex;
   color: grey;
   font-size: 2rem;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
