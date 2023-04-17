@@ -83,10 +83,7 @@ export const CopyArray = () => {
 
   Array.from(elements).forEach((divElement) => {
     if (divElement.style.backgroundImage) {
-      console.log("it has a image");
       if (divElement.style.backgroundImage.length > 200) {
-        console.log("it has more length");
-
         divElement.style.backgroundImage = `url('local image')`;
         // divElement.style.removeProperty("background-image");
       }

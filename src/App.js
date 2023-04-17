@@ -17,6 +17,9 @@ function App() {
   const [propertyPanel, onpropertyPanel] = useState(false);
   const [scalepg, onscalepg] = useState(1);
   const PlayGround = useRef();
+  // state managed for visibility of Reference images
+  const [Visible, onVisible] = useState(true);
+
   // const mainContainer = "main-container";
   const Properties = useRef();
   const [activeElement, setactiveElement] = useState();
@@ -56,7 +59,11 @@ function App() {
       activeElement.style.outline = "5px solid blue";
 
       setTimeout(() => {
-        activeElement.style.removeProperty("outline");
+        if (activeElement.tagName === "DIV") {
+          activeElement.style.outline = "0.5px solid rgb(255 207 207)";
+        } else {
+          activeElement.style.removeProperty("outline");
+        }
       }, 100);
     }
   }, [activeElement]);
@@ -139,7 +146,7 @@ function App() {
           CreateRect.style.position = "relative";
           // CreateRect.style.top = tempObj.top;
           // CreateRect.style.left = tempObj.left;
-          CreateRect.style.border = "0.5px solid rgb(255 207 207)";
+          CreateRect.style.outline = "0.5px solid rgb(255 207 207)";
           CreateRect.style.boxSizing = "border-box";
           CreateRect.style.boxShadow = "0 0 5px #fff,0 0 10px #fff";
 
@@ -376,6 +383,22 @@ function App() {
         console.error("Failed to copy element: ", err);
       });
   };
+
+  const ToggleVisibleRef = () => {
+    let refImage = document.querySelectorAll("#reference-image");
+    if (Visible) {
+      onVisible(false);
+      refImage.forEach((elem) => {
+        elem.style.display = "none";
+      });
+    } else {
+      onVisible(true);
+
+      refImage.forEach((elem) => {
+        elem.style.display = "block";
+      });
+    }
+  };
   return (
     <div className="App">
       <div className="center-control">
@@ -424,6 +447,21 @@ function App() {
         />
         <div onClick={() => ZoomIn(PlayGround, onscalepg, scalepg)}>+</div>
         <div onClick={() => ZoomOut(PlayGround, onscalepg, scalepg)}>-</div>
+        {Visible ? (
+          <img
+            className="open-properties"
+            onClick={() => ToggleVisibleRef()}
+            alt="visible"
+            src={require("./assect/visibility.svg").default}
+          />
+        ) : (
+          <img
+            className="open-properties"
+            onClick={() => ToggleVisibleRef()}
+            alt="unvisible"
+            src={require("./assect/visibility_off.svg").default}
+          />
+        )}
       </div>
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">

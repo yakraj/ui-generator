@@ -92,6 +92,7 @@ export const Controlbar = ({ Element, Properties }) => {
               <div className="flex-col ">
                 <p className="a-l">Custon Class</p>
                 <input
+                  style={{ width: "90%" }}
                   className="custom-input"
                   onFocus={(e) => e.target.select()}
                   onKeyDown={(e) => {
@@ -103,7 +104,54 @@ export const Controlbar = ({ Element, Properties }) => {
                   placeholder="custom class"
                 />
               </div>
-
+              {/* this is for height and width */}
+              <div className="flex">
+                <div className="wid-50">
+                  <p>Height</p>
+                  <input
+                    onFocus={(e) => {
+                      e.target.value = Element && Element.style.height;
+                      e.target.readOnly = false;
+                      e.target.select();
+                    }}
+                    onBlur={(e) => {
+                      e.target.setAttribute("readOnly", "readOnly");
+                    }}
+                    onChange={(e) => {
+                      if (Element) {
+                        Element.style.height = e.target.value;
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) {
+                        Element.style.height = e.target.value;
+                      }
+                    }}
+                    type="text"
+                    placeholder="Height"
+                  />
+                </div>
+                <div className="wid-50">
+                  <p>Width</p>
+                  <input
+                    onFocus={(e) => {
+                      e.target.value = Element && Element.style.width;
+                      e.target.readOnly = false;
+                      e.target.select();
+                    }}
+                    onChange={(e) =>
+                      Element ? (Element.style.width = e.target.value) : null
+                    }
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) {
+                        Element.style.width = e.target.value;
+                      }
+                    }}
+                    type="text"
+                    placeholder="Width"
+                  />
+                </div>
+              </div>
               {/* this is for display and flex-direction */}
               <div className="flex">
                 <div className="wid-50">
@@ -279,52 +327,112 @@ export const Controlbar = ({ Element, Properties }) => {
                   />
                 </div>
               </div>
-
-              {/* this is for height and width */}
+              {/* this is for box shadow and box sizing */}
               <div className="flex">
                 <div className="wid-50">
-                  <p>Height</p>
-                  <input
-                    onFocus={(e) => {
-                      e.target.value = Element && Element.style.height;
-                      e.target.readOnly = false;
-                      e.target.select();
-                    }}
-                    onBlur={(e) => {
-                      e.target.setAttribute("readOnly", "readOnly");
-                    }}
-                    onChange={(e) => {
-                      if (Element) {
-                        Element.style.height = e.target.value;
-                      }
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.keyCode === 13) {
-                        Element.style.height = e.target.value;
-                      }
-                    }}
-                    type="text"
-                    placeholder="Height"
-                  />
+                  <p>Box-Sizing</p>
+                  <select
+                    onFocus={(e) => (e.target.value = "")}
+                    id="displayDropdown"
+                    onChange={(e) =>
+                      Element
+                        ? (Element.style.boxSizing = e.target.value)
+                        : null
+                    }
+                  >
+                    <option value="unset">unset</option>
+                    <option value="border-box">Border-box</option>
+                    <option value="content-box">Content-Box</option>
+                  </select>
                 </div>
                 <div className="wid-50">
-                  <p>Width</p>
+                  <p>Shadow</p>
                   <input
-                    onFocus={(e) => {
-                      e.target.value = Element && Element.style.width;
-                      e.target.readOnly = false;
-                      e.target.select();
-                    }}
+                    onFocus={(e) => e.target.select()}
                     onChange={(e) =>
-                      Element ? (Element.style.width = e.target.value) : null
+                      Element
+                        ? (Element.style.boxShadow = e.target.value)
+                        : null
                     }
-                    onKeyDown={(e) => {
-                      if (e.keyCode === 13) {
-                        Element.style.width = e.target.value;
-                      }
-                    }}
                     type="text"
-                    placeholder="Width"
+                  />
+                </div>
+              </div>
+              {/* from here the border starts */}
+              <p>Border</p>
+              <div className="flex">
+                <div
+                  onClick={() => (Element.style.border = "2px solid grey")}
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      border: "2px solid pink",
+                    }}
+                  />
+                </div>
+                <div
+                  onClick={() => (Element.style.borderLeft = "2px solid grey")}
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      borderLeft: "2px solid pink",
+                    }}
+                  />
+                </div>
+                <div
+                  onClick={() => (Element.style.borderRight = "2px solid grey")}
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      borderRight: "2px solid pink",
+                    }}
+                  />
+                </div>{" "}
+                <div
+                  onClick={() => (Element.style.borderTop = "2px solid grey")}
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      borderTop: "2px solid pink",
+                    }}
+                  />
+                </div>
+                <div
+                  onClick={() =>
+                    (Element.style.borderBottom = "2px solid grey")
+                  }
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      borderBottom: "2px solid pink",
+                    }}
+                  />
+                </div>
+                <div
+                  onClick={() => (Element.style.border = "none")}
+                  className={FlexControlBox + " flex-center"}
+                >
+                  <div
+                    style={{
+                      height: "75%",
+                      width: "75%",
+                      border: "none",
+                    }}
                   />
                 </div>
               </div>
