@@ -59,7 +59,11 @@ function App() {
       activeElement.style.outline = "5px solid blue";
 
       setTimeout(() => {
-        activeElement.style.outline = "0.5px solid rgb(255 207 207)";
+        if (activeElement.tagName === "DIV") {
+          activeElement.style.outline = "0.5px solid rgb(255 207 207)";
+        } else {
+          activeElement.style.removeProperty("outline");
+        }
       }, 100);
     }
   }, [activeElement]);
