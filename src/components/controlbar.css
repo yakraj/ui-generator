@@ -77,7 +77,7 @@
 }
 .wid-30 select {
   border: none;
-  background: transparent;
+  background: #646464;
   color: palegreen;
   border-bottom: 2px solid palegreen;
   border-radius: 0px;

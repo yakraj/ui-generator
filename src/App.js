@@ -148,7 +148,6 @@ function App() {
           // CreateRect.style.left = tempObj.left;
           CreateRect.style.outline = "0.5px solid rgb(255 207 207)";
           CreateRect.style.boxSizing = "border-box";
-          CreateRect.style.boxShadow = "0 0 5px #fff,0 0 10px #fff";
 
           if (targetItem) {
             targetItem.appendChild(CreateRect);
@@ -386,17 +385,25 @@ function App() {
 
   const ToggleVisibleRef = () => {
     let refImage = document.querySelectorAll("#reference-image");
+    const allElements = PlayGround.current.getElementsByTagName("DIV");
+
     if (Visible) {
       onVisible(false);
       refImage.forEach((elem) => {
         elem.style.display = "none";
       });
+      for (let i = 0; i < allElements.length; i++) {
+        allElements[i].style.removeProperty("outline");
+      }
     } else {
       onVisible(true);
 
       refImage.forEach((elem) => {
         elem.style.display = "block";
       });
+      for (let i = 0; i < allElements.length; i++) {
+        allElements[i].style.outline = "0.5px solid rgb(255 207 207)";
+      }
     }
   };
   return (
