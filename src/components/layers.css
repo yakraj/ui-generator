@@ -1,0 +1,59 @@
+.controlbar-navigator {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.controlbar-navigator h1 {
+  margin: 0;
+  font-size: 1rem;
+  padding: 5px 10px;
+  background: rebeccapurple;
+  border-radius: 25px;
+  width: 40%;
+  color: #fff;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin: 10px 0px;
+
+  box-shadow: 8px 10px 17px #282828, -4px -3px 26px #a0a0a0;
+}
+
+.layer-element {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1px solid grey;
+}
+
+.layer-leftside {
+  display: flex;
+  align-items: center;
+}
+
+.layer-leftside img {
+  width: 30px;
+  margin: 0px 10px;
+  cursor: pointer;
+}
+
+.layers-scroll::-webkit-scrollbar {
+  display: none;
+}
+.layers-scroll p {
+  color: #534a4a;
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0.2rem;
+}
+.layers-scroll {
+  background: #d9d9d9;
+  width: 100%;
+  height: 90vh;
+  overflow-y: scroll;
+}
