@@ -8,20 +8,39 @@ export const Layers = ({ Element, setElement }) => {
     var PlayGround = document.getElementById("main-container");
     const allElements = PlayGround.getElementsByTagName("*");
     onNodes(allElements);
-  }, [ontimer]);
+  }, []);
 
   const SingleTab = ({ data }) => {
-    console.log(data);
     const [Visible, onVisible] = useState(true);
 
+    useEffect(() => {
+      if (data.style.visibility) {
+        if (data.style.visibility === "visible") {
+          onVisible(true);
+        } else {
+          onVisible(false);
+        }
+      } else {
+        onVisible(true);
+      }
+    }, []);
     const ToggleVisibleRef = (Element) => {
+      // if (data.style.visibility) {
+      //   if (data.style.visibility === "visible") {
+      //     Element.style.visibility = "hidden";
+      //   } else {
+      //     Element.style.visibility = "visible";
+      //   }
+      // } else {
+      //   Element.style.visibility = "hidden";
+      // }
+
       if (Visible) {
         onVisible(false);
         Element.style.visibility = "hidden";
       } else {
-        Element.style.visibility = "visible";
-
         onVisible(true);
+        Element.style.visibility = "visible";
       }
     };
     return (

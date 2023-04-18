@@ -80,7 +80,6 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
 
     reader.readAsDataURL(file);
   };
-  console.log(opendTab);
   return (
     <>
       <div ref={Message} className="class-message">
@@ -99,12 +98,7 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               <div className="neo-cont">
                 {/* this is for custom class */}
                 <div className="flex-col ">
-                  <p className="a-l">Clas</p>
-                  <input
-                    style={{ width: "90%" }}
-                    className="custom-input"
-                    placeholder="custom class"
-                  />
+                
                   <p className="a-l">Custon Class</p>
                   <input
                     style={{ width: "90%" }}
