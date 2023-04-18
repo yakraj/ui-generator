@@ -488,7 +488,11 @@ function App() {
           id="main-container"
         ></div>
       </div>
-      <Controlbar Element={activeElement} Properties={Properties} />
+      <Controlbar
+        setElement={setactiveElement}
+        Element={activeElement}
+        Properties={Properties}
+      />
     </div>
   );
 }
