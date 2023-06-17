@@ -43,6 +43,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   height: 100vh;
   width: 100%;
   background: linear-gradient(95deg, rgb(184, 243, 250), pink);
@@ -264,12 +265,13 @@ div {
   margin: 20px 5px;
   position: relative;
 }
+
 .extra-subitem {
   display: none;
   position: absolute;
   left: 55px;
   top: 0;
-  z-index: 100;
+  z-index: 900;
   background: azure;
   padding: 10px;
   border-radius: 10px;
@@ -277,6 +279,12 @@ div {
 }
 .sub-button {
   width: auto;
+  transition-duration: 0.2s;
+}
+
+.sub-button:hover {
+  background: grey;
+  color: #fff;
 }
 
 .rectangle-1 {
@@ -289,14 +297,21 @@ div {
   width: 40%;
   background: #fff;
 }
-
-.center-control {
+.center-control-parent {
+  /* background: red; */
+  width: 100%;
+  top: 0;
+  display: flex;
   position: absolute;
+  z-index: 500;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.center-control {
   background: grey;
   display: flex;
   top: 0;
   z-index: 1000;
-  left: 45%;
   padding: 10px;
   border-radius: 0px 0px 10px 10px;
 }

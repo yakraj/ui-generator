@@ -1,14 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { InputMenu } from "./input-menu";
 import { Controlbar } from "./components/controlbar";
 import { CopyArray, ZoomIn, ZoomOut } from "./components/smallFunc";
 import { act } from "react-dom/test-utils";
-
+import { MainContext } from "../src/context/main.context";
+import { PlayGroundWindow } from "./components/playground";
+import { LeftElements } from "./components/Elements";
+import { TopControls } from "./components/topControls";
+import { BottomControl } from "./components/bottomcontrol";
 function App() {
   const [images, setImages] = useState([]);
-  const [closeProps, onCloseProps] = useState(true);
   const Rectangle = useRef("");
   const [tempImage, setTempImage] = useState([]);
   const [parent, setParent] = useState("main-container");
@@ -17,15 +20,13 @@ function App() {
   const [propertyPanel, onpropertyPanel] = useState(false);
   const [scalepg, onscalepg] = useState(1);
   const PlayGround = useRef();
+
+  const { activeElement, setactiveElement } = useContext(MainContext);
   // state managed for visibility of Reference images
-  const [Visible, onVisible] = useState(true);
 
   // const mainContainer = "main-container";
   const Properties = useRef();
-  const [activeElement, setactiveElement] = useState();
   // these are for appendchild as rectangle
-
-  //
 
   // prevent to onload
 
@@ -185,139 +186,6 @@ function App() {
     setImages(tempImage);
   }, [tempImage]);
 
-  // this is element creating section
-  const ElementCreator = (type) => {
-    let element = null;
-
-    switch (type) {
-      case "text":
-        element = document.createElement("input");
-        element.setAttribute("type", "text");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "img":
-        element = document.createElement("img");
-        element.setAttribute("src", "text");
-        element.setAttribute("alt", "custom");
-        break;
-      case "input":
-        console.log("input");
-        break;
-      case "button":
-        element = document.createElement("button");
-        element.innerHTML = "Click Me";
-        break;
-      case "textarea":
-        element = document.createElement("textarea");
-        element.setAttribute("type", "text");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "h1":
-        element = document.createElement("h1");
-        element.innerHTML = "Hello World";
-        break;
-
-      case "p":
-        element = document.createElement("p");
-        element.innerHTML = "Hello World";
-        break;
-      case "strong":
-        element = document.createElement("strong");
-        element.innerHTML = "Hello World";
-        break;
-      case "file":
-        element = document.createElement("input");
-        element.setAttribute("type", "file");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "number":
-        element = document.createElement("input");
-        element.setAttribute("type", "number");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "email":
-        element = document.createElement("input");
-        element.setAttribute("type", "email");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "date":
-        element = document.createElement("input");
-        element.setAttribute("type", "date");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "password":
-        element = document.createElement("input");
-        element.setAttribute("type", "password");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "search":
-        element = document.createElement("input");
-        element.setAttribute("type", "search");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "tel":
-        element = document.createElement("input");
-        element.setAttribute("type", "tel");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      case "url":
-        element = document.createElement("input");
-        element.setAttribute("type", "url");
-        element.setAttribute("placeholder", "Your Text");
-        break;
-      default:
-        console.log("default");
-        break;
-    }
-    let targetItem = null;
-
-    const TargetFinder = (e) => {
-      targetItem = e.target;
-    };
-
-    const MouseUpHandler = () => {
-      PlayGround.current.removeEventListener("mousemove", TargetFinder);
-      window.removeEventListener("mouseup", MouseUpHandler);
-      if (targetItem) {
-        targetItem.appendChild(element);
-      }
-    };
-
-    PlayGround.current.addEventListener("mousemove", TargetFinder);
-    window.addEventListener("mouseup", MouseUpHandler);
-  };
-
-  // this is for create single button
-
-  const SingleButton = ({ data }) => {
-    return (
-      <div
-        onMouseDown={() =>
-          data.subitems.length ? null : ElementCreator(data.value)
-        }
-        className="buttons-container"
-      >
-        <div className="input-button">{data.icon}</div>
-
-        {data.subitems.length ? (
-          <div className="extra-subitem">
-            {data.subitems.map((x, i) => {
-              return (
-                <div
-                  onMouseDown={() => ElementCreator(x.value)}
-                  key={i}
-                  className="input-button sub-button"
-                >
-                  {x.icon}
-                </div>
-              );
-            })}
-          </div>
-        ) : null}
-      </div>
-    );
-  };
-
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.shiftKey && event.key === "D") {
@@ -368,125 +236,29 @@ function App() {
     return PlayGround.current.addEventListener("click", NHighliter);
   }, []);
 
-  // Copy selected Element
-  const CopySelected = () => {
-    let clonedElement = activeElement.cloneNode(true);
-    navigator.clipboard
-      .writeText(clonedElement.outerHTML)
-      .then(() => {
-        if (window.confirm("Do you want to extract copied data?")) {
-          activeElement.remove();
-        }
-      })
-      .catch((err) => {
-        console.error("Failed to copy element: ", err);
-      });
-  };
-
-  const ToggleVisibleRef = () => {
-    let refImage = document.querySelectorAll("#reference-image");
-    const allElements = PlayGround.current.getElementsByTagName("DIV");
-
-    if (Visible) {
-      onVisible(false);
-      refImage.forEach((elem) => {
-        elem.style.display = "none";
-      });
-      for (let i = 0; i < allElements.length; i++) {
-        allElements[i].style.removeProperty("outline");
-      }
-    } else {
-      onVisible(true);
-
-      refImage.forEach((elem) => {
-        elem.style.display = "block";
-      });
-      for (let i = 0; i < allElements.length; i++) {
-        allElements[i].style.outline = "0.5px solid rgb(255 207 207)";
-      }
-    }
-  };
   return (
     <div className="App">
-      <div className="center-control">
-        <img
-          onClick={() => {
-            const result = window.confirm(
-              "Are you sure you want to delete this item?"
-            );
-            if (result === true) {
-              activeElement.remove();
-              // Perform the delete operation
-            } else {
-              // User clicked Cancel
-              // Do nothing or perform some other operation
-            }
-          }}
-          alt="delete"
-          src={require("./assect/delete.svg").default}
-        />
-        {closeProps ? (
-          <img
-            className="open-properties"
-            onClick={() => {
-              Properties.current.style.width = "300px";
-              onCloseProps(false);
-            }}
-            alt="delete"
-            src={require("./assect/edit.svg").default}
-          />
-        ) : (
-          <img
-            className="close-properties"
-            onClick={() => {
-              Properties.current.style.width = "0%";
-              onCloseProps(true);
-            }}
-            alt="delete"
-            src={require("./assect/close.svg").default}
-          />
-        )}
-        <img
-          className="open-properties"
-          onClick={() => CopySelected()}
-          alt="delete"
-          src={require("./assect/copy.svg").default}
-        />
-        <div onClick={() => ZoomIn(PlayGround, onscalepg, scalepg)}>+</div>
-        <div onClick={() => ZoomOut(PlayGround, onscalepg, scalepg)}>-</div>
-        {Visible ? (
-          <img
-            className="open-properties"
-            onClick={() => ToggleVisibleRef()}
-            alt="visible"
-            src={require("./assect/visibility.svg").default}
-          />
-        ) : (
-          <img
-            className="open-properties"
-            onClick={() => ToggleVisibleRef()}
-            alt="unvisible"
-            src={require("./assect/visibility_off.svg").default}
-          />
-        )}
-      </div>
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data
       </div>
-      <div className="CreatorSec">
-        {InputMenu.map((x, i) => {
-          return <SingleButton PlayGround={PlayGround} key={i} data={x} />;
-        })}
-      </div>
+      <LeftElements PlayGround={PlayGround} />
 
       <div ref={Rectangle} id="rectangle" className="guide-rectangle"></div>
+
       <div ref={mainContainer} className="container-parent">
-        <div
-          ref={PlayGround}
-          onClick={() => setParent("main-container")}
-          id="main-container"
-        ></div>
+        <TopControls
+          scalepg={scalepg}
+          onscalepg={onscalepg}
+          Properties={Properties}
+          PlayGround={PlayGround}
+        />
+        <PlayGroundWindow
+          mainContainer={mainContainer}
+          PlayGround={PlayGround}
+          setParent={setParent}
+        />
+        <BottomControl />
       </div>
       <Controlbar
         setElement={setactiveElement}
