@@ -4,7 +4,7 @@ import { MainContext } from "../context/main.context";
 
 import InputColor from "react-input-color";
 export const BottomControl = () => {
-  const { activeElement, MainUnit } = useContext(MainContext);
+  const { activeElement, MainUnit, onMainUnit } = useContext(MainContext);
   const handleChange = (element, color) => {
     if (element) {
       element.style.borderColor = color.hex;
@@ -12,6 +12,10 @@ export const BottomControl = () => {
   };
 
   const BorderSetter = (data) => {
+    if (!activeElement) {
+      return;
+    }
+
     let hasBorder = activeElement.style.border;
 
     if (data === "all" && hasBorder) {
@@ -43,6 +47,27 @@ export const BottomControl = () => {
       default:
         break;
     }
+  };
+
+  const inputValueController = (e, find) => {
+    if (!activeElement) {
+      return;
+    }
+    e.target.value = "";
+    let finder = find;
+    if (!finder) {
+      return;
+    }
+    let previusunit = MainUnit;
+    const result = finder.match(/\d+|\D+/g);
+
+    onMainUnit(result[1]);
+    e.target.value = result[0];
+    e.target.readOnly = false;
+    e.target.select();
+    setTimeout(() => {
+      onMainUnit(previusunit);
+    }, 200);
   };
 
   return (
@@ -96,6 +121,7 @@ export const BottomControl = () => {
           />
         </div>
       </div>
+      {/* this is for justify and align */}
       <div className="gui-controllers">
         <p>Justyfy-Content</p>
         <div className="justifyControl">
@@ -132,7 +158,6 @@ export const BottomControl = () => {
           />
         </div>
       </div>
-
       <div className="gui-controllers">
         <p>Align-Items</p>
         <div className="justifyControl">
@@ -236,6 +261,9 @@ export const BottomControl = () => {
         <p className="al-left">Border</p>
         <input
           className="custom-input"
+          onFocus={(e) => {
+            inputValueController(e, activeElement.style.borderWidth);
+          }}
           onChange={(e) =>
             (activeElement.style.borderWidth = e.target.value + MainUnit)
           }
@@ -268,12 +296,251 @@ export const BottomControl = () => {
         <p className="al-left">Radius</p>
         <input
           className="custom-input"
-          onFocus={(e) => e.target.select()}
+          onFocus={(e) => {
+            inputValueController(e, activeElement.style.borderRadius);
+          }}
           onChange={(e) =>
             (activeElement.style.borderRadius = e.target.value + MainUnit)
           }
           type="number"
         />
+      </div>
+      <div className="padding-control gui-controllers">
+        <p>Padding</p>
+        <div className="justifyControl">
+          <div data="Flex-start" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.paddingLeft);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.paddingLeft = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+          <div className="centercolumn">
+            <div data="space-between" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.paddingTop);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.paddingTop = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+            <div data="Center" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.padding);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.padding = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+            <div data="space-around" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.paddingBottom);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.paddingBottom =
+                      e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+          </div>
+          <div data="Flex-End" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.paddingRight);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.paddingRight = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+        </div>
+      </div>
+      <div className="padding-control gui-controllers">
+        <p>Margin</p>
+        <div className="justifyControl">
+          <div data="Flex-start" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.marginLeft);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.marginLeft = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+          <div className="centercolumn">
+            <div data="space-between" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.marginTop);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.marginTop = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+            <div data="Center" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.margin);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.margin = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+            <div data="space-around" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.marginBottom);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.marginBottom =
+                      e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+          </div>
+          <div data="Flex-End" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.marginRight);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.marginRight = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+        </div>
+      </div>
+      <div style={{ width: "150px" }} className="input-position">
+        <p className="al-left">position</p>
+        <select
+          className="custom-input"
+          onFocus={(e) => (e.target.value = "")}
+          id="displayDropdown"
+          onChange={(e) =>
+            activeElement
+              ? (activeElement.style.position = e.target.value)
+              : null
+          }
+        >
+          <option value="none">None</option>
+          <option value="absolute">Absolute</option>
+          <option value="relative">Relative</option>
+          <option value="fixed">Fixed</option>
+          <option value="sticky">sticky</option>
+          <option value="static">Static</option>
+        </select>
+        <p className="al-left">Z Index</p>
+        <input
+          className="custom-input"
+          onFocus={(e) => {
+            inputValueController(e, activeElement.style.zIndex);
+          }}
+          onChange={(e) =>
+            activeElement ? (activeElement.style.zIndex = e.target.value) : null
+          }
+          type="number"
+        />
+      </div>
+      <div className="padding-control gui-controllers">
+        <p>Transform</p>
+        <div className="justifyControl">
+          <div data="Flex-start" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.left);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.left = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+          <div className="centercolumn">
+            <div data="space-between" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.top);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.top = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+            <div data="Center" className="single-div input-boxes"></div>
+            <div data="space-around" className="single-div input-boxes">
+              <input
+                onFocus={(e) => {
+                  inputValueController(e, activeElement.style.bottom);
+                }}
+                onChange={(e) => {
+                  if (activeElement) {
+                    activeElement.style.bottom = e.target.value + MainUnit;
+                  }
+                }}
+                type="number"
+              />
+            </div>
+          </div>
+          <div data="Flex-End" className="single-div input-boxes">
+            <input
+              onFocus={(e) => {
+                inputValueController(e, activeElement.style.right);
+              }}
+              onChange={(e) => {
+                if (activeElement) {
+                  activeElement.style.right = e.target.value + MainUnit;
+                }
+              }}
+              type="number"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
