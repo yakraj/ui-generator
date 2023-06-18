@@ -49,3 +49,21 @@
   padding: 5px 0 0px 10px;
   border-radius: 0 0 0 20px;
 }
+
+.ButtonToggle {
+  position: absolute;
+  height: 35px;
+  width: 35px;
+  top: 100%;
+  right: 0;
+  cursor: pointer;
+  background: #b4f55d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: times-new;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: grey;
+  border-radius: 0 0 0px 10px;
+}

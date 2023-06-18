@@ -7,6 +7,9 @@ export const MainProvider = ({ children }) => {
   const [activeElement, setactiveElement] = useState(null);
   const [Raja, setRaja] = useState("my name is yakraj ");
   const [MainUnit, onMainUnit] = useState("px");
+  const [TggTxtControl, onTggTxtControl] = useState(false);
+  const [TggPropControl, onTggPropControl] = useState("px");
+
   return (
     <MainContext.Provider
       value={{
@@ -16,6 +19,10 @@ export const MainProvider = ({ children }) => {
         setRaja,
         MainUnit,
         onMainUnit,
+        TggTxtControl,
+        onTggTxtControl,
+        TggPropControl,
+        onTggPropControl,
       }}
     >
       {children}

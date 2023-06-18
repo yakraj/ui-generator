@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { BottomControl } from "./bottomcontrol";
 import "./controlbar.css";
 import { Layers } from "./layers";
 
@@ -97,6 +98,7 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
           <div className="properties-items">
             <div className="data-contents">
               {/* this is for flex adjustment */}
+              {/* <BottomControl /> */}
               <div className="neo-cont">
                 {/* this is for box shadow and box sizing */}
                 <div className="flex-col">
@@ -113,6 +115,7 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                 </div>
               </div>
               {/* this is for overflow */}
+
               <div className=" neo-cont">
                 <p className="al-left">Overflow</p>
                 <div className="flex">
