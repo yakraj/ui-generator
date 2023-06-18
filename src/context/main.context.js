@@ -8,7 +8,24 @@ export const MainProvider = ({ children }) => {
   const [Raja, setRaja] = useState("my name is yakraj ");
   const [MainUnit, onMainUnit] = useState("px");
   const [TggTxtControl, onTggTxtControl] = useState(false);
-  const [TggPropControl, onTggPropControl] = useState("px");
+  const [TggPropControl, onTggPropControl] = useState(false);
+
+  useEffect(() => {
+    if (!activeElement) {
+      return;
+    }
+    var hasText = Array.from(activeElement.childNodes).some(function (node) {
+      return node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== "";
+    });
+
+    if (hasText) {
+      onTggTxtControl(true);
+      onTggPropControl(false);
+    } else {
+      onTggTxtControl(false);
+      onTggPropControl(true);
+    }
+  }, [activeElement]);
 
   return (
     <MainContext.Provider

@@ -192,6 +192,7 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
           />
         )}
       </div>
+      <div style={{ width: "200px" }}></div>
       <div className="rightside-end">
         <div style={{ marginBottom: 0 }} className="flex">
           <div className="wid-50">
@@ -263,7 +264,7 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
             overflow: "hidden",
             padding: TggTxtControl ? "5px" : 0,
             marginBottom: "10px",
-            transitionDuration: "1s",
+            transitionDuration: "0.5s",
           }}
           className="text-edit-cont neo-cont"
         >
@@ -333,20 +334,11 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
           </div>
           {/* this is for font color and font family */}
           <div className="flex">
-            <div className="wid-50 colorpicker">
-              <p>Color</p>
-              <input
-                onChange={(e) =>
-                  activeElement
-                    ? (activeElement.style.color = e.target.value)
-                    : null
-                }
-                type="color"
-              />
-            </div>
-            <div className="wid-50">
+            <div className="flex-col">
               <p>Fonts</p>
               <select
+                className="custom-input"
+                style={{ width: "90%" }}
                 onChange={(e) =>
                   activeElement
                     ? (activeElement.style.fontFamily = e.target.value)
