@@ -4,7 +4,13 @@ import { ZoomIn, ZoomOut } from "../components/smallFunc";
 import "./topcontrols.css";
 import InputColor from "react-input-color";
 export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
-  const { activeElement, MainUnit, onMainUnit } = useContext(MainContext);
+  const {
+    activeElement,
+    MainUnit,
+    onMainUnit,
+    TggTxtControl,
+    onTggTxtControl,
+  } = useContext(MainContext);
 
   const [verDiv, onverDiv] = useState(false);
   const [closeProps, onCloseProps] = useState(true);
@@ -187,7 +193,7 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
         )}
       </div>
       <div className="rightside-end">
-        <div className="flex">
+        <div style={{ marginBottom: 0 }} className="flex">
           <div className="wid-50">
             <input
               onFocus={(e) => {
@@ -252,11 +258,12 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
         </div>
         <div
           style={{
-            marginTop: 0,
-            height: 0,
+            marginTop: TggTxtControl ? "10px" : 0,
+            height: TggTxtControl ? "300px" : 0,
             overflow: "hidden",
-            padding: 0,
+            padding: TggTxtControl ? "5px" : 0,
             marginBottom: "10px",
+            transitionDuration: "1s",
           }}
           className="text-edit-cont neo-cont"
         >
@@ -434,6 +441,12 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
               </select>
             </div>
           </div>
+        </div>
+        <div
+          onClick={() => onTggTxtControl(!TggTxtControl)}
+          className="ButtonToggle"
+        >
+          Tt
         </div>
       </div>
     </div>
