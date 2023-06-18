@@ -9,6 +9,9 @@
   align-items: center;
 }
 
+.customBoxes {
+  border: 1px solid grey;
+}
 .single-div:hover {
   background: pink;
 }
@@ -36,6 +39,10 @@
   margin: 1px;
 }
 
+.input-boxes {
+  overflow: hidden;
+}
+
 .justifyControl {
   display: flex;
   justify-content: center;
@@ -52,4 +59,17 @@
   color: #fff;
   margin: 0;
   font-size: 0.7rem;
+}
+.padding-control input {
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  font-size: 0.9rem;
+}
+.bottombarcontrols input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
