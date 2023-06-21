@@ -21,7 +21,8 @@ function App() {
   const [scalepg, onscalepg] = useState(1);
   const PlayGround = useRef();
 
-  const { activeElement, setactiveElement } = useContext(MainContext);
+  const { activeElement, setactiveElement, generateRandomNumber } =
+    useContext(MainContext);
   // state managed for visibility of Reference images
 
   // const mainContainer = "main-container";
@@ -141,7 +142,7 @@ function App() {
 
         if (e.clientY - topPosition > 10 && e.clientX - leftPosition > 10) {
           var CreateRect = document.createElement("div");
-          CreateRect.setAttribute("id", tempObj.id);
+          CreateRect.classList.add(`division${generateRandomNumber()}`);
           CreateRect.style.height = tempObj.height;
           CreateRect.style.width = tempObj.width;
           CreateRect.style.position = "relative";

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Css Extractor</title>
+    <title>Document</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css"
@@ -16,15 +16,87 @@
       body {
         margin: 0;
       }
-
-      .main-container {
+      textarea {
+        height: 100%;
+        width: 100%;
+        border: none;
+      }
+      .container {
         height: 100vh;
         width: 100%;
         position: relative;
         box-sizing: border-box;
+        overflow: hidden;
       }
-      .button,
-      button {
+      pre {
+        height: 88%;
+        /* padding-bottom: 20px; */
+        box-sizing: border-box;
+      }
+      .insert-code {
+        height: 50%;
+        width: 100%;
+        position: relative;
+        background: #272822;
+      }
+      .add-code-tab {
+        height: 10%;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 5px 15px;
+        box-sizing: border-box;
+        background: #d7e5d7;
+      }
+      .lower-contaier {
+        height: 50%;
+        width: 100%;
+        position: relative;
+        display: flex;
+      }
+      .css-code pre {
+        display: flex;
+      }
+      .css-code {
+        height: 100%;
+        width: 50%;
+        position: relative;
+        border-right: 1px solid grey;
+        background: #272822;
+      }
+      .css-code-tab {
+        height: 10%;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 15px;
+        box-sizing: border-box;
+        background: #d7e5d7;
+      }
+      .html-code {
+        height: 100%;
+        width: 50%;
+        position: relative;
+        background: #272822;
+      }
+      .html-code-tab {
+        height: 10%;
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 5px 15px;
+        box-sizing: border-box;
+        background: #d7e5d7;
+      }
+      .button {
         background-color: #4caf50;
         border: none;
         color: white;
@@ -37,183 +109,182 @@
         border-radius: 15px;
         cursor: pointer;
       }
-      .html-code-tab {
-        height: 6%;
-        width: 100%;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        padding: 5px 15px;
-        box-sizing: border-box;
-        background: #d7e5d7;
+      h2 {
+        margin: 0;
+        font-family: sans-serif;
+        color: grey;
+        font-size: 1rem;
+        text-transform: capitalize;
       }
       .button:hover {
         background-color: #00bfff;
       }
-      button:hover {
-        background-color: #00bfff;
-      }
-
-      .extract-contents {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-      }
-      .file-extract {
-        padding: 10px;
-        box-sizing: border-box;
-        height: 10%;
-        width: 100%;
-        position: relative;
-        background: linear-gradient(45deg, #3ce18d, #ffb8b8);
-        box-sizing: border-box;
-      }
-      .extract-report {
-        background-color: #272822;
-        height: 90%;
-        width: 100%;
-        position: relative;
-        box-sizing: border-box;
-      }
-      #id1680537649947 {
-        height: 6%;
-        width: 100%;
-        position: relative;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      pre {
-        height: 92%;
-        /* padding-bottom: 20px; */
-        box-sizing: border-box;
-      }
-      .insert-code {
-        height: 50%;
-        width: 100%;
-        position: relative;
-        background: #272822;
-      }
-      .extracted-content {
-        height: 94%;
-        width: 100%;
-        position: relative;
-        box-sizing: border-box;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-      }
     </style>
-    <div class="main-container">
-      <div class="file-extract">
-        <input
-          style="
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            border-radius: 10px;
-          "
-          id="input-text"
-          type="text"
-        />
-        <div class="extract-contents">
-          <input id="input-file" type="file" />
-          <button onclick="ExtractCode()">Extract</button>
+    <div id="main-container">
+      <div class="container">
+        <div class="insert-code">
+          <div class="add-code-tab">
+            <h2>Insert your Code</h2>
+            <button id="extract-css-btn" class="button">
+              Compile and Extract
+            </button>
+          </div>
+          <textarea id="html-code"></textarea>
         </div>
-      </div>
-      <div class="extract-report">
-        <div class="html-code-tab">
-          <h2>Extracted HTML</h2>
-          <button onclick="copyCSS()" class="button">COPY</button>
+        <div class="lower-contaier">
+          <div class="css-code">
+            <div class="css-code-tab">
+              <h2>Extracted CSS</h2>
+              <button onclick="copyCSS()" class="button">COPY</button>
+            </div>
+            <pre class="language-css">
+                <code class="language-css" id="extracted-css">
+                  <!-- Your HTML code goes here -->
+                </code>
+              </pre>
+          </div>
+          <div class="html-code">
+            <div class="html-code-tab">
+              <h2>Extracted HTML</h2>
+              <button onclick="copyHTML()" class="button">COPY</button>
+            </div>
+            <pre class="language-html">
+                <code class="language-html"  id="extracted-html">
+                  <!-- Your HTML code goes here -->
+                </code>
+              </pre>
+          </div>
         </div>
-        <pre class="language-html">
-            <code style = "display:flex;" class="language-html"  id="extracted-css">
-              <!-- Your HTML code goes here -->
-            </code>
-          </pre>
       </div>
     </div>
-
     <script>
-      // this is code for filtering content
-      var DesiredText = document.getElementById("input-text");
-      let minified = "";
-      let ExtractedCSS = [];
+      let HTMLvalue;
+      let CSSvalue;
+      // get references to the HTML elements
+      const htmlCodeInput = document.getElementById("html-code");
+      const extractCssBtn = document.getElementById("extract-css-btn");
       const extractedCssOutput = document.getElementById("extracted-css");
+      const extractedHTMLOutput = document.getElementById("extracted-html");
 
-      function extractCssValues(minifiedCss, desiredSelectors) {
-        const regexPatterns = desiredSelectors.map(
-          (selector) => new RegExp(`(${selector}{)(.*?)(})`, "gm")
+      // add event listener to the extract CSS button
+      extractCssBtn.addEventListener("click", extractCssFromHtml);
+
+      function extractCssFromHtml() {
+        // create a new DOM element from the HTML code
+        const tempElement = document.createElement("div");
+        tempElement.innerHTML = htmlCodeInput.value;
+
+        // get all the elements in the new DOM element
+        const allElements = tempElement.querySelectorAll("*");
+
+        // create an array to store the extracted CSS
+        const extractedCss = [];
+
+        // my starts from here
+        let classlists = [];
+        allElements.forEach((element) => {
+          const classes = Array.from(element.classList);
+          classlists.push(...classes);
+        });
+        // find all classes which are repeated more that 1time
+        // find class which is repeated more than 1 time
+        const stringCounts = classlists.reduce((counts, string) => {
+          counts[string] = (counts[string] || 0) + 1;
+          return counts;
+        }, {});
+
+        const repeatedClasses = Object.keys(stringCounts).filter(
+          (string) => stringCounts[string] > 1
         );
-        const values = {};
 
-        regexPatterns.forEach((pattern) => {
-          const matches = minifiedCss.match(pattern);
-          if (matches && matches.length > 0) {
-            const css = matches[0];
-            const valuesStr = css.substring(
-              css.indexOf("{") + 1,
-              css.lastIndexOf("}")
-            );
-            values[pattern.exec(css)[1].replace("{", "")] = valuesStr.trim();
+        //from here the work will start
+
+        repeatedClasses.forEach((ee) => {
+          //it will find all styles inside all elements
+          // Get all the elements with the common class name
+          const elements = document.getElementsByClassName(ee);
+          // Extract the common class name from the first element
+          const commonClassName = elements[0].className;
+
+          // Array to store the common styles
+          const commonStyles = [];
+          // Iterate through the elements
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+
+            console.log(element);
+            // Split the inline styles into individual declarations
+            const inlineStyles = element.getAttribute("style").split(";");
+            commonStyles.push(inlineStyles);
+            // Iterate through the inline styles
           }
-        });
-
-        return values;
-      }
-
-      function getFileContents(inputElement) {
-        return new Promise((resolve, reject) => {
-          const file = inputElement.files[0];
-          if (!file) {
-            reject(new Error("No file selected"));
-          }
-          const reader = new FileReader();
-          reader.onload = (event) => {
-            const contents = event.target.result;
-            resolve(contents);
-          };
-          reader.onerror = (event) => {
-            reject(event.target.error);
-          };
-          reader.readAsText(file);
-        });
-      }
-
-      let reader = new FileReader();
-      reader.onload = function () {
-        let text = reader.result;
-        console.log(text);
-      };
-      const ExtractCode = () => {
-        const inputElement = document.getElementById("input-file");
-        getFileContents(inputElement)
-          .then((contents) => {
-            minified = contents;
-            // console.log(contents);
-          })
-          .catch((error) => {
-            console.error(error);
+          // it will find the common in all arrays
+          const commonElements = commonStyles.reduce((common, array) => {
+            return common.filter((element) => array.includes(element));
           });
+          // it will convert it to plain css
+          const outputstyle = `.${ee}{` + commonElements.join("; ") + "}";
+          extractedCss.push(outputstyle);
+          // to be used for remove the styles inside of the commonElements
+          //remove values and keep only properties
+          let RemoveProperties = commonElements.map((style) =>
+            style.split(":")[0].trim()
+          );
+          RemoveProperties.forEach((prop) => {
+            for (let i = 0; i < elements.length; i++) {
+              elements[i].style.removeProperty(prop);
+            }
+          });
+        });
 
-        desired = JSON.parse(DesiredText.value);
-        setTimeout(() => {
-          const values = extractCssValues(minified, desired);
-          for (let key in values) {
-            ExtractedCSS.push(`.${key}{${values[key]}}`);
-            extractedCssOutput.innerText = ExtractedCSS.join("\n");
+        // my ends at here
 
-            // console.log(`${key}{${values[key]}}`);
+        // loop through all the elements and extract their inline styles
+        for (let i = 0; i < allElements.length; i++) {
+          allElements[i].style.removeProperty("z-index");
+          allElements[i].style.removeProperty("outline");
+          const styles = allElements[i].getAttribute("style");
+
+          const identifier =
+            allElements[i].classList.length > 0
+              ? `.${
+                  allElements[i].classList[allElements[i].classList.length - 1]
+                }`
+              : `#${allElements[i].id}`;
+          const objectExists = extractedCss.some((x) => x.includes(identifier));
+
+          if (styles) {
+            if (!objectExists) {
+              extractedCss.push(`${identifier} {${styles}}`);
+            }
           }
-          console.log("loop finished");
-        }, 100);
-      };
+        }
 
-      // this is for data
+        console.log(extractedCss);
+
+        // set the extracted CSS in the output element
+        extractedCssOutput.innerText = extractedCss.join("\n");
+
+        const divElements = tempElement.querySelectorAll("*");
+        divElements.forEach((divElement) => {
+          divElement.removeAttribute("style");
+          divElement.classList.length > 0
+            ? divElement.removeAttribute("id")
+            : null;
+        });
+        extractedHTMLOutput.innerText = `${tempElement.innerHTML}`;
+      }
+
+      const copyHTML = () => {
+        navigator.clipboard
+          .writeText(extractedHTMLOutput.innerText)
+          .then(() => {
+            window.alert("HTML code successfully copied.");
+          })
+          .catch((err) => {
+            console.error("Failed to copy element: ", err);
+          });
+      };
       const copyCSS = () => {
         navigator.clipboard
           .writeText(extractedCssOutput.innerText)
@@ -224,6 +295,11 @@
             console.error("Failed to copy element: ", err);
           });
       };
+      // Initialize PrismJS
+      Prism.highlightAll();
+
+      // Enable dark mode
+      document.documentElement.classList.add("dark");
     </script>
   </body>
 </html>

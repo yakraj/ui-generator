@@ -101,6 +101,19 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               {/* <BottomControl /> */}
               <div className="neo-cont">
                 {/* this is for box shadow and box sizing */}
+                <p className="al-left">Custon Class</p>
+                <textarea
+                  style={{ width: "95%" }}
+                  className="custom-input"
+                  onFocus={(e) => e.target.select()}
+                  onKeyDown={(e) => {
+                    if (e.keyCode === 13) {
+                      Element.classList.add(e.target.value);
+                    }
+                  }}
+                  type="text"
+                  placeholder={Element && Element.classList.value}
+                />
                 <div className="flex-col">
                   <p className="al-left">Shadow</p>
                   <textarea
