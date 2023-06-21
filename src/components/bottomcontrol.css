@@ -4,6 +4,7 @@
   position: absolute;
   background: red;
   bottom: 0;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,4 +73,21 @@
   -webkit-appearance: none;
 
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.wrapButtons {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #fff;
+  width: auto !important;
+  padding: 0 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.wrapButtonsParent {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
 }

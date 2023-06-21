@@ -130,17 +130,32 @@ export const BottomControl = () => {
           </div>
           <div className="flex-col">
             <p className="al-left">Custon Class</p>
-            <input
-              className="custom-input"
-              onFocus={(e) => e.target.select()}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  activeElement.classList.add(e.target.value);
+            <div className="wrapButtonsParent">
+              <div
+                onClick={() => {
+                  if (activeElement && activeElement.style.flexWrap) {
+                    activeElement.style.removeProperty("flex-wrap");
+                    return;
+                  }
+                  activeElement.style.flexWrap = "wrap";
+                }}
+                data={
+                  activeElement && activeElement.style.flexWrap
+                    ? "Remove"
+                    : "Wrap"
                 }
-              }}
-              type="text"
-              placeholder="custom class"
-            />
+                className="single-div wrapButtons"
+              >
+                Wrap
+              </div>
+              <div
+                onClick={() => (activeElement.style.flexWrap = "wrap-reverse")}
+                data="Reverse"
+                className="single-div wrapButtons"
+              >
+                Reverse
+              </div>
+            </div>
           </div>
         </div>
         {/* this is for justify and align */}

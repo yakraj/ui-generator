@@ -107,8 +107,10 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                   className="custom-input"
                   onFocus={(e) => e.target.select()}
                   onKeyDown={(e) => {
-                    if (e.keyCode === 13) {
+                    if (e.keyCode === 13 && e.target.value.length > 3) {
+                      e.preventDefault();
                       Element.classList.add(e.target.value);
+                      e.target.value = ""; // Clear the value of the textarea
                     }
                   }}
                   type="text"

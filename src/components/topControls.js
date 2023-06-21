@@ -1,9 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/main.context";
 import { ZoomIn, ZoomOut } from "../components/smallFunc";
 import "./topcontrols.css";
 import InputColor from "react-input-color";
-export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
+export const TopControls = ({
+  Properties,
+  PlayGround,
+  scalepg,
+  onscalepg,
+  playgroundHeight,
+  playgroundWidth,
+}) => {
   const {
     activeElement,
     MainUnit,
@@ -30,12 +37,20 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
       });
   };
 
-  const ToggleVisibleRef = () => {
+  const ToggleVisibleRef = (fromshift) => {
     let refImage = document.querySelectorAll("#reference-image");
     const allElements = PlayGround.current.getElementsByTagName("DIV");
 
-    if (Visible) {
+    if (Visible && !fromshift) {
       onVisible(false);
+      // change styles
+      PlayGround.current.style.height = "100vh";
+      PlayGround.current.style.width = "100vw";
+      PlayGround.current.style.position = "fixed";
+      PlayGround.current.style.left = "0";
+      PlayGround.current.style.top = "0";
+      PlayGround.current.style.zIndex = "9999";
+
       refImage.forEach((elem) => {
         elem.style.display = "none";
       });
@@ -44,7 +59,12 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
       }
     } else {
       onVisible(true);
-
+      PlayGround.current.style.height = playgroundHeight;
+      PlayGround.current.style.width = playgroundWidth;
+      PlayGround.current.style.removeProperty("position");
+      PlayGround.current.style.removeProperty("left");
+      PlayGround.current.style.removeProperty("top");
+      PlayGround.current.style.removeProperty("z-index");
       refImage.forEach((elem) => {
         elem.style.display = "block";
       });
@@ -64,6 +84,20 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
       element.style.color = color.hex;
     }
   };
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "f") {
+        ToggleVisibleRef(true);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [playgroundHeight, playgroundWidth]);
   return (
     <div className="center-control-parent">
       <div className="leftside-start">
@@ -179,7 +213,7 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
         {Visible ? (
           <img
             className="open-properties"
-            onClick={() => ToggleVisibleRef()}
+            onClick={() => ToggleVisibleRef(false)}
             alt="visible"
             src={require("../assect/visibility.svg").default}
           />
@@ -271,6 +305,8 @@ export const TopControls = ({ Properties, PlayGround, scalepg, onscalepg }) => {
           <div className="text-section">
             <textarea
               onFocus={(e) => {
+                e.target.value = activeElement && activeElement.innerText;
+                e.target.readOnly = false;
                 e.target.select();
               }}
               onChange={(e) => {

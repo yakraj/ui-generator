@@ -19,10 +19,19 @@ function App() {
   const [data, ondata] = useState();
   const [propertyPanel, onpropertyPanel] = useState(false);
   const [scalepg, onscalepg] = useState(1);
+
+  // these are playground dimension
+
+  const [playgroundHeight, setPlaygroundHeight] = useState("");
+  const [playgroundWidth, setPlaygroundWidth] = useState("");
   const PlayGround = useRef();
 
-  const { activeElement, setactiveElement, generateRandomNumber } =
-    useContext(MainContext);
+  const {
+    activeElement,
+    setactiveElement,
+    generateRandomNumber,
+    onTggPropControl,
+  } = useContext(MainContext);
   // state managed for visibility of Reference images
 
   // const mainContainer = "main-container";
@@ -219,6 +228,9 @@ function App() {
 
     PlayGround.current.style.width = setWidth + "px";
     PlayGround.current.style.height = setHeight + "px";
+
+    setPlaygroundHeight(setHeight + "px");
+    setPlaygroundWidth(setWidth + "px");
   }, []);
 
   // select element
@@ -249,6 +261,8 @@ function App() {
 
       <div ref={mainContainer} className="container-parent">
         <TopControls
+          playgroundHeight={playgroundHeight}
+          playgroundWidth={playgroundWidth}
           scalepg={scalepg}
           onscalepg={onscalepg}
           Properties={Properties}
@@ -260,6 +274,17 @@ function App() {
           setParent={setParent}
         />
         <BottomControl />
+        <div
+          onMouseOver={() => onTggPropControl(true)}
+          style={{
+            height: "30px",
+            width: "90%",
+            position: "absolute",
+            bottom: "0",
+            zIndex: "9",
+          }}
+          className="bottomHover"
+        ></div>
       </div>
       <Controlbar
         setElement={setactiveElement}
