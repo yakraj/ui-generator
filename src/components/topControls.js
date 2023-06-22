@@ -69,7 +69,7 @@ export const TopControls = ({
         elem.style.display = "block";
       });
       for (let i = 0; i < allElements.length; i++) {
-        allElements[i].style.outline = "0.5px solid rgb(255 207 207)";
+        allElements[i].style.outline = "0.5px dashed rgb(255 207 207)";
       }
     }
   };
