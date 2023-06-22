@@ -71,7 +71,7 @@ function App() {
 
       setTimeout(() => {
         if (activeElement.tagName === "DIV") {
-          activeElement.style.outline = "0.5px solid rgb(255 207 207)";
+          activeElement.style.outline = "0.5px dashed rgb(255 207 207)";
         } else {
           activeElement.style.removeProperty("outline");
         }
@@ -157,7 +157,7 @@ function App() {
           CreateRect.style.position = "relative";
           // CreateRect.style.top = tempObj.top;
           // CreateRect.style.left = tempObj.left;
-          CreateRect.style.outline = "0.5px solid rgb(255 207 207)";
+          CreateRect.style.outline = "0.5px dashed rgb(255 207 207)";
           CreateRect.style.boxSizing = "border-box";
 
           if (targetItem) {
