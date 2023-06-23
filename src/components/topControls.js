@@ -10,6 +10,8 @@ export const TopControls = ({
   onscalepg,
   playgroundHeight,
   playgroundWidth,
+  onRecMode,
+  RecMode,
 }) => {
   const {
     activeElement,
@@ -165,6 +167,13 @@ export const TopControls = ({
       </div>
 
       <div className="center-control">
+        <img
+          onClick={() => {
+            onRecMode(!RecMode);
+          }}
+          alt="delete"
+          src={require("../assect/delete.svg").default}
+        />
         <img
           onClick={() => {
             const result = window.confirm(

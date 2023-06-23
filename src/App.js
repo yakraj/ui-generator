@@ -19,6 +19,8 @@ function App() {
   const [data, ondata] = useState();
   const [propertyPanel, onpropertyPanel] = useState(false);
   const [scalepg, onscalepg] = useState(1);
+  // this starts mode
+  const [RecMode, onRecMode] = useState(false);
 
   // these are playground dimension
 
@@ -88,6 +90,12 @@ function App() {
     let lastLeftPosition = 0;
     var randomColor = Math.floor(Math.random() * 16777215).toString(16);
     function handleMouseDown(e) {
+      // it will return if the mode is not activaed
+
+      if (!RecMode) {
+        return;
+      }
+
       counter = counter + 1;
       const idName = "Image" + counter;
 
@@ -153,6 +161,9 @@ function App() {
           var CreateRect = document.createElement("div");
           CreateRect.classList.add(`division${generateRandomNumber()}`);
           CreateRect.style.height = tempObj.height;
+          CreateRect.style.overflow = "hidden";
+          CreateRect.style.resize = "both";
+
           CreateRect.style.width = tempObj.width;
           CreateRect.style.position = "relative";
           // CreateRect.style.top = tempObj.top;
@@ -162,6 +173,7 @@ function App() {
 
           if (targetItem) {
             targetItem.appendChild(CreateRect);
+            onRecMode(!RecMode);
           }
         }
         Rectangle.current.style.height = 0 + "px";
@@ -177,7 +189,7 @@ function App() {
     return () => {
       PlayGround.current.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [tempImage, scalepg]);
+  }, [tempImage, scalepg, RecMode]);
 
   // keypress eventlistner
 
@@ -249,6 +261,22 @@ function App() {
     return PlayGround.current.addEventListener("click", NHighliter);
   }, []);
 
+  // it is for rectangle mode
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.shiftKey && event.key === "R") {
+        onRecMode(!RecMode);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [RecMode]);
+
   return (
     <div className="App">
       <div id="branding">UI GENERATOR</div>
@@ -261,6 +289,8 @@ function App() {
 
       <div ref={mainContainer} className="container-parent">
         <TopControls
+          RecMode={RecMode}
+          onRecMode={onRecMode}
           playgroundHeight={playgroundHeight}
           playgroundWidth={playgroundWidth}
           scalepg={scalepg}
