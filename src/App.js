@@ -161,8 +161,10 @@ function App() {
           var CreateRect = document.createElement("div");
           CreateRect.classList.add(`division${generateRandomNumber()}`);
           CreateRect.style.height = tempObj.height;
-          CreateRect.style.overflow = "hidden";
-          CreateRect.style.resize = "both";
+
+          //
+          // CreateRect.style.overflow = "hidden";
+          // CreateRect.style.resize = "both";
 
           CreateRect.style.width = tempObj.width;
           CreateRect.style.position = "relative";
@@ -276,6 +278,28 @@ function App() {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [RecMode]);
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Delete") {
+        const result = window.confirm(
+          "Are you sure you want to delete this item?"
+        );
+        if (result === true) {
+          activeElement.remove();
+          // Perform the delete operation
+        } else {
+          // User clicked Cancel
+          // Do nothing or perform some other operation
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [activeElement]);
 
   return (
     <div className="App">
