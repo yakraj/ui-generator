@@ -10,6 +10,7 @@ import { PlayGroundWindow } from "./components/playground";
 import { LeftElements } from "./components/Elements";
 import { TopControls } from "./components/topControls";
 import { BottomControl } from "./components/bottomcontrol";
+import { Extrafunc } from "./components/extrafunc";
 function App() {
   const [images, setImages] = useState([]);
   const Rectangle = useRef("");
@@ -161,8 +162,6 @@ function App() {
           var CreateRect = document.createElement("div");
           CreateRect.classList.add(`division${generateRandomNumber()}`);
           CreateRect.style.height = tempObj.height;
-
-          //
           // CreateRect.style.overflow = "hidden";
           // CreateRect.style.resize = "both";
 
@@ -278,31 +277,10 @@ function App() {
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [RecMode]);
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "Delete") {
-        const result = window.confirm(
-          "Are you sure you want to delete this item?"
-        );
-        if (result === true) {
-          activeElement.remove();
-          // Perform the delete operation
-        } else {
-          // User clicked Cancel
-          // Do nothing or perform some other operation
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [activeElement]);
 
   return (
     <div className="App">
+      <Extrafunc PlayGround={PlayGround} />
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data

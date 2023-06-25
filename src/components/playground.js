@@ -2,10 +2,10 @@ import React from "react";
 
 export const PlayGroundWindow = ({ PlayGround, setParent }) => {
   return (
-    <canvas
+    <div
       ref={PlayGround}
       onClick={() => setParent("main-container")}
       id="main-container"
-    ></canvas>
+    ></div>
   );
 };
