@@ -118,23 +118,9 @@ function App() {
 
         var recWidth = null;
         var recHeight = null;
-        switch (scalepg) {
-          case 1:
-            recHeight = ev.clientY - topPosition;
-            recWidth = ev.clientX - leftPosition;
-            break;
-          case 2:
-            recHeight = (ev.clientY - topPosition) / 2;
-            recWidth = (ev.clientX - leftPosition) / 2;
-            break;
-          case 3:
-            recHeight = (ev.clientY - topPosition) / 3;
-            recWidth = (ev.clientX - leftPosition) / 3;
-            break;
-          default:
-            return;
-        }
 
+        recHeight = (ev.clientY - topPosition) / scalepg;
+        recWidth = (ev.clientX - leftPosition) / scalepg;
         Rectangle.current.style.height = ev.clientY - topPosition + "px";
         Rectangle.current.style.width = ev.clientX - leftPosition + "px";
         const heiGht =
@@ -280,7 +266,11 @@ function App() {
 
   return (
     <div className="App">
-      <Extrafunc PlayGround={PlayGround} />
+      <Extrafunc
+        scalepg={scalepg}
+        onscalepg={onscalepg}
+        PlayGround={PlayGround}
+      />
       <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data

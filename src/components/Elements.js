@@ -4,6 +4,7 @@ import { MainContext } from "../context/main.context";
 
 export const LeftElements = ({ PlayGround }) => {
   const { generateRandomNumber } = useContext(MainContext);
+
   const ElementCreator = (type) => {
     let element = null;
 
@@ -105,7 +106,14 @@ export const LeftElements = ({ PlayGround }) => {
     let targetItem = null;
 
     const TargetFinder = (e) => {
+      if (targetItem) {
+        if (targetItem.style.boxShadow.includes("0.3")) {
+          targetItem.style.removeProperty("box-shadow");
+        }
+      }
+
       targetItem = e.target;
+      targetItem.style.boxShadow = "0.3px 0px 5px green";
     };
 
     const MouseUpHandler = () => {
@@ -113,6 +121,11 @@ export const LeftElements = ({ PlayGround }) => {
       window.removeEventListener("mouseup", MouseUpHandler);
       if (targetItem) {
         targetItem.appendChild(element);
+        if (targetItem) {
+          if (targetItem.style.boxShadow.includes("0.3")) {
+            targetItem.style.removeProperty("box-shadow");
+          }
+        }
       }
     };
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { MainContext } from "../context/main.context";
 
-export const Extrafunc = ({ PlayGround }) => {
+export const Extrafunc = ({ PlayGround, scalepg, onscalepg }) => {
   const { activeElement } = useContext(MainContext);
 
   //   function it will handle the delete elements
@@ -30,20 +30,59 @@ export const Extrafunc = ({ PlayGround }) => {
 
   // function it will handle scroll zoom in and zoom out
 
+  // useEffect(() => {
+  //   var scale = scalepg ? scalepg : 1;
+  //   var spacePressed = false;
+  //   var mouseDown = false;
+  //   var lastX, lastY;
+  //   var el = PlayGround.current;
+  //   el.onwheel = function (e) {
+  //     if (e.altKey) {
+  //       e.preventDefault();
+  //       if (e.deltaY > 0 && scale > 0.5) {
+  //         // zoom out, but not beyond 0.5
+  //         scale -= 0.1;
+  //       } else if (e.deltaY < 0 && scale < 5) {
+  //         // zoom in, but not beyond 1
+  //         scale += 0.1;
+  //       }
+  //       el.style.transform = `scale(${scale})`;
+  //     }
+  //   };
+
+  //   window.addEventListener("keyup", function (event) {
+  //     if (event.key === "Alt") {
+  //       // Set focus back to your element
+  //       el.focus();
+  //       onscalepg(scale);
+  //     }
+  //   });
+  // }, [scalepg, onscalepg]);
+
   useEffect(() => {
-    var scale = 1;
-    var spacePressed = false;
-    var mouseDown = false;
-    var lastX, lastY;
+    var scale = scalepg ? scalepg : 1;
     var el = PlayGround.current;
+
     el.onwheel = function (e) {
       if (e.altKey) {
         e.preventDefault();
+
+        // Get mouse pointer position relative to the element, in percentages
+        var rect = e.target.getBoundingClientRect();
+        var x = e.clientX - rect.left; //x position within the element.
+        var y = e.clientY - rect.top; //y position within the element.
+
+        var xPercent = (x / rect.width) * 100;
+        var yPercent = (y / rect.height) * 100;
+
+        // Set the transform-origin property
+        el.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+
         if (e.deltaY > 0 && scale > 0.5) {
           // zoom out, but not beyond 0.5
           scale -= 0.1;
         } else if (e.deltaY < 0 && scale < 5) {
-          // zoom in, but not beyond 1
+          // zoom in, but not beyond 5
           scale += 0.1;
         }
         el.style.transform = `scale(${scale})`;
@@ -54,9 +93,10 @@ export const Extrafunc = ({ PlayGround }) => {
       if (event.key === "Alt") {
         // Set focus back to your element
         el.focus();
+        onscalepg(scale);
       }
     });
-  }, []);
+  }, [scalepg, onscalepg]);
 
   // it will be for the pan
 
@@ -87,7 +127,6 @@ export const Extrafunc = ({ PlayGround }) => {
         elementX = playElement.offsetLeft;
         elementY = playElement.offsetTop;
         playElement.style.transitionDuration = "0s";
-        console.log(elementX, elementY);
       }
     });
 
@@ -95,7 +134,6 @@ export const Extrafunc = ({ PlayGround }) => {
       if (mouseDown && spacePressed) {
         var dx = event.clientX - lastX;
         var dy = event.clientY - lastY;
-        console.log(elementX + dx, elementY + dy);
         playElement.style.left = elementX + dx + "px";
         playElement.style.top = elementY + dy + "px";
       }
@@ -108,5 +146,60 @@ export const Extrafunc = ({ PlayGround }) => {
     });
   }, []);
 
+  useEffect(() => {
+    let targetItem = null;
+    let element = null;
+    let cloned = null;
+    let altpressed = false;
+    const TargetFinder = (e) => {
+      if (targetItem) {
+        if (element) {
+          cloned = element.cloneNode(true);
+        }
+        if (targetItem.style.boxShadow.includes("0.3")) {
+          targetItem.style.removeProperty("box-shadow");
+        }
+      }
+
+      targetItem = e.target;
+      targetItem.style.boxShadow = "0.3px 0px 5px green";
+    };
+
+    const handleKeyPress = (event) => {
+      altpressed = true;
+    };
+    const MouseUpHandler = () => {
+      if (targetItem && element && targetItem !== element) {
+        if (altpressed) {
+          targetItem.appendChild(cloned);
+          altpressed = false;
+        } else {
+          altpressed = false;
+          targetItem.appendChild(element);
+        }
+        if (targetItem) {
+          if (targetItem.style.boxShadow.includes("0.3")) {
+            targetItem.style.removeProperty("box-shadow");
+          }
+        }
+      }
+    };
+
+    const MouseDownHandler = (e) => {
+      element = e.target;
+    };
+
+    PlayGround.current.addEventListener("mousemove", TargetFinder);
+    PlayGround.current.addEventListener("mouseup", MouseUpHandler);
+    PlayGround.current.addEventListener("mousedown", MouseDownHandler);
+    PlayGround.current.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      PlayGround.current.removeEventListener("mousemove", TargetFinder);
+      PlayGround.current.removeEventListener("mouseup", MouseUpHandler);
+      PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
+      PlayGround.current.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [activeElement]);
   return <></>;
 };

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/main.context";
-import { ZoomIn, ZoomOut } from "../components/smallFunc";
+
 import "./topcontrols.css";
 import InputColor from "react-input-color";
 export const TopControls = ({
@@ -174,22 +174,7 @@ export const TopControls = ({
           alt="delete"
           src={require("../assect/delete.svg").default}
         />
-        <img
-          onClick={() => {
-            const result = window.confirm(
-              "Are you sure you want to delete this item?"
-            );
-            if (result === true) {
-              activeElement.remove();
-              // Perform the delete operation
-            } else {
-              // User clicked Cancel
-              // Do nothing or perform some other operation
-            }
-          }}
-          alt="delete"
-          src={require("../assect/delete.svg").default}
-        />
+
         {closeProps ? (
           <img
             className="open-properties"
@@ -217,8 +202,7 @@ export const TopControls = ({
           alt="delete"
           src={require("../assect/copy.svg").default}
         />
-        <div onClick={() => ZoomIn(PlayGround, onscalepg, scalepg)}>+</div>
-        <div onClick={() => ZoomOut(PlayGround, onscalepg, scalepg)}>-</div>
+
         {Visible ? (
           <img
             className="open-properties"
