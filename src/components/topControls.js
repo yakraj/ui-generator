@@ -168,14 +168,7 @@ export const TopControls = ({
       </div>
 
       <div className="center-control">
-        <img
-          onClick={() => {
-            onRecMode(!RecMode);
-          }}
-          alt="delete"
-          src={require("../assect/delete.svg").default}
-        />
-
+       
         {closeProps ? (
           <img
             className="open-properties"
@@ -183,7 +176,7 @@ export const TopControls = ({
               Properties.current.style.width = "300px";
               onCloseProps(false);
             }}
-            alt="delete"
+            alt="open close"
             src={require("../assect/edit.svg").default}
           />
         ) : (
@@ -193,7 +186,7 @@ export const TopControls = ({
               Properties.current.style.width = "0%";
               onCloseProps(true);
             }}
-            alt="delete"
+            alt="open close"
             src={require("../assect/close.svg").default}
           />
         )}

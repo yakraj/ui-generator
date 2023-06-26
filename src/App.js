@@ -254,7 +254,7 @@ function App() {
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.shiftKey && event.key === "R") {
+      if (event.key === "r") {
         onRecMode(!RecMode);
       }
     };
@@ -269,6 +269,7 @@ function App() {
   return (
     <div className="App">
       <Extrafunc
+      RecMode = {RecMode}
         scalepg={scalepg}
         onscalepg={onscalepg}
         PlayGround={PlayGround}
