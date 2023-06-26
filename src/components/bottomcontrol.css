@@ -27,7 +27,8 @@
   z-index: 100;
   padding: 2px 5px;
   color: #fff;
-  left: -50%;
+  left: -200%;
+  text-align: center;
 }
 .single-div {
   height: 20px;

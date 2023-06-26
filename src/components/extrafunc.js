@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { MainContext } from "../context/main.context";
 
-export const Extrafunc = ({ PlayGround, scalepg, onscalepg }) => {
+export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
   const { activeElement } = useContext(MainContext);
 
   //   function it will handle the delete elements
@@ -154,6 +154,10 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg }) => {
   }, []);
 
   useEffect(() => {
+    
+    if(RecMode){
+      return;
+    }
     let targetItem = null;
     let element = null;
     let cloned = null;
@@ -207,6 +211,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg }) => {
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
       PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
-  }, [activeElement]);
+  }, [activeElement,RecMode]);
   return <></>;
 };
