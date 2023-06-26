@@ -28,7 +28,7 @@ function App() {
 
   const [playgroundHeight, setPlaygroundHeight] = useState("");
   const [playgroundWidth, setPlaygroundWidth] = useState("");
-  const [Previewdata,setPreviewdata] = useState(false)
+  const [Previewdata, setPreviewdata] = useState(false);
   const PlayGround = useRef();
 
   const {
@@ -204,7 +204,6 @@ function App() {
           const clonedElement = activeElement.cloneNode(true);
 
           const parentElement = activeElement.parentNode;
-          console.log(parentElement, "/n", clonedElement);
           parentElement.appendChild(clonedElement);
         }
       }
@@ -241,7 +240,6 @@ function App() {
     setactiveElement(e.target);
   };
   useEffect(() => {
-    console.log("running", new Date());
     if (!runFirst) {
       PlayGround.current.removeEventListener("click", NHighliter);
     } else {
@@ -269,14 +267,15 @@ function App() {
   return (
     <div className="App">
       <Extrafunc
-      RecMode = {RecMode}
+        RecMode={RecMode}
         scalepg={scalepg}
         onscalepg={onscalepg}
         PlayGround={PlayGround}
       />
-      {
-      Previewdata && <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround}/>
-      }<div id="branding">UI GENERATOR</div>
+      {Previewdata && (
+        <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround} />
+      )}
+      <div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data
       </div>
@@ -286,7 +285,7 @@ function App() {
 
       <div ref={mainContainer} className="container-parent">
         <TopControls
-         setPreviewdata ={setPreviewdata} 
+          setPreviewdata={setPreviewdata}
           RecMode={RecMode}
           onRecMode={onRecMode}
           playgroundHeight={playgroundHeight}

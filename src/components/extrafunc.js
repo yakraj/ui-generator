@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MainContext } from "../context/main.context";
 
-export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
+export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
   const { activeElement } = useContext(MainContext);
 
   //   function it will handle the delete elements
@@ -60,50 +60,49 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
   // }, [scalepg, onscalepg]);
 
   useEffect(() => {
-  var scale = scalepg ? scalepg : 1;
-  var el = PlayGround.current;
+    var scale = scalepg ? scalepg : 1;
+    var el = PlayGround.current;
 
-  el.onwheel = function (e) {
-    if (e.altKey) {
-      e.preventDefault();
+    el.onwheel = function (e) {
+      if (e.altKey) {
+        e.preventDefault();
 
-      // Get mouse pointer position relative to the element, in percentages
-      var rect = el.getBoundingClientRect();
-      var x = e.clientX - rect.left; //x position within the element.
-      var y = e.clientY - rect.top; //y position within the element.
+        // Get mouse pointer position relative to the element, in percentages
+        var rect = el.getBoundingClientRect();
+        var x = e.clientX - rect.left; //x position within the element.
+        var y = e.clientY - rect.top; //y position within the element.
 
-      var xPercent = (x / rect.width) * 100;
-      var yPercent = (y / rect.height) * 100;
+        var xPercent = (x / rect.width) * 100;
+        var yPercent = (y / rect.height) * 100;
 
-      // Set the transform-origin property
-      el.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+        // Set the transform-origin property
+        el.style.transformOrigin = `${xPercent}% ${yPercent}%`;
 
-      if (e.deltaY > 0 && scale > 0.5) {
-        // zoom out, but not beyond 0.5
-        scale -= 0.1;
-      } else if (e.deltaY < 0 && scale < 5) {
-        // zoom in, but not beyond 5
-        scale += 0.1;
+        if (e.deltaY > 0 && scale > 0.5) {
+          // zoom out, but not beyond 0.5
+          scale -= 0.1;
+        } else if (e.deltaY < 0 && scale < 5) {
+          // zoom in, but not beyond 5
+          scale += 0.1;
+        }
+        el.style.transform = `scale(${scale})`;
       }
-      el.style.transform = `scale(${scale})`;
-    }
-  };
+    };
 
-  window.addEventListener("keyup", function (event) {
-    if (event.key === "Alt") {
-      // Set focus back to your element
-      el.focus();
-      onscalepg(scale);
-    }
-  });
+    window.addEventListener("keyup", function (event) {
+      if (event.key === "Alt") {
+        // Set focus back to your element
+        el.focus();
+        onscalepg(scale);
+      }
+    });
 
-  // Clean up event listeners on unmount
-  return () => {
-    el.onwheel = null;
-    window.removeEventListener("keyup", el.focus);
-  };
-}, [scalepg, onscalepg]);
-
+    // Clean up event listeners on unmount
+    return () => {
+      el.onwheel = null;
+      window.removeEventListener("keyup", el.focus);
+    };
+  }, [scalepg, onscalepg]);
 
   // it will be for the pan
 
@@ -153,35 +152,53 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
     });
   }, []);
 
+  const [Ehigh, setHeigh] = useState();
+  const lastHighRef = useRef(null);
+  const tempBackgroundRef = useRef(null);
+
   useEffect(() => {
-    
-    if(RecMode){
+    if (tempBackgroundRef.current && lastHighRef.current) {
+      const bgg = tempBackgroundRef.current;
+      if (!bgg.includes("0.3")) {
+        lastHighRef.current.style.boxShadow = tempBackgroundRef.current;
+      } else {
+        lastHighRef.current &&
+          lastHighRef.current.style.removeProperty("box-shadow");
+      }
+    }
+
+    if (Ehigh && Ehigh.style.boxShadow) {
+      tempBackgroundRef.current = Ehigh.style.boxShadow;
+    }
+    if (Ehigh) {
+      Ehigh.style.boxShadow = "0.3px 0px 5px green";
+    }
+    lastHighRef.current = Ehigh;
+  }, [Ehigh]);
+
+  useEffect(() => {
+    if (RecMode) {
       return;
     }
+    console.log("going away");
     let targetItem = null;
     let element = null;
     let cloned = null;
     let altpressed = false;
     const TargetFinder = (e) => {
-      if (targetItem) {
-        if (element) {
-          cloned = element.cloneNode(true);
-        }
-        if (targetItem.style.boxShadow.includes("0.3")) {
-          targetItem.style.removeProperty("box-shadow");
-        }
-      }
-
       targetItem = e.target;
-      targetItem.style.boxShadow = "0.3px 0px 5px green";
+      setHeigh(e.target);
     };
 
     const handleKeyPress = (event) => {
-      altpressed = true;
+      if (event.key === "Alt") {
+        altpressed = true;
+      }
     };
     const MouseUpHandler = () => {
       if (targetItem && element && targetItem !== element) {
         if (altpressed) {
+          cloned = element.cloneNode(true);
           targetItem.appendChild(cloned);
           altpressed = false;
         } else {
@@ -189,9 +206,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
           targetItem.appendChild(element);
         }
         if (targetItem) {
-          if (targetItem.style.boxShadow.includes("0.3")) {
-            targetItem.style.removeProperty("box-shadow");
-          }
         }
       }
     };
@@ -211,6 +225,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg,RecMode }) => {
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
       PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
-  }, [activeElement,RecMode]);
+  }, [activeElement, RecMode]);
   return <></>;
 };
