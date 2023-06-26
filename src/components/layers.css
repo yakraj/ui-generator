@@ -57,3 +57,12 @@
   height: 90vh;
   overflow-y: scroll;
 }
+#previewPanel{
+  height: 100vh;
+  width: 100%;
+  position:fixed;
+  left:0;
+  top:0;
+  background:pink;
+  z-index:100000; 
+}
