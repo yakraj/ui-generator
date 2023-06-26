@@ -169,6 +169,8 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
 
     if (Ehigh && Ehigh.style.boxShadow) {
       tempBackgroundRef.current = Ehigh.style.boxShadow;
+    } else {
+      tempBackgroundRef.current = null;
     }
     if (Ehigh) {
       Ehigh.style.boxShadow = "0.3px 0px 5px green";
