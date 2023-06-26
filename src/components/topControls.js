@@ -201,7 +201,7 @@ export const TopControls = ({
           <img
             className="open-properties"
             onClick={() =>    setPreviewdata(true)}
-            alt="visible"
+            alt="preview"
             src={require("../assect/visibility.svg").default}
           />
         ) : (
