@@ -157,25 +157,20 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
   const tempBackgroundRef = useRef(null);
 
   useEffect(() => {
-    if (tempBackgroundRef.current && lastHighRef.current) {
-      const bgg = tempBackgroundRef.current;
-      if (!bgg.includes("0.3")) {
-        lastHighRef.current.style.boxShadow = tempBackgroundRef.current;
-      } else {
-        lastHighRef.current &&
-          lastHighRef.current.style.removeProperty("box-shadow");
-      }
-    }
-
-    if (Ehigh && Ehigh.style.boxShadow) {
-      tempBackgroundRef.current = Ehigh.style.boxShadow;
-    } else {
-      tempBackgroundRef.current = null;
-    }
     if (Ehigh) {
+      if (tempBackgroundRef.current && lastHighRef.current) {
+        const bgg = tempBackgroundRef.current;
+        if (!bgg.includes("0.3")) {
+          lastHighRef.current.style.boxShadow = bgg;
+        } else {
+          lastHighRef.current.style.removeProperty("box-shadow");
+        }
+      }
+
+      tempBackgroundRef.current = Ehigh.style.boxShadow || null;
       Ehigh.style.boxShadow = "0.3px 0px 5px green";
+      lastHighRef.current = Ehigh;
     }
-    lastHighRef.current = Ehigh;
   }, [Ehigh]);
 
   useEffect(() => {
