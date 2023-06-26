@@ -60,43 +60,50 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg }) => {
   // }, [scalepg, onscalepg]);
 
   useEffect(() => {
-    var scale = scalepg ? scalepg : 1;
-    var el = PlayGround.current;
+  var scale = scalepg ? scalepg : 1;
+  var el = PlayGround.current;
 
-    el.onwheel = function (e) {
-      if (e.altKey) {
-        e.preventDefault();
+  el.onwheel = function (e) {
+    if (e.altKey) {
+      e.preventDefault();
 
-        // Get mouse pointer position relative to the element, in percentages
-        var rect = e.target.getBoundingClientRect();
-        var x = e.clientX - rect.left; //x position within the element.
-        var y = e.clientY - rect.top; //y position within the element.
+      // Get mouse pointer position relative to the element, in percentages
+      var rect = el.getBoundingClientRect();
+      var x = e.clientX - rect.left; //x position within the element.
+      var y = e.clientY - rect.top; //y position within the element.
 
-        var xPercent = (x / rect.width) * 100;
-        var yPercent = (y / rect.height) * 100;
+      var xPercent = (x / rect.width) * 100;
+      var yPercent = (y / rect.height) * 100;
 
-        // Set the transform-origin property
-        el.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+      // Set the transform-origin property
+      el.style.transformOrigin = `${xPercent}% ${yPercent}%`;
 
-        if (e.deltaY > 0 && scale > 0.5) {
-          // zoom out, but not beyond 0.5
-          scale -= 0.1;
-        } else if (e.deltaY < 0 && scale < 5) {
-          // zoom in, but not beyond 5
-          scale += 0.1;
-        }
-        el.style.transform = `scale(${scale})`;
+      if (e.deltaY > 0 && scale > 0.5) {
+        // zoom out, but not beyond 0.5
+        scale -= 0.1;
+      } else if (e.deltaY < 0 && scale < 5) {
+        // zoom in, but not beyond 5
+        scale += 0.1;
       }
-    };
+      el.style.transform = `scale(${scale})`;
+    }
+  };
 
-    window.addEventListener("keyup", function (event) {
-      if (event.key === "Alt") {
-        // Set focus back to your element
-        el.focus();
-        onscalepg(scale);
-      }
-    });
-  }, [scalepg, onscalepg]);
+  window.addEventListener("keyup", function (event) {
+    if (event.key === "Alt") {
+      // Set focus back to your element
+      el.focus();
+      onscalepg(scale);
+    }
+  });
+
+  // Clean up event listeners on unmount
+  return () => {
+    el.onwheel = null;
+    window.removeEventListener("keyup", el.focus);
+  };
+}, [scalepg, onscalepg]);
+
 
   // it will be for the pan
 

@@ -11,7 +11,7 @@ export const TopControls = ({
   playgroundHeight,
   playgroundWidth,
   onRecMode,
-  RecMode,
+  RecMode,setPreviewdata
 }) => {
   const {
     activeElement,
@@ -40,6 +40,7 @@ export const TopControls = ({
   };
 
   const ToggleVisibleRef = (fromshift) => {
+ 
     let refImage = document.querySelectorAll("#reference-image");
     const allElements = PlayGround.current.getElementsByTagName("DIV");
 
@@ -90,7 +91,7 @@ export const TopControls = ({
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "f") {
-        ToggleVisibleRef(true);
+        setPreviewdata(false);
       }
     };
 
@@ -206,7 +207,7 @@ export const TopControls = ({
         {Visible ? (
           <img
             className="open-properties"
-            onClick={() => ToggleVisibleRef(false)}
+            onClick={() =>    setPreviewdata(true)}
             alt="visible"
             src={require("../assect/visibility.svg").default}
           />

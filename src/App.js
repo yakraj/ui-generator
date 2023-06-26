@@ -11,6 +11,7 @@ import { LeftElements } from "./components/Elements";
 import { TopControls } from "./components/topControls";
 import { BottomControl } from "./components/bottomcontrol";
 import { Extrafunc } from "./components/extrafunc";
+import { Preview } from "./components/preview";
 function App() {
   const [images, setImages] = useState([]);
   const Rectangle = useRef("");
@@ -27,6 +28,7 @@ function App() {
 
   const [playgroundHeight, setPlaygroundHeight] = useState("");
   const [playgroundWidth, setPlaygroundWidth] = useState("");
+  const [Previewdata,setPreviewdata] = useState(false)
   const PlayGround = useRef();
 
   const {
@@ -271,7 +273,9 @@ function App() {
         onscalepg={onscalepg}
         PlayGround={PlayGround}
       />
-      <div id="branding">UI GENERATOR</div>
+      {
+      Previewdata && <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround}/>
+      }<div id="branding">UI GENERATOR</div>
       <div onClick={() => CopyArray()} id="copy-array">
         Copy Data
       </div>
@@ -281,6 +285,7 @@ function App() {
 
       <div ref={mainContainer} className="container-parent">
         <TopControls
+         setPreviewdata ={setPreviewdata} 
           RecMode={RecMode}
           onRecMode={onRecMode}
           playgroundHeight={playgroundHeight}
