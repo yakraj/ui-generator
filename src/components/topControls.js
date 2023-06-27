@@ -101,6 +101,7 @@ export const TopControls = ({
       document.removeEventListener("keydown", handleKeyPress);
     };
   }, [playgroundHeight, playgroundWidth]);
+
   return (
     <div className="center-control-parent">
       <div className="leftside-start">

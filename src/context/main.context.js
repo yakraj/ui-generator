@@ -9,6 +9,7 @@ export const MainProvider = ({ children }) => {
   const [MainUnit, onMainUnit] = useState("px");
   const [TggTxtControl, onTggTxtControl] = useState(false);
   const [TggPropControl, onTggPropControl] = useState(false);
+  const [ContHighliter, onContHighliter] = useState(false);
 
   useEffect(() => {
     if (!activeElement) {
@@ -44,6 +45,8 @@ export const MainProvider = ({ children }) => {
         TggPropControl,
         onTggPropControl,
         generateRandomNumber,
+        ContHighliter,
+        onContHighliter,
       }}
     >
       {children}

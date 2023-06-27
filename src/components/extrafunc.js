@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/main.context";
 
 export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
-  const { activeElement } = useContext(MainContext);
+  const { activeElement, onContHighliter, ContHighliter } =
+    useContext(MainContext);
 
   //   function it will handle the delete elements
   useEffect(() => {
@@ -152,39 +153,36 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     });
   }, []);
 
-  const [Ehigh, setHeigh] = useState();
-  const lastHighRef = useRef(null);
-  const tempBackgroundRef = useRef(null);
-
-  useEffect(() => {
-    if (Ehigh) {
-      if (tempBackgroundRef.current && lastHighRef.current) {
-        const bgg = tempBackgroundRef.current;
-        if (!bgg.includes("0.3")) {
-          lastHighRef.current.style.boxShadow = bgg;
-        } else {
-          lastHighRef.current.style.removeProperty("box-shadow");
-        }
-      }
-
-      tempBackgroundRef.current = Ehigh.style.boxShadow || null;
-      Ehigh.style.boxShadow = "0.3px 0px 5px green";
-      lastHighRef.current = Ehigh;
-    }
-  }, [Ehigh]);
-
   useEffect(() => {
     if (RecMode) {
       return;
     }
-    console.log("going away");
+
     let targetItem = null;
+    let targetshadow = null;
     let element = null;
     let cloned = null;
     let altpressed = false;
+    let isMouseDown = false; // Flag to track mouse button state
+
     const TargetFinder = (e) => {
+      if (!isMouseDown) {
+        return; // Ignore mousemove events if mouse button is not down
+      }
+
+      if (targetItem == e.target) {
+        return;
+      }
+      if (targetItem) {
+        if (targetshadow) {
+          targetItem.style.boxShadow = targetshadow;
+        } else {
+          targetItem.style.removeProperty("box-shadow");
+        }
+      }
       targetItem = e.target;
-      setHeigh(e.target);
+      targetshadow = e.target.style.boxShadow;
+      targetItem.style.boxShadow = "0.3px 0px 5px green";
     };
 
     const handleKeyPress = (event) => {
@@ -192,7 +190,16 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         altpressed = true;
       }
     };
+
     const MouseUpHandler = () => {
+      isMouseDown = false; // Mouse button is released
+      if (targetItem) {
+        if (targetshadow) {
+          targetItem.style.boxShadow = targetshadow;
+        } else {
+          targetItem.style.removeProperty("box-shadow");
+        }
+      }
       if (targetItem && element && targetItem !== element) {
         if (altpressed) {
           cloned = element.cloneNode(true);
@@ -202,13 +209,12 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
           altpressed = false;
           targetItem.appendChild(element);
         }
-        if (targetItem) {
-        }
       }
     };
 
     const MouseDownHandler = (e) => {
       element = e.target;
+      isMouseDown = true; // Mouse button is pressed
     };
 
     PlayGround.current.addEventListener("mousemove", TargetFinder);
@@ -223,5 +229,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
   }, [activeElement, RecMode]);
+
   return <></>;
 };

@@ -104,15 +104,20 @@ export const LeftElements = ({ PlayGround }) => {
         break;
     }
     let targetItem = null;
-
+    let targetshadow = null;
     const TargetFinder = (e) => {
+      if (targetItem == e.target) {
+        return;
+      }
       if (targetItem) {
-        if (targetItem.style.boxShadow.includes("0.3")) {
+        if (targetshadow) {
+          targetItem.style.boxShadow = targetshadow;
+        } else {
           targetItem.style.removeProperty("box-shadow");
         }
       }
-
       targetItem = e.target;
+      targetshadow = e.target.style.boxShadow;
       targetItem.style.boxShadow = "0.3px 0px 5px green";
     };
 
@@ -124,6 +129,9 @@ export const LeftElements = ({ PlayGround }) => {
         if (targetItem) {
           if (targetItem.style.boxShadow.includes("0.3")) {
             targetItem.style.removeProperty("box-shadow");
+            if (targetshadow) {
+              targetItem.style.boxShadow = targetshadow;
+            }
           }
         }
       }
