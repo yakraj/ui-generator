@@ -186,7 +186,14 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     };
 
     const handleKeyPress = (event) => {
+      if (!isMouseDown) {
+        return; // Ignore mousemove events if mouse button is not down
+      }
       if (event.key === "Alt") {
+        if (altpressed) {
+          return;
+        }
+        console.log("alt is pressed");
         altpressed = true;
       }
     };
@@ -204,15 +211,16 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         if (altpressed) {
           cloned = element.cloneNode(true);
           targetItem.appendChild(cloned);
-          altpressed = false;
         } else {
-          altpressed = false;
           targetItem.appendChild(element);
         }
       }
+      altpressed = false;
     };
 
     const MouseDownHandler = (e) => {
+      element = null;
+      targetItem = null;
       element = e.target;
       isMouseDown = true; // Mouse button is pressed
     };
