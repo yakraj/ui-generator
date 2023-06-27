@@ -10,6 +10,12 @@ export const Preview = ({ PlayGround, setPreviewdata }) => {
     clonedPreview.style.height = "100%";
     clonedPreview.style.position = "revert";
     clonedPreview.style.transform = "scale(1)";
+    let refImage = clonedPreview.querySelectorAll("#reference-image");
+
+    refImage.forEach((elem) => {
+      elem.remove();
+    });
+
     const allElements = clonedPreview.querySelectorAll("*");
 
     if (clonedPreview.style.boxShadow.includes("0.3")) {

@@ -76,11 +76,9 @@ export const BottomControl = () => {
     }, 200);
   };
 
-
-const setFlexdisplay = () =>{
-  activeElement.style.display = 'flex'
-}
-
+  const setFlexdisplay = () => {
+    activeElement.style.display = "flex";
+  };
 
   return (
     <div
@@ -169,41 +167,44 @@ const setFlexdisplay = () =>{
           <p>Justyfy-Content</p>
           <div className="justifyControl">
             <div
-              onClick={() =>{
-              (activeElement.style.justifyContent = "space-between");
-                  setFlexdisplay()}
-                
-              }
+              onClick={() => {
+                activeElement.style.justifyContent = "space-between";
+                setFlexdisplay();
+              }}
               data="space-between"
               className="single-div"
             ></div>
             <div className="centercolumn">
               <div
-                onClick={() =>{
-                  (activeElement.style.justifyContent = "flex-start"); setFlexdisplay()}
-                 
-                }
+                onClick={() => {
+                  activeElement.style.justifyContent = "flex-start";
+                  setFlexdisplay();
+                }}
                 data="flex-start"
                 className="single-div"
               />
               <div
-                onClick={() => {(activeElement.style.justifyContent = "center");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.justifyContent = "center";
+                  setFlexdisplay();
+                }}
                 data="Center"
                 className="single-div"
               />
               <div
-                onClick={() =>
-                { (activeElement.style.justifyContent = "flex-end");
-                  setFlexdisplay()}
-                }
+                onClick={() => {
+                  activeElement.style.justifyContent = "flex-end";
+                  setFlexdisplay();
+                }}
                 data="flex-end"
                 className="single-div"
               />
             </div>
             <div
-              onClick={() =>  {(activeElement.style.justifyContent = "space-around");
-                  setFlexdisplay()}}
+              onClick={() => {
+                activeElement.style.justifyContent = "space-around";
+                setFlexdisplay();
+              }}
               data="space-around"
               className="single-div"
             />
@@ -213,35 +214,45 @@ const setFlexdisplay = () =>{
           <p>Align-Items</p>
           <div className="justifyControl">
             <div
-              onClick={() => {(activeElement.style.alignItems = "self-start");
-                  setFlexdisplay()}}
+              onClick={() => {
+                activeElement.style.alignItems = "self-start";
+                setFlexdisplay();
+              }}
               data="Self Start"
               className="single-div"
             ></div>
             <div className="centercolumn">
               <div
-                onClick={() => {(activeElement.style.alignItems = "flex-start");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.alignItems = "flex-start";
+                  setFlexdisplay();
+                }}
                 data="Flex-start"
                 className="single-div"
               />
               <div
-                onClick={() => {(activeElement.style.alignItems = "center");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.alignItems = "center";
+                  setFlexdisplay();
+                }}
                 data="Center"
                 className="single-div"
               />
               <div
-                onClick={() => {(activeElement.style.alignItems = "flex-end");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.alignItems = "flex-end";
+                  setFlexdisplay();
+                }}
                 data="Flex-End"
                 className="single-div"
               />
             </div>
             <div
               data="Self End"
-              onClick={() => {(activeElement.style.alignItems = "self-end");
-                  setFlexdisplay()}}
+              onClick={() => {
+                activeElement.style.alignItems = "self-end";
+                setFlexdisplay();
+              }}
               className="single-div"
             />
           </div>
@@ -250,39 +261,45 @@ const setFlexdisplay = () =>{
           <p>direction</p>
           <div className="justifyControl">
             <div
-              onClick={() => {(activeElement.style.flexDirection = "row");
-                  setFlexdisplay()}}
+              onClick={() => {
+                activeElement.style.flexDirection = "row";
+                setFlexdisplay();
+              }}
               data="row"
               className="single-div"
             ></div>
             <div className="centercolumn">
               <div
                 data="column"
-                onClick={() => {(activeElement.style.flexDirection = "column");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.flexDirection = "column";
+                  setFlexdisplay();
+                }}
                 className="single-div"
               />
               <div
                 data="Auto"
-                onClick={() => {(activeElement.style.flexDirection = "auto");
-                  setFlexdisplay()}}
+                onClick={() => {
+                  activeElement.style.flexDirection = "auto";
+                  setFlexdisplay();
+                }}
                 className="single-div"
               />
               <div
                 data="column Reverse"
-                onClick={() =>
-                  {(activeElement.style.flexDirection = "column-reverse");
-                  setFlexdisplay()}
-                }
+                onClick={() => {
+                  activeElement.style.flexDirection = "column-reverse";
+                  setFlexdisplay();
+                }}
                 className="single-div"
               />
             </div>
             <div
               data="row Reverse"
-              onClick={() =>
-               { (activeElement.style.flexDirection = "row-reverse");
-                  setFlexdisplay()}
-              }
+              onClick={() => {
+                activeElement.style.flexDirection = "row-reverse";
+                setFlexdisplay();
+              }}
               className="single-div"
             />
           </div>
@@ -333,11 +350,12 @@ const setFlexdisplay = () =>{
             type="number"
             placeholder="width"
           />
-          <InputColor
+          <input
+            type="color"
             style={{ width: "90%" }}
             initialValue="#5e72e4"
-            onChange={(e) => handleChange(activeElement, e)}
-            placement="right"
+            onChange={(e) => (activeElement.style.borderColor = e.target.value)}
+            placement="top"
           />
         </div>
         <div className="flex-col" style={{ width: "100px" }}>
