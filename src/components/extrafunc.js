@@ -236,7 +236,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
       PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
-  }, [activeElement, RecMode]);
+  }, []);
 
   return <></>;
 };
