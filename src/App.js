@@ -154,7 +154,7 @@ function App() {
           // CreateRect.style.resize = "both";
 
           CreateRect.style.width = tempObj.width;
-          CreateRect.style.position = "relative";
+          //CreateRect.style.position = "relative";
           // CreateRect.style.top = tempObj.top;
           // CreateRect.style.left = tempObj.left;
           CreateRect.style.outline = "0.5px dashed rgb(255 207 207)";
