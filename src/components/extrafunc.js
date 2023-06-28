@@ -127,6 +127,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     window.addEventListener("keyup", function (event) {
       if (event.code === "Space") {
         spacePressed = false;
+        playElement.style.cursor = "auto";
       }
     });
 
@@ -152,7 +153,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
 
     window.addEventListener("mouseup", function (event) {
       mouseDown = false;
-      playElement.style.cursor = "auto";
       playElement.style.transitionDuration = "0.3s";
     });
   }, []);
