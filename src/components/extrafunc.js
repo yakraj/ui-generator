@@ -91,16 +91,16 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       }
     };
 
-    // window.addEventListener("keyup", function (event) {
-    //   if (event.key === "Alt") {
-    //     // Set focus back to your element
-    //     el.focus();
-    //     onscalepg(scale);
-    //   }
-    //   if (event.key === "w") {
-    //     onmoveon(true);
-    //   }
-    // });
+    window.addEventListener("keyup", function (event) {
+      if (event.key === "Alt") {
+        // Set focus back to your element
+        el.focus();
+        onscalepg(scale);
+      }
+      // if (event.key === "w") {
+      //   onmoveon(true);
+      // }
+    });
 
     // Clean up event listeners on unmount
     return () => {
