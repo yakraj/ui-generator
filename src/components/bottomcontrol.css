@@ -2,7 +2,8 @@
   height: 100px;
   width: 100%;
   position: absolute;
-  background: red;
+  background: #1f3723;
+  box-shadow: 0 0 5px, 0 0 10px;
   bottom: 0;
   z-index: 10;
   display: flex;
