@@ -4,6 +4,7 @@ import { MainContext } from "../context/main.context";
 export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
   const { activeElement, onContHighliter, ContHighliter } =
     useContext(MainContext);
+  const [moveon, onmoveon] = useState(false);
 
   //   function it will handle the delete elements
   useEffect(() => {
@@ -96,6 +97,9 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         el.focus();
         onscalepg(scale);
       }
+      if (event.key === "w") {
+        onmoveon(true);
+      }
     });
 
     // Clean up event listeners on unmount
@@ -154,7 +158,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
   }, []);
 
   useEffect(() => {
-    if (RecMode) {
+    if (!moveon) {
       return;
     }
 
@@ -216,6 +220,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         }
       }
       altpressed = false;
+      onmoveon(false);
     };
 
     const MouseDownHandler = (e) => {
@@ -236,7 +241,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
       PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
-  }, []);
+  }, [moveon]);
 
   return <></>;
 };
