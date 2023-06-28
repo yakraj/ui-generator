@@ -43,43 +43,41 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
   }, [Element]);
 
   const handleFileInputChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (ev) => {
-      setImageURL(ImageType);
-      switch (ImageType) {
-        case "bg":
-          Element.style.backgroundImage = `url(${ev.target.result})`;
+    const [file] = event.target.files;
+    let localURL;
+    if (file) {
+      localURL = URL.createObjectURL(file);
+    }
+    setImageURL(localURL);
+    switch (ImageType) {
+      case "bg":
+        Element.style.backgroundImage = `url(${localURL})`;
+        event.target.value = "";
+        break;
+      case "img":
+        Element.setAttribute("src", localURL);
+        event.target.value = "";
+        break;
+      default:
+        var backgoundIMG = document.createElement("img");
+        backgoundIMG.style.position = "absolute";
+        backgoundIMG.style.height = "100%";
+        backgoundIMG.style.width = "100%";
+        backgoundIMG.style.opacity = "0.4";
+        backgoundIMG.style.top = "0";
+        backgoundIMG.style.left = "0";
+        backgoundIMG.style.pointerEvents = "none";
+        backgoundIMG.setAttribute("src", localURL);
+        backgoundIMG.setAttribute("id", "reference-image");
+        if (Element) {
+          Element.style.position = "relative";
+          Element.appendChild(backgoundIMG);
           event.target.value = "";
-          break;
-        case "img":
-          Element.setAttribute("src", ev.target.result);
+        } else {
+          window.alert("Parent Node Not found");
           event.target.value = "";
-          break;
-        default:
-          var backgoundIMG = document.createElement("img");
-          backgoundIMG.style.position = "absolute";
-          backgoundIMG.style.height = "100%";
-          backgoundIMG.style.width = "100%";
-          backgoundIMG.style.opacity = "0.4";
-          backgoundIMG.style.top = "0";
-          backgoundIMG.style.left = "0";
-          backgoundIMG.style.pointerEvents = "none";
-          backgoundIMG.setAttribute("src", ev.target.result);
-          backgoundIMG.setAttribute("id", "reference-image");
-          if (Element) {
-            Element.style.position = "relative";
-            Element.appendChild(backgoundIMG);
-            event.target.value = "";
-          } else {
-            window.alert("Parent Node Not found");
-            event.target.value = "";
-          }
-      }
-    };
-
-    reader.readAsDataURL(file);
+        }
+    }
   };
 
   return (
