@@ -127,6 +127,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     window.addEventListener("keyup", function (event) {
       if (event.code === "Space") {
         spacePressed = false;
+        playElement.style.cursor = "auto";
       }
     });
 

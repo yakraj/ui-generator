@@ -207,6 +207,9 @@ function App() {
           parentElement.appendChild(clonedElement);
         }
       }
+      if (event.key === "r") {
+        onRecMode(!RecMode);
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -214,7 +217,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeElement]);
+  }, [activeElement, RecMode]);
 
   //from here zoom and other starts
   const mainContainer = useRef();
@@ -249,20 +252,6 @@ function App() {
   }, []);
 
   // it is for rectangle mode
-
-  useEffect(() => {
-    const handleKeyPress = (event) => {
-      if (event.key === "r") {
-        onRecMode(!RecMode);
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyPress);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyPress);
-    };
-  }, [RecMode]);
 
   return (
     <div className="App">
