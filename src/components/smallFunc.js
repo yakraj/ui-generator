@@ -104,6 +104,7 @@ export const CopyArray = () => {
   navigator.clipboard
     .writeText(clonedElement.outerHTML)
     .then(() => {
+      clonedElement= "";
       if (window.confirm("Do you want to extract copied data?")) {
         window.open("https://html-extractor.yakraj.com", "_blank");
       }
