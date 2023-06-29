@@ -189,18 +189,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       targetItem.style.boxShadow = "0.3px 0px 5px green";
     };
 
-    const handleKeyPress = (event) => {
-      if (!isMouseDown) {
-        return; // Ignore mousemove events if mouse button is not down
-      }
-      if (event.key === "Alt") {
-        if (altpressed) {
-          return;
-        }
-        console.log("alt is pressed");
-        altpressed = true;
-      }
-    };
+    
 
     const MouseUpHandler = () => {
       isMouseDown = false; // Mouse button is released
@@ -212,12 +201,9 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         }
       }
       if (targetItem && element && targetItem !== element) {
-        if (altpressed) {
-          cloned = element.cloneNode(true);
-          targetItem.appendChild(cloned);
-        } else {
+        
           targetItem.appendChild(element);
-        }
+        
       }
       altpressed = false;
       onmoveon(false);
@@ -233,13 +219,11 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     PlayGround.current.addEventListener("mousemove", TargetFinder);
     PlayGround.current.addEventListener("mouseup", MouseUpHandler);
     PlayGround.current.addEventListener("mousedown", MouseDownHandler);
-    PlayGround.current.addEventListener("keydown", handleKeyPress);
 
     return () => {
       PlayGround.current.removeEventListener("mousemove", TargetFinder);
       PlayGround.current.removeEventListener("mouseup", MouseUpHandler);
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
-      PlayGround.current.removeEventListener("keydown", handleKeyPress);
     };
   }, [activeElement, RecMode]);
 
