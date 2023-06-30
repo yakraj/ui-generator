@@ -70,3 +70,21 @@
   color: grey;
   border-radius: 0 0 0px 10px;
 }
+.division99115 {
+  transform: rotate(45deg);
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border: 3px solid rgb(230, 91, 91);
+  border-radius: 10px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.division36194 {
+  height: 3px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgb(230, 91, 91);
+}

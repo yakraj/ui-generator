@@ -100,6 +100,39 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               <div className="neo-cont">
                 {/* this is for box shadow and box sizing */}
                 <p className="al-left">Custon Class</p>
+                <div className="flex">
+                  {Element &&
+                    Array.from(Element.classList).map((x) => {
+                      return (
+                        <input
+                          style={{
+                            width: "48%",
+                            borderRadius: "5px",
+                            background: "transparent",
+                            color: "grey",
+                            color: "#fff",
+                            fontSize: "1rem",
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.keyCode === 13 && e.target.value.length > 3) {
+                              e.preventDefault();
+                              Element.classList.replace(
+                                x,
+                                e.target.value.toString()
+                              );
+                            }
+                          }}
+                          type="text"
+                          onFocus={(e) => {
+                            e.target.value = x;
+                            e.target.readOnly = false;
+                            e.target.select();
+                          }}
+                          placeholder={x}
+                        ></input>
+                      );
+                    })}
+                </div>
                 <textarea
                   style={{ width: "95%" }}
                   className="custom-input"
@@ -112,7 +145,6 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                     }
                   }}
                   type="text"
-                  placeholder={Element && Element.classList.value}
                 />
                 <div className="flex-col">
                   <p className="al-left">Shadow</p>

@@ -28,11 +28,6 @@ export const BottomControl = () => {
       activeElement.style.removeProperty("border");
       return;
     }
-    activeElement.style.removeProperty("border");
-    activeElement.style.removeProperty("borderLeft");
-    activeElement.style.removeProperty("borderRight");
-    activeElement.style.removeProperty("borderTop");
-    activeElement.style.removeProperty("borderBottom");
 
     switch (data) {
       case "all":

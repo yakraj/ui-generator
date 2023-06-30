@@ -151,6 +151,14 @@ export const TopControls = ({
               onChange={(e) => handleChange(activeElement, e)}
               placement="right"
             />
+            <div
+              onClick={() => {
+                activeElement.style.removeProperty("background-color");
+              }}
+              class="division99115"
+            >
+              <div class="division36194"></div>
+            </div>
           </div>
           <div>
             <div>Text</div>
@@ -160,6 +168,14 @@ export const TopControls = ({
               onChange={(e) => handleTextChange(activeElement, e)}
               placement="right"
             />
+            <div
+              onClick={() => {
+                activeElement.style.removeProperty("color");
+              }}
+              class="division99115"
+            >
+              <div class="division36194"></div>
+            </div>
           </div>
         </div>
       </div>
