@@ -128,6 +128,10 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                             e.target.readOnly = false;
                             e.target.select();
                           }}
+ onBlur={(e) => {
+                e.target.setAttribute("readOnly", "readOnly");
+                e.target.value = "";
+              }}
                           placeholder={x}
                         ></input>
                       );
