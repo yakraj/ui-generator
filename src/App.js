@@ -20,10 +20,11 @@ function App() {
   const [childElement, onChildElement] = useState("");
   const [data, ondata] = useState();
   const [propertyPanel, onpropertyPanel] = useState(false);
-  const [scalepg, onscalepg] = useState(1);
-  // this starts mode
-  const [RecMode, onRecMode] = useState(false);
 
+  // this starts mode
+  // const [RecMode, onRecMode] = useState(false);
+  const scalepg = useRef(1);
+  const RecMode = useRef(false);
   // these are playground dimension
 
   const [playgroundHeight, setPlaygroundHeight] = useState("");
@@ -70,6 +71,8 @@ function App() {
     }
   }, [childElement]);
 
+  console.log(RecMode.current);
+
   useEffect(() => {
     if (activeElement) {
       activeElement.style.outline = "5px solid blue";
@@ -95,7 +98,7 @@ function App() {
     function handleMouseDown(e) {
       // it will return if the mode is not activaed
 
-      if (!RecMode) {
+      if (!RecMode.current) {
         return;
       }
 
@@ -121,8 +124,8 @@ function App() {
         var recWidth = null;
         var recHeight = null;
 
-        recHeight = (ev.clientY - topPosition) / scalepg;
-        recWidth = (ev.clientX - leftPosition) / scalepg;
+        recHeight = (ev.clientY - topPosition) / scalepg.current;
+        recWidth = (ev.clientX - leftPosition) / scalepg.current;
         Rectangle.current.style.height = ev.clientY - topPosition + "px";
         Rectangle.current.style.width = ev.clientX - leftPosition + "px";
         const heiGht =
@@ -162,7 +165,7 @@ function App() {
 
           if (targetItem) {
             targetItem.appendChild(CreateRect);
-            onRecMode(!RecMode);
+            RecMode.current = !RecMode.current;
           }
         }
         Rectangle.current.style.height = 0 + "px";
@@ -178,7 +181,7 @@ function App() {
     return () => {
       PlayGround.current.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [tempImage, scalepg, RecMode]);
+  }, [tempImage]);
 
   // keypress eventlistner
 
@@ -208,7 +211,7 @@ function App() {
         }
       }
       if (event.key === "r") {
-        onRecMode(!RecMode);
+        RecMode.current = !RecMode.current;
       }
     };
 
@@ -217,7 +220,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [activeElement, RecMode]);
+  }, [activeElement]);
 
   //from here zoom and other starts
   const mainContainer = useRef();
@@ -255,12 +258,7 @@ function App() {
 
   return (
     <div className="App">
-      <Extrafunc
-        RecMode={RecMode}
-        scalepg={scalepg}
-        onscalepg={onscalepg}
-        PlayGround={PlayGround}
-      />
+      <Extrafunc RecMode={RecMode} scalepg={scalepg} PlayGround={PlayGround} />
       {Previewdata && (
         <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround} />
       )}
@@ -276,11 +274,8 @@ function App() {
         <TopControls
           setPreviewdata={setPreviewdata}
           RecMode={RecMode}
-          onRecMode={onRecMode}
           playgroundHeight={playgroundHeight}
           playgroundWidth={playgroundWidth}
-          scalepg={scalepg}
-          onscalepg={onscalepg}
           Properties={Properties}
           PlayGround={PlayGround}
         />

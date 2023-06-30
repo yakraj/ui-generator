@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/main.context";
 
-export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
+export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
   const { activeElement, onContHighliter, ContHighliter } =
     useContext(MainContext);
   const [moveon, onmoveon] = useState(false);
@@ -30,39 +30,8 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
     };
   }, [activeElement]);
 
-  // function it will handle scroll zoom in and zoom out
-
-  // useEffect(() => {
-  //   var scale = scalepg ? scalepg : 1;
-  //   var spacePressed = false;
-  //   var mouseDown = false;
-  //   var lastX, lastY;
-  //   var el = PlayGround.current;
-  //   el.onwheel = function (e) {
-  //     if (e.altKey) {
-  //       e.preventDefault();
-  //       if (e.deltaY > 0 && scale > 0.5) {
-  //         // zoom out, but not beyond 0.5
-  //         scale -= 0.1;
-  //       } else if (e.deltaY < 0 && scale < 5) {
-  //         // zoom in, but not beyond 1
-  //         scale += 0.1;
-  //       }
-  //       el.style.transform = `scale(${scale})`;
-  //     }
-  //   };
-
-  //   window.addEventListener("keyup", function (event) {
-  //     if (event.key === "Alt") {
-  //       // Set focus back to your element
-  //       el.focus();
-  //       onscalepg(scale);
-  //     }
-  //   });
-  // }, [scalepg, onscalepg]);
-
   useEffect(() => {
-    var scale = scalepg ? scalepg : 1;
+    var scale = scalepg.current ? scalepg.current : 1;
     var el = PlayGround.current;
 
     el.onwheel = function (e) {
@@ -95,7 +64,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       if (event.key === "Alt") {
         // Set focus back to your element
         el.focus();
-        onscalepg(scale);
+        scalepg.current = scale;
       }
       // if (event.key === "w") {
       //   onmoveon(true);
@@ -107,7 +76,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       el.onwheel = null;
       window.removeEventListener("keyup", el.focus);
     };
-  }, [scalepg, onscalepg]);
+  }, []);
 
   // it will be for the pan
 
@@ -158,7 +127,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
   }, []);
 
   useEffect(() => {
-    if (RecMode) {
+    if (RecMode.current) {
       return;
     }
 
@@ -189,8 +158,6 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       targetItem.style.boxShadow = "0.3px 0px 5px green";
     };
 
-    
-
     const MouseUpHandler = () => {
       isMouseDown = false; // Mouse button is released
       if (targetItem) {
@@ -201,9 +168,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
         }
       }
       if (targetItem && element && targetItem !== element) {
-        
-          targetItem.appendChild(element);
-        
+        targetItem.appendChild(element);
       }
       altpressed = false;
       onmoveon(false);
@@ -225,7 +190,7 @@ export const Extrafunc = ({ PlayGround, scalepg, onscalepg, RecMode }) => {
       PlayGround.current.removeEventListener("mouseup", MouseUpHandler);
       PlayGround.current.removeEventListener("mousedown", MouseDownHandler);
     };
-  }, [activeElement, RecMode]);
+  }, []);
 
   return <></>;
 };

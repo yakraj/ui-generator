@@ -6,12 +6,8 @@ import InputColor from "react-input-color";
 export const TopControls = ({
   Properties,
   PlayGround,
-  scalepg,
-  onscalepg,
   playgroundHeight,
   playgroundWidth,
-  onRecMode,
-  RecMode,
   setPreviewdata,
 }) => {
   const {
@@ -100,7 +96,7 @@ export const TopControls = ({
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [playgroundHeight, playgroundWidth]);
+  }, []);
 
   return (
     <div className="center-control-parent">
