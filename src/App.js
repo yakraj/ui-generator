@@ -72,8 +72,6 @@ function App() {
     }
   }, [childElement]);
 
-  console.log(RecMode.current);
-
   useEffect(() => {
     if (activeElement) {
       activeElement.style.outline = "5px solid blue";
@@ -259,7 +257,12 @@ function App() {
 
   return (
     <div className="App">
-      <Extrafunc PanMode ={PanMode} RecMode={RecMode} scalepg={scalepg} PlayGround={PlayGround} />
+      <Extrafunc
+        PanMode={PanMode}
+        RecMode={RecMode}
+        scalepg={scalepg}
+        PlayGround={PlayGround}
+      />
       {Previewdata && (
         <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround} />
       )}
@@ -273,6 +276,7 @@ function App() {
 
       <div ref={mainContainer} className="container-parent">
         <TopControls
+          scalepg={scalepg}
           setPreviewdata={setPreviewdata}
           RecMode={RecMode}
           playgroundHeight={playgroundHeight}

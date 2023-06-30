@@ -9,6 +9,7 @@ export const TopControls = ({
   playgroundHeight,
   playgroundWidth,
   setPreviewdata,
+  scalepg,
 }) => {
   const {
     activeElement,
@@ -84,6 +85,17 @@ export const TopControls = ({
     }
   };
 
+  // this code is for reset zoom
+  const ResetZoom = () => {
+    // code for reset zoom
+    PlayGround.current.style.removeProperty("left");
+    PlayGround.current.style.removeProperty("top");
+    PlayGround.current.style.removeProperty("transform-origin");
+    PlayGround.current.style.removeProperty("transform-origin");
+    PlayGround.current.style.transform = "scale(1)";
+    scalepg.current = 1;
+  };
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "F") {
@@ -155,9 +167,9 @@ export const TopControls = ({
               onClick={() => {
                 activeElement.style.removeProperty("background-color");
               }}
-              class="division99115"
+              className="division99115"
             >
-              <div class="division36194"></div>
+              <div className="division36194"></div>
             </div>
           </div>
           <div>
@@ -172,15 +184,22 @@ export const TopControls = ({
               onClick={() => {
                 activeElement.style.removeProperty("color");
               }}
-              class="division99115"
+              className="division99115"
             >
-              <div class="division36194"></div>
+              <div className="division36194"></div>
             </div>
           </div>
         </div>
       </div>
 
       <div className="center-control">
+        <img
+          width="20px"
+          className="open-properties"
+          onClick={() => ResetZoom()}
+          alt="reset zoom"
+          src={require("../assect/R.png")}
+        />
         {closeProps ? (
           <img
             className="open-properties"
