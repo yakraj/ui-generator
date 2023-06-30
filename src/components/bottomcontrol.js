@@ -347,6 +347,7 @@ export const BottomControl = () => {
           />
           <input
             type="color"
+            value="#ff0000"
             style={{ width: "90%" }}
             onChange={(e) => (activeElement.style.borderColor = e.target.value)}
             placement="top"

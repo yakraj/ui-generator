@@ -99,14 +99,14 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               {/* <BottomControl /> */}
               <div className="neo-cont">
                 {/* this is for box shadow and box sizing */}
-                <p className="al-left">Custon Class</p>
-                <div className="flex">
+                <p className="al-left">Custom Class</p>
+                <div className="flex" style={{ flexWrap: "wrap" }}>
                   {Element &&
                     Array.from(Element.classList).map((x) => {
                       return (
                         <input
                           style={{
-                            width: "48%",
+                            width: "45%",
                             borderRadius: "5px",
                             background: "transparent",
                             color: "grey",
@@ -128,10 +128,10 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                             e.target.readOnly = false;
                             e.target.select();
                           }}
- onBlur={(e) => {
-                e.target.setAttribute("readOnly", "readOnly");
-                e.target.value = "";
-              }}
+                          onBlur={(e) => {
+                            e.target.setAttribute("readOnly", "readOnly");
+                            e.target.value = "";
+                          }}
                           placeholder={x}
                         ></input>
                       );

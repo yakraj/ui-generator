@@ -46,7 +46,7 @@ export const CopyArray = () => {
   });
 
   navigator.clipboard
-    .writeText(clonedElement.outerHTML)
+    .writeText(clonedElement.innerHTML)
     .then(() => {
       clonedElement = "";
       if (window.confirm("Do you want to extract copied data?")) {
