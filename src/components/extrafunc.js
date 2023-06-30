@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MainContext } from "../context/main.context";
 
-export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
+export const Extrafunc = ({ PlayGround, scalepg, RecMode, PanMode }) => {
   const { activeElement, onContHighliter, ContHighliter } =
     useContext(MainContext);
   const [moveon, onmoveon] = useState(false);
@@ -89,6 +89,7 @@ export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
     window.addEventListener("keydown", function (event) {
       if (event.code === "Space") {
         spacePressed = true;
+        PanMode.current = true;
         playElement.style.cursor = "grab";
       }
     });
@@ -96,6 +97,7 @@ export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
     window.addEventListener("keyup", function (event) {
       if (event.code === "Space") {
         spacePressed = false;
+        PanMode.current = false;
         playElement.style.cursor = "auto";
       }
     });
@@ -127,18 +129,16 @@ export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
   }, []);
 
   useEffect(() => {
-    if (RecMode.current) {
-      return;
-    }
-
     let targetItem = null;
     let targetshadow = null;
     let element = null;
     let cloned = null;
-    let altpressed = false;
     let isMouseDown = false; // Flag to track mouse button state
 
     const TargetFinder = (e) => {
+      if (RecMode.current || PanMode.current) {
+        return;
+      }
       if (!isMouseDown) {
         return; // Ignore mousemove events if mouse button is not down
       }
@@ -170,7 +170,7 @@ export const Extrafunc = ({ PlayGround, scalepg, RecMode }) => {
       if (targetItem && element && targetItem !== element) {
         targetItem.appendChild(element);
       }
-      altpressed = false;
+
       onmoveon(false);
     };
 

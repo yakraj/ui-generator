@@ -237,6 +237,7 @@ export const TopControls = ({
               }}
               onBlur={(e) => {
                 e.target.setAttribute("readOnly", "readOnly");
+                e.target.value = "";
               }}
               onChange={(e) => {
                 if (activeElement) {
@@ -249,7 +250,9 @@ export const TopControls = ({
                 }
               }}
               type="text"
-              placeholder="Height"
+              placeholder={
+                activeElement && activeElement.style.height.toString()
+              }
             />
             <div
               onClick={() => {
@@ -277,8 +280,14 @@ export const TopControls = ({
                   activeElement.style.width = e.target.value;
                 }
               }}
+              onBlur={(e) => {
+                e.target.setAttribute("readOnly", "readOnly");
+                e.target.value = "";
+              }}
               type="text"
-              placeholder="Width"
+              placeholder={
+                activeElement && activeElement.style.width.toString()
+              }
             />
             <div
               onClick={() => {
