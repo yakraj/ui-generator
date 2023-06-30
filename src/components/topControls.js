@@ -151,6 +151,14 @@ export const TopControls = ({
               onChange={(e) => handleChange(activeElement, e)}
               placement="right"
             />
+            <div
+              onClick={() => {
+                activeElement.style.removeProperty("background-color");
+              }}
+              class="division99115"
+            >
+              <div class="division36194"></div>
+            </div>
           </div>
           <div>
             <div>Text</div>
@@ -160,6 +168,14 @@ export const TopControls = ({
               onChange={(e) => handleTextChange(activeElement, e)}
               placement="right"
             />
+            <div
+              onClick={() => {
+                activeElement.style.removeProperty("color");
+              }}
+              class="division99115"
+            >
+              <div class="division36194"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -221,6 +237,7 @@ export const TopControls = ({
               }}
               onBlur={(e) => {
                 e.target.setAttribute("readOnly", "readOnly");
+                e.target.value = "";
               }}
               onChange={(e) => {
                 if (activeElement) {
@@ -233,7 +250,9 @@ export const TopControls = ({
                 }
               }}
               type="text"
-              placeholder="Height"
+              placeholder={
+                activeElement && activeElement.style.height.toString()
+              }
             />
             <div
               onClick={() => {
@@ -261,8 +280,14 @@ export const TopControls = ({
                   activeElement.style.width = e.target.value;
                 }
               }}
+              onBlur={(e) => {
+                e.target.setAttribute("readOnly", "readOnly");
+                e.target.value = "";
+              }}
               type="text"
-              placeholder="Width"
+              placeholder={
+                activeElement && activeElement.style.width.toString()
+              }
             />
             <div
               onClick={() => {

@@ -25,6 +25,7 @@ function App() {
   // const [RecMode, onRecMode] = useState(false);
   const scalepg = useRef(1);
   const RecMode = useRef(false);
+  const PanMode = useRef(false);
   // these are playground dimension
 
   const [playgroundHeight, setPlaygroundHeight] = useState("");
@@ -258,7 +259,7 @@ function App() {
 
   return (
     <div className="App">
-      <Extrafunc RecMode={RecMode} scalepg={scalepg} PlayGround={PlayGround} />
+      <Extrafunc PanMode ={PanMode} RecMode={RecMode} scalepg={scalepg} PlayGround={PlayGround} />
       {Previewdata && (
         <Preview setPreviewdata={setPreviewdata} PlayGround={PlayGround} />
       )}

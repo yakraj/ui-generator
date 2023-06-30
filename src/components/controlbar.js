@@ -100,6 +100,39 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               <div className="neo-cont">
                 {/* this is for box shadow and box sizing */}
                 <p className="al-left">Custon Class</p>
+                <div className="flex">
+                  {Element &&
+                    Array.from(Element.classList).map((x) => {
+                      return (
+                        <input
+                          style={{
+                            width: "48%",
+                            borderRadius: "5px",
+                            background: "transparent",
+                            color: "grey",
+                            color: "#fff",
+                            fontSize: "1rem",
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.keyCode === 13 && e.target.value.length > 3) {
+                              e.preventDefault();
+                              Element.classList.replace(
+                                x,
+                                e.target.value.toString()
+                              );
+                            }
+                          }}
+                          type="text"
+                          onFocus={(e) => {
+                            e.target.value = x;
+                            e.target.readOnly = false;
+                            e.target.select();
+                          }}
+                          placeholder={x}
+                        ></input>
+                      );
+                    })}
+                </div>
                 <textarea
                   style={{ width: "95%" }}
                   className="custom-input"
@@ -112,7 +145,6 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                     }
                   }}
                   type="text"
-                  placeholder={Element && Element.classList.value}
                 />
                 <div className="flex-col">
                   <p className="al-left">Shadow</p>
@@ -125,6 +157,118 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
                     }
                     type="text"
                   />
+                </div>
+                <div style={{ marginBottom: 0 }} className="flex">
+                  <div className="wid-50">
+                    <p>max-height</p>
+                    <input
+                      onFocus={(e) => {
+                        e.target.value = Element && Element.style.maxHeight;
+                        e.target.readOnly = false;
+                        e.target.select();
+                      }}
+                      onBlur={(e) => {
+                        e.target.setAttribute("readOnly", "readOnly");
+                        e.target.value = "";
+                      }}
+                      onChange={(e) => {
+                        if (Element) {
+                          Element.style.maxHeight = e.target.value;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                          Element.style.maxHeight = e.target.value;
+                        }
+                      }}
+                      type="text"
+                      placeholder={
+                        Element && Element.style.maxHeight.toString()
+                      }
+                    />
+                  </div>
+                  <div className="wid-50">
+                    <p>min-height</p>
+                    <input
+                      onFocus={(e) => {
+                        e.target.value = Element && Element.style.minHeight;
+                        e.target.readOnly = false;
+                        e.target.select();
+                      }}
+                      onChange={(e) =>
+                        Element
+                          ? (Element.style.minHeight = e.target.value)
+                          : null
+                      }
+                      onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                          Element.style.minHeight = e.target.value;
+                        }
+                      }}
+                      onBlur={(e) => {
+                        e.target.setAttribute("readOnly", "readOnly");
+                        e.target.value = "";
+                      }}
+                      type="text"
+                      placeholder={
+                        Element && Element.style.minHeight.toString()
+                      }
+                    />
+                  </div>
+                </div>
+                <div style={{ marginBottom: 0 }} className="flex">
+                  <div className="wid-50">
+                    <p>max-width</p>
+                    <input
+                      onFocus={(e) => {
+                        e.target.value = Element && Element.style.maxWidth;
+                        e.target.readOnly = false;
+                        e.target.select();
+                      }}
+                      onBlur={(e) => {
+                        e.target.setAttribute("readOnly", "readOnly");
+                        e.target.value = "";
+                      }}
+                      onChange={(e) => {
+                        if (Element) {
+                          Element.style.maxWidth = e.target.value;
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                          Element.style.maxWidth = e.target.value;
+                        }
+                      }}
+                      type="text"
+                      placeholder={Element && Element.style.maxWidth.toString()}
+                    />
+                  </div>
+                  <div className="wid-50">
+                    <p>min-width</p>
+                    <input
+                      onFocus={(e) => {
+                        e.target.value = Element && Element.style.minWidth;
+                        e.target.readOnly = false;
+                        e.target.select();
+                      }}
+                      onChange={(e) =>
+                        Element
+                          ? (Element.style.minWidth = e.target.value)
+                          : null
+                      }
+                      onKeyDown={(e) => {
+                        if (e.keyCode === 13) {
+                          Element.style.minWidth = e.target.value;
+                        }
+                      }}
+                      onBlur={(e) => {
+                        e.target.setAttribute("readOnly", "readOnly");
+                        e.target.value = "";
+                      }}
+                      type="text"
+                      placeholder={Element && Element.style.minWidth.toString()}
+                    />
+                  </div>
                 </div>
               </div>
               {/* this is for overflow */}
