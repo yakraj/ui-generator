@@ -390,6 +390,20 @@ export const Controlbar = ({ Element, setElement, Properties }) => {
               {/* this is for position and transform */}
 
               <div className="neo-cont">
+                <p>Custom style</p>
+                <textarea
+                  style={{ width: "95%" }}
+                  className="custom-input"
+                  onFocus={(e) => e.target.select()}
+                  onKeyDown={(e) => {
+                    if (e.keyCode === 13 && e.target.value.length > 3) {
+                      e.preventDefault();
+                      Element.style.cssText += e.target.value;
+                      e.target.value = ""; // Clear the value of the textarea
+                    }
+                  }}
+                  type="text"
+                />
                 <p>HTML Code</p>
                 <textarea
                   value={InnerHTML}
