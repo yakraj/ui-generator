@@ -97,7 +97,7 @@ function App() {
     function handleMouseDown(e) {
       // it will return if the mode is not activaed
 
-      if (!RecMode.current) {
+      if (!RecMode.current || PanMode.current) {
         return;
       }
 
